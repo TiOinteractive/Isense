@@ -1,0 +1,58 @@
+<?php
+
+namespace Modules\Form\Language\en;
+
+return [
+    'SectionContent' => 'Section content',
+    'Addressee' => 'Addressee',
+    'AddresseeCC' => 'Addressee DW',
+    'AddresseeBCC' => 'Addressee UDW',
+    'Addressees' => 'Addressees',
+    'AddresseesCC' => 'Addressees DW',
+    'AddresseesBCC' => 'Addressees UDW',
+    'CommaSeparated' => 'separated by commas',
+    'Name' => 'Name',
+    'Content' => 'Content',
+    'SuccessMessage' => 'Message after correct sending',
+    'ErrorMessage' => 'Error message',
+    'Template' => 'Template',
+    'SuccessMsg' => 'Message was sent',
+    'ErrorMsg' => 'An error occurred while sending a message',
+    'FormFields' => 'Form fields',
+    'TurnOnCaptcha' => 'Turn on captcha',
+    'CaptchaError' => 'Captcha validation error',
+    'fields' => [
+        'AddField' => 'Add a field',
+        'Delete' => 'Delete',
+        'DeleteField' => 'Delete a form field',
+        'ConfirmInfo' => 'Are you sure you want to delete the selected field?',
+        'Cancel' => 'Cancel',
+        'Name' => 'Name',
+        'Description' => 'Description',
+        'Validation' => 'Validation',
+        'Type' => 'Type',
+        'Required' => 'Required',
+        'Publish' => 'Publication',
+    ],
+    'field' => [
+        'Name' => 'Name',
+        'Message' => 'Message',
+        'PhoneNo' => 'Phone number',
+        'EMail' => 'E-mail adress',
+        'Send' => 'Send',
+    ],
+    'validation' => [
+        'Email' => 'E-mail adress',
+        'Phone' => 'Phone number',
+        'ZipCode' => 'ZIP code',
+        'NIP' => 'NIP number',
+        'Regon' => 'REGON number',
+        'Pesel' => 'Pesel number',
+    ],
+    'type' => [
+        'Text' => 'Text (input)',
+        'TextArea' => 'Text area (textarea)',
+        'Number' => 'Number (input)',
+        'Checkbox' => 'Check box (checkbox)',
+    ],
+];

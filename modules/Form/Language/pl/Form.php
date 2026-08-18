@@ -1,0 +1,58 @@
+<?php
+
+namespace Modules\Form\Language\pl;
+
+return [
+    'SectionContent' => 'Zawartość sekcji',
+    'Addressee' => 'Odbiorca',
+    'AddresseeCC' => 'Odbiorca DW',
+    'AddresseeBCC' => 'Odbiorca UDW',
+    'Addressees' => 'Odbiorcy',
+    'AddresseesCC' => 'Odbiorcy DW',
+    'AddresseesBCC' => 'Odbiorcy UDW',
+    'CommaSeparated' => 'oddzieleni przecinkami',
+    'Name' => 'Nazwa',
+    'Content' => 'Treść',
+    'SuccessMessage' => 'Komunikat po poprawnym wysłaniu',
+    'ErrorMessage' => 'Komunikat po błędzie',
+    'Template' => 'Szablon',
+    'SuccessMsg' => 'Wiadomość została wysłana',
+    'ErrorMsg' => 'Wystąpił błąd podczas wysyłania wiadomości',
+    'FormFields' => 'Pola formularza',
+    'TurnOnCaptcha' => 'Włącz captcha',
+    'CaptchaError' => 'Błąd walidacje captcha',
+    'fields' => [
+        'AddField' => 'Dodaj pole',
+        'Delete' => 'Usuń',
+        'DeleteField' => 'Usuwanie pola formularza',
+        'ConfirmInfo' => 'Czy na pewno chcesz usunąć wybrane pole?',
+        'Cancel' => 'Anuluj',
+        'Name' => 'Nazwa',
+        'Description' => 'Opis',
+        'Validation' => 'Walidacja',
+        'Type' => 'Typ',
+        'Required' => 'Wymagane',
+        'Publish' => 'Publikacja',
+    ],
+    'field' => [
+        'Name' => 'Nazwa / Imię i nazwisko',
+        'Message' => 'Wiadomość',
+        'PhoneNo' => 'Numer telefonu',
+        'EMail' => 'Adres e-mail',
+        'Send' => 'Wyślij',
+    ],
+    'validation' => [
+        'Email' => 'Adres e-mail',
+        'Phone' => 'Numer telefonu',
+        'ZipCode' => 'Kod pocztowy',
+        'NIP' => 'Numer NIP',
+        'Regon' => 'Numer Regon',
+        'Pesel' => 'Numer Pesel',
+    ],
+    'type' => [
+        'Text' => 'Pole tekstowe (input)',
+        'TextArea' => 'Obszar tekstowy (textarea)',
+        'Number' => 'Numer (input)',
+        'Checkbox' => 'Pole wyboru (checkbox)',
+    ],
+];

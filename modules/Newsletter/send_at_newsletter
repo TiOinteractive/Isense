@@ -1,0 +1,5 @@
+#!/bin/bash
+
+zapis=`links -dump "https://www.resinet.pl/newsletter-action/send-at"`
+
+echo `date +%Y-%m-%d-%H-%M` >> /home/www/resinet/html/writable/logs/newsletter/sent_at.log 
