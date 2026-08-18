@@ -7,5 +7,7 @@ return [
     'Content' => 'Content',
     'BackgroundImage' => 'Background image',
     'BackgroundImageInfo' => 'shared across all languages',
+    'SideImage' => 'Image next to text',
+    'SideImageInfo' => 'shared across all languages',
     'AddChangePhoto' => 'Add / change image',
 ];

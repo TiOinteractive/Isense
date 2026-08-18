@@ -7,5 +7,7 @@ return [
     'Content' => 'Treść',
     'BackgroundImage' => 'Grafika tła',
     'BackgroundImageInfo' => 'wspólna dla wszystkich wersji językowych',
+    'SideImage' => 'Grafika obok tekstu',
+    'SideImageInfo' => 'wspólna dla wszystkich wersji językowych',
     'AddChangePhoto' => 'Dodaj / zmień grafikę',
 ];

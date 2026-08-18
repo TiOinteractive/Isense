@@ -39,3 +39,18 @@
         <span class="s">(<?=lang('Wyswig.BackgroundImageInfo');?>)</span>
     </div>
 </div>
+<!-- Grafika obok tekstu — również wspólna dla wszystkich wersji językowych -->
+<div class="form-row">
+    <div class="form-label">
+        <label><?=lang('Wyswig.SideImage');?></label>
+    </div>
+    <div class="form-field">
+        <div class="files-list">
+            <?php if(!empty($form_data['image'])): ?>
+                <?=view('admin/filemenager/files_list', array('files'=>array($form_data['image']), 'name'=>'form_data', 'key_name'=>'image')); ?>
+            <?php endif; ?>
+        </div>
+        <a href="<?=$locale ? '/' . $locale : ''; ?>/<?=env('ADMIN_PANEL_SLUG'); ?>/file-menager/open" title="<?=lang('Wyswig.AddChangePhoto');?>" class="btn file-menager" data-multi="false" data-key="image" data-type="image" data-field-name="form_data" data-title="<?=lang('Admin.file-menager.FileMenager');?>" data-btn-ok="<?=lang('Admin.file-menager.Select');?>" data-btn-cancel="<?=lang('Admin.file-menager.Cancel');?>"><?=lang('Wyswig.AddChangePhoto');?></a>
+        <span class="s">(<?=lang('Wyswig.SideImageInfo');?>)</span>
+    </div>
+</div>
