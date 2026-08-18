@@ -565,7 +565,7 @@ class Event {
             case 'calendar':
                 break;
             case 'single_element':
-                $assets['js'][] = 'https://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAE58OHS8e9ksf4DaxTynUcbipPqpZceeY';
+                $assets['js'][] = 'https://maps.google.com/maps/api/js?sensor=false&key=' . (!empty($data['settings']) && !empty($data['settings']['google_map_key']) ? $data['settings']['google_map_key'] : (string) env('google.mapsApiKey'));
                 $assets['js_ready'][] = 'updateViews();';
                break;			
         }
