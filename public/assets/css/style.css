@@ -990,7 +990,7 @@ form input[name="field_h"] {display: none;}
 /* Wyswig: szablony "isense-repair" (kolumna 640px) i "isense-repair-2" (pelna szerokosc) - wyglad zgodny z modulem Isense (repair-hero) */
 .section-wyswig.repair, .section-wyswig.repair-2 {position: relative; padding: 96px 0; background-size: cover; background-position: right center; background-repeat: no-repeat;}
 .section-wyswig.repair:not([style]), .section-wyswig.repair-2:not([style]) {background: #F5F5F7; padding: 64px 0;}
-.section-wyswig.repair .container > h2, .section-wyswig.repair-2 .container > h2 {max-width: 640px; margin: 0 0 12px 0; font-size: 14px; line-height: 20px; font-weight: 600; color: #3b81f7; text-transform: uppercase; letter-spacing: 0.1em;}
+.section-wyswig.repair .col-text > h2, .section-wyswig.repair-2 .col-text > h2 {max-width: 640px; margin: 0 0 12px 0; font-size: 14px; line-height: 20px; font-weight: 600; color: #3b81f7; text-transform: uppercase; letter-spacing: 0.1em;}
 .section-wyswig.repair h1.head, .section-wyswig.repair-2 h1.head {max-width: 640px; margin: 0 0 24px 0; font-size: 60px; line-height: 1.1; font-weight: 700; color: #1D1D1F;}
 .section-wyswig.repair h1.head span, .section-wyswig.repair-2 h1.head span {display: inline;}
 .section-wyswig.repair .wyswig, .section-wyswig.repair-2 .wyswig {max-width: 640px; font-size: 16px; line-height: 1.625; color: rgba(29, 29, 31, 0.7);}
@@ -1009,7 +1009,7 @@ form input[name="field_h"] {display: none;}
 .section-wyswig.repair .wyswig a.white-btn, .section-wyswig.repair-2 .wyswig a.white-btn {border-color: #1D1D1F; background: #fff; color: #1D1D1F;}
 .section-wyswig.repair .wyswig a.white-btn:hover, .section-wyswig.repair-2 .wyswig a.white-btn:hover {background: #F5F5F7; color: #1D1D1F; text-decoration: none;}
 /* repair-2: naglowki i tresc na pelnej szerokosci kontenera */
-.section-wyswig.repair-2 .container > h2, .section-wyswig.repair-2 h1.head, .section-wyswig.repair-2 .wyswig {max-width: none;}
+.section-wyswig.repair-2 .col-text > h2, .section-wyswig.repair-2 h1.head, .section-wyswig.repair-2 .wyswig {max-width: none;}
 /* repair / repair-2 z grafika obok tekstu (klasa .with-image) */
 .section-wyswig.repair .cols, .section-wyswig.repair-2 .cols {display: flex; flex-wrap: wrap; align-items: center; gap: 48px;}
 .section-wyswig.repair .col-text, .section-wyswig.repair-2 .col-text {flex: 1 1 0; min-width: 0;}
