@@ -1,0 +1,1 @@
+<img src="/image/<?=$file['path']; ?>" alt="<?=$file['name']; ?>" />

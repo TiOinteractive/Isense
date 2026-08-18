@@ -1,0 +1,43 @@
+<?php
+
+return [
+    'LoginToCms' => 'Logowanie do TiO CMS',
+    'Login' => 'Login',
+    'EmailAddress' => 'Adres e-mail',
+    'EnterYourLoginOrEmailAddress' => 'Wpisz login',
+    'emailorlogin' => 'Login lub adres e-mail',
+    'emaillostpassword' => 'Podaj adres e-mail aby zmienić hasło',
+    'Password' => 'Hasło',
+    'EnterPassword' => 'Wpisz hasło',
+    'login' => 'Zaloguj się',
+    'lostpasswordsend' => 'Zresetuj hasło',
+    'passwordremind' => 'Nie pamiętam hasła',
+    'PasswordRecovery' => 'Przywracanie hasła',
+    'RemindPassword' => 'Przypomnij hasło',
+    'loginincorrect' => 'Błędne dane logowania. Sprawdź poprawność danych lub skorzystaj z przypomnienia hasła.',
+    'emailincorrect' => 'Błędny adres e-mail.',
+    'EmailTopicNewPass' => 'Zmiana hasła administratora',
+    'EmailMsgNewPass' => '<h1>Zmiana hasła</h1><p>Wygenerowano prośbę o zmianę hasła do Twojego konta administratora. Jeżeli chcesz zmienić hasło kliknij w poniższy link:</p><p><a href="{token}">{token}</a></p>',
+    'mailnotsend' => 'Wystąpił błąd. Nie udało się wysłać wiadomości.',
+    'mailsend' => 'Wiadomość została wysłana. Sprawdź pocztę i postępuj według instrukcji zawartych w wiadomości.',
+    'tokenincorrect' => 'Token jest niepoprawny lub upłynął czas na zmianę hasła. Sprawdź adres lub skorzystaj ponownie ze zmiany hasła.',
+    'SetPassword' => 'Ustaw hasło',
+    'Savepass' => 'Zapisz nowe hasło',
+    'newpassword' => 'Podaj nowe hasło',
+    'repeatpassword' => 'Powtórz nowe hasło',
+    'Passinfo' => 'Nowe hasło musi mieć conajmniej 8 znaków, jedną dużą literę, jedną cyfrę oraz znak specjalny.',
+    'Passchanged' => 'Hasło zostało zmienione. <br />Możesz zalogować się nowym hasłem <a href="/admin" class="trans200">zaloguj się</a>',
+    'FullService' => 'Kompleksowa obsługa',
+    'Ebusiness' => 'e-biznesu',
+    'Realization' => 'Realizacja',
+    'InternetShops' => 'Sklepy<br />internetowe',
+    'SeoPositioning' => 'Pozycjonowanie,<br />SEO',
+    'GoogleAdsFacebookAds' => 'Google ADS,<br />Facebook ADS',
+    'Websites' => 'Strony<br />WWW',
+    'validation' => [
+        'min_length' => 'Pole musi mieć conajmniej {param} znaków.',
+        'required' => 'Pole jest wymagane',
+        'matches' => 'Podana wartość nie jest taka sama.',
+        'regex_match' => 'Podana wartość nie spełnia kryteriów.'
+    ]
+];
