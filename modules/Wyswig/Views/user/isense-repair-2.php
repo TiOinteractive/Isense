@@ -1,10 +1,10 @@
 <?php
 /*
-  Isense repair tpl H1
+  Isense repair tpl H2
  */
 ?>
 
-<section class="section section-<?= $id_cont; ?> section-wyswig repair"<?= !empty($data['bg_image']) ? ' style="background-image:url(\'' . esc($data['bg_image'], 'attr') . '\');"' : ''; ?>>
+<section class="section section-<?= $id_cont; ?> section-wyswig repair-2"<?= !empty($data['bg_image']) ? ' style="background-image:url(\'' . esc($data['bg_image'], 'attr') . '\');"' : ''; ?>>
     <div class="container">
         <?php if (!empty($subtitle)): ?>
             <h2><?= $subtitle; ?></h2>
