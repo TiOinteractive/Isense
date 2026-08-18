@@ -9,6 +9,7 @@ class WyswigModel extends Model {
     protected $table = 'wyswig';
     protected $allowedFields = [
         'id_page_cont',
+        'id_photo',
         'edited_at',
         'created_at',
     ];
@@ -17,6 +18,10 @@ class WyswigModel extends Model {
         $wyswig = $this->where('id_page_cont', $id_content)->first();
         if (!empty($wyswig)) {
             $wyswig['lang'] = $this->getWyswigLang($wyswig['id']);
+            // Grafika tła — wspólna dla wszystkich wersji językowych
+            if (!empty($wyswig['id_photo'])) {
+                $wyswig['photo'] = $this->db->table('tio_files')->where('id', $wyswig['id_photo'])->limit(1)->get()->getRowArray();
+            }
         }
         return $wyswig;
     }
@@ -34,7 +39,8 @@ class WyswigModel extends Model {
 
     public function saveWyswig($id_content, $post) {
         $data = array(
-            'id_page_cont' => $id_content
+            'id_page_cont' => $id_content,
+            'id_photo' => !empty($post['photo']) && !empty($post['photo']['id']) ? $post['photo']['id'] : 0,
         );
         $wyswig = $this->where('id_page_cont', $id_content)->first();
         if (!empty($wyswig)) {

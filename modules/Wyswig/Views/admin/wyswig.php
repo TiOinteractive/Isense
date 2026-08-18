@@ -24,3 +24,18 @@
         <?php ++$l; endforeach; ?>
     <?php if(!empty($languages) && count($languages) > 1): ?></div><?php endif; ?>
 </div>
+<!-- Grafika tła sekcji — wspólna dla wszystkich wersji językowych (poza zakładkami języków) -->
+<div class="form-row">
+    <div class="form-label">
+        <label><?=lang('Wyswig.BackgroundImage');?></label>
+    </div>
+    <div class="form-field">
+        <div class="files-list">
+            <?php if(!empty($form_data['photo'])): ?>
+                <?=view('admin/filemenager/files_list', array('files'=>array($form_data['photo']), 'name'=>'form_data', 'key_name'=>'photo')); ?>
+            <?php endif; ?>
+        </div>
+        <a href="<?=$locale ? '/' . $locale : ''; ?>/<?=env('ADMIN_PANEL_SLUG'); ?>/file-menager/open" title="<?=lang('Wyswig.AddChangePhoto');?>" class="btn file-menager" data-multi="false" data-key="photo" data-type="image" data-field-name="form_data" data-title="<?=lang('Admin.file-menager.FileMenager');?>" data-btn-ok="<?=lang('Admin.file-menager.Select');?>" data-btn-cancel="<?=lang('Admin.file-menager.Cancel');?>"><?=lang('Wyswig.AddChangePhoto');?></a>
+        <span class="s">(<?=lang('Wyswig.BackgroundImageInfo');?>)</span>
+    </div>
+</div>

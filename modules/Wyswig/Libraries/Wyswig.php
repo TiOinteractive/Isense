@@ -18,10 +18,15 @@ class Wyswig
     {
         $wyswig = $this->wyswigModel
                 ->join('wyswig_lang wl', 'wyswig.id=wl.id_wyswig')
-                ->select('wyswig.id,wl.content')
+                ->join('files f', 'f.id=wyswig.id_photo', 'left')
+                ->select('wyswig.id,wl.content,f.path as photo_path')
                 ->where('wyswig.id_page_cont', $content['id'])
                 ->where('wl.id_lang', $id_lang)
                 ->first();
+        // Grafika tła — jedna dla wszystkich wersji językowych
+        if (!empty($wyswig)) {
+            $wyswig['bg_image'] = !empty($wyswig['photo_path']) ? '/image/' . $wyswig['photo_path'] : '';
+        }
         return $wyswig;
     }
     
