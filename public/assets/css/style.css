@@ -995,7 +995,11 @@ form input[name="field_h"] {display: none;}
 .section-wyswig.repair h1.head span, .section-wyswig.repair-2 h1.head span {display: inline;}
 .section-wyswig.repair .wyswig, .section-wyswig.repair-2 .wyswig {max-width: 640px; font-size: 16px; line-height: 1.625; color: rgba(29, 29, 31, 0.7);}
 .section-wyswig.repair .wyswig p, .section-wyswig.repair-2 .wyswig p {margin: 0 0 16px 0;}
-.section-wyswig.repair .wyswig ul, .section-wyswig.repair-2 .wyswig ul, .section-wyswig.repair .wyswig ol, .section-wyswig.repair-2 .wyswig ol {margin: 0 0 16px 20px;}
+.section-wyswig.repair .wyswig ul, .section-wyswig.repair-2 .wyswig ul, .section-wyswig.repair .wyswig ol, .section-wyswig.repair-2 .wyswig ol {margin: 0 0 16px 0; padding: 0 0 0 22px;}
+.section-wyswig.repair .wyswig ul, .section-wyswig.repair-2 .wyswig ul {list-style: disc outside;}
+.section-wyswig.repair .wyswig ol, .section-wyswig.repair-2 .wyswig ol {list-style: decimal outside;}
+.section-wyswig.repair .wyswig ul ul, .section-wyswig.repair-2 .wyswig ul ul {margin: 4px 0 0 0; list-style: circle outside;}
+.section-wyswig.repair .wyswig li::marker, .section-wyswig.repair-2 .wyswig li::marker {color: #3b81f7;}
 .section-wyswig.repair .wyswig li, .section-wyswig.repair-2 .wyswig li {margin: 0 0 4px 0;}
 .section-wyswig.repair .wyswig h2, .section-wyswig.repair-2 .wyswig h2, .section-wyswig.repair .wyswig h3, .section-wyswig.repair-2 .wyswig h3 {max-width: none; margin: 0 0 12px 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #1D1D1F; text-transform: none; letter-spacing: normal;}
 .section-wyswig.repair .wyswig strong, .section-wyswig.repair-2 .wyswig strong, .section-wyswig.repair .wyswig b, .section-wyswig.repair-2 .wyswig b {color: #1D1D1F;}
