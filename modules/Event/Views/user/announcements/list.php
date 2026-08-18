@@ -1,0 +1,5 @@
+<?php
+/* 
+Premiery i zapowiedzi
+ */
+?>
