@@ -1,0 +1,91 @@
+
+#<FilesMatch ".+\.ph(p[345]?|t|tml)$">
+#    SetHandler application/x-httpd-php847
+#</FilesMatch>
+
+# Disable directory browsing
+Options All -Indexes
+
+# ----------------------------------------------------------------------
+# Rewrite engine
+# ----------------------------------------------------------------------
+
+# Turning on the rewrite engine is necessary for the following rules and features.
+# FollowSymLinks must be enabled for this to work.
+<IfModule mod_rewrite.c>
+	Options +FollowSymlinks
+	RewriteEngine On
+
+	# If you installed CodeIgniter in a subfolder, you will need to
+	# change the following line to match the subfolder you need.
+	# http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
+	# RewriteBase /
+
+	# Redirect Trailing Slashes...
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} (.+)/$
+	RewriteRule ^ %1 [L,R=301]
+
+	# Redirect non-www → www (canonical host)
+	RewriteCond %{HTTP_HOST} ^isense\.pl$ [NC]
+	RewriteRule ^ https://www.isense.pl%{REQUEST_URI} [R=301,L]
+
+	# --- Odciazenie: ubijaj masowe sondy botow ZANIM trafia do PHP ---
+	# /reklama/openx/* to nieistniejacy adserwer skanowany przez boty setki tys.
+	# razy; kazde takie zadanie renderowalo pelny 404 CI4 (~33 KB). 410 = Gone,
+	# zwracane bezposrednio przez Apache, bez startu PHP.
+	RewriteRule ^reklama/openx/ - [G]
+
+	# Checks to see if the user is attempting to access a valid file,
+	# such as an image or css document, if this isn't true it sends the
+	# request to the front controller, index.php
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^([\s\S]*)$ index.php?/$1 [L,NC,QSA]
+
+	# Ensure Authorization header is passed along
+	RewriteCond %{HTTP:Authorization} .
+	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+	# If we don't have mod_rewrite installed, all 404's
+	# can be sent to index.php, and everything works as normal.
+	ErrorDocument 404 index.php
+</IfModule>
+
+# Disable server signature start
+	ServerSignature Off
+# Disable server signature end
+
+# ----------------------------------------------------------------------
+# Security headers
+# ----------------------------------------------------------------------
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "interest-cohort=()"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# Kompresja i cache statykow (transfer + mniej powtornych zadan)
+# ----------------------------------------------------------------------
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json image/svg+xml application/xml
+</IfModule>
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresByType text/css "access plus 1 month"
+	ExpiresByType application/javascript "access plus 1 month"
+	ExpiresByType image/webp "access plus 1 year"
+	ExpiresByType image/jpeg "access plus 1 month"
+	ExpiresByType image/png "access plus 1 month"
+	ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# UWAGA: pod FPM/FastCGI dyrektywy `php_value` w .htaccess NIE dzialaja (a bywaja
+# zrodlem bledu 500) — usunieto. Limity uploadu/pamieci/czasu ustawia .user.ini
+# (PHP_INI_PERDIR), a OPcache/realpath — php.ini / pula FPM. Patrz DEPLOY_PHP85_SERWER.md.

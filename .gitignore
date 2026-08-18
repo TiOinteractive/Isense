@@ -1,0 +1,149 @@
+#-------------------------
+# Operating Specific Junk Files
+#-------------------------
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# OS X Thumbnails
+._*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Linux
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+#-------------------------
+# Environment Files
+#-------------------------
+# These should never be under version control,
+# as it poses a security risk.
+.env
+# Kopie zapasowe (.env.bak, .env.local, .env.old) zawieraja te same hasla co .env
+# i musza byc ignorowane tak samo. env.example jest bez sekretow — zostaje w repo.
+.env.*
+!env.example
+.vagrant
+Vagrantfile
+
+#-------------------------
+# Temporary Files
+#-------------------------
+writable/cache/*
+!writable/cache/index.html
+
+writable/logs/*
+!writable/logs/index.html
+
+writable/session/*
+!writable/session/index.html
+
+writable/uploads/*
+!writable/uploads/index.html
+
+writable/debugbar/*
+
+writable/temp/*
+!writable/temp/index.html
+
+php_errors.log
+
+#-------------------------
+# User Guide Temp Files
+#-------------------------
+user_guide_src/build/*
+user_guide_src/cilexer/build/*
+user_guide_src/cilexer/dist/*
+user_guide_src/cilexer/pycilexer.egg-info/*
+
+#-------------------------
+# Test Files
+#-------------------------
+tests/coverage*
+
+# Don't save a project-root phpunit binary under version control.
+# NOTE: musi byc zakotwiczone do roota (/phpunit) — bez ukosnika regula
+# dopasowywala tez vendor/phpunit/, przez co po klonie brakowalo pakietu,
+# a mapa autoloadu Composera odwolywala sie do nieistniejacego pliku (HTTP 500).
+/phpunit
+
+
+#-------------------------
+# IDE / Development Files
+#-------------------------
+
+# Modules Testing
+_modules/*
+
+# Node — zaleznosci builda theme-build/ (tailwind); odtwarzane z package-lock.json
+node_modules/
+
+# phpenv local config
+.php-version
+
+# Jetbrains editors (PHPStorm, etc)
+.idea/
+*.iml
+
+# Netbeans
+# NOTE: zakotwiczone do roota (/build, /dist) z tego samego powodu co /phpunit
+# nizej — bez ukosnika reguly lapia KAZDY zagniezdzony katalog o tej nazwie
+# (np. node_modules/*/dist), przez co paczki trafialy do repo niekompletne.
+nbproject/
+/build/
+nbbuild/
+/dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+.nb-gradle/
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+.phpintel
+/api/
+
+# Visual Studio Code
+.vscode/
+
+/results/
+/phpunit*.xml
+/.phpunit.*.cache
+
+#-------------------------
+# Vendor — wersjonowany w calosci
+#-------------------------
+# vendor/ jest trzymany w repo. Ogolne reguly powyzej (.DS_Store, build/,
+# .phpunit*.cache itd.) nie moga wybiorczo usuwac jego czesci — inaczej klon
+# jest niekompletny i aplikacja nie startuje. Te negacje musza byc na koncu
+# pliku, bo w .gitignore wygrywa OSTATNIA pasujaca regula.
+!vendor/
+!vendor/**
+
