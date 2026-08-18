@@ -4,6 +4,26 @@ $assets = $assets ?? rtrim(base_url('assets/isense'), '/');
 $announcement = isense_announcement();
 // Górne menu — zarządzane w panelu → Menu → „Menu górne" (id 1)
 $topMenu = isense_menu(1);
+// Awaryjne ikony dla pozycji bez ikony ustawionej w panelu (dopasowanie po nazwie)
+$fallbackIcons = [
+    'słuchawk' => 'headphones',
+    'sluchawk' => 'headphones',
+    'airpods'  => 'headphones',
+    'beats'    => 'headphones',
+];
+$childIcon = static function (array $child) use ($fallbackIcons): string {
+    if (! empty($child['icon'])) {
+        return $child['icon'];
+    }
+    $name = mb_strtolower($child['name'] ?? '');
+    foreach ($fallbackIcons as $needle => $icon) {
+        if (mb_strpos($name, $needle) !== false) {
+            return $icon;
+        }
+    }
+
+    return '';
+};
 ?>
 <div class="relative z-50">
     <!-- Pasek ogłoszeniowy (zarządzalny: panel → Ustawienia → „Pasek ogłoszeniowy") -->
@@ -64,7 +84,8 @@ $topMenu = isense_menu(1);
                                         <div data-dropdown-menu class="hidden absolute top-full left-0 mt-1 w-52 rounded-lg overflow-hidden shadow-2xl border border-[#E5E5EA] bg-white z-50">
                                             <?php foreach ($item['children'] as $child): ?>
                                                 <a href="<?= $child['url'] ?>"<?= $child['target'] ? ' target="' . esc($child['target'], 'attr') . '"' : '' ?> class="flex items-center gap-3 px-4 py-3 text-[#1D1D1F] hover:bg-[#F5F5F7] hover:text-[#3b81f7] transition-colors text-sm font-medium border-b border-[#F0F0F0] last:border-0">
-                                                    <?php if ($child['icon']): ?><?= isense_icon($child['icon'], 'w-4 h-4 text-[#3b81f7] flex-shrink-0') ?><?php endif; ?>
+                                                    <?php $icon = $childIcon($child); ?>
+                                                    <?php if ($icon): ?><?= isense_icon($icon, 'w-4 h-4 text-[#3b81f7] flex-shrink-0') ?><?php endif; ?>
                                                     <?= esc($child['name']) ?>
                                                 </a>
                                             <?php endforeach; ?>
