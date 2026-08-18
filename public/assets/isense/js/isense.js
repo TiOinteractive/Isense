@@ -1,4 +1,4 @@
-/* iSense — interakcje front-endu. Vanilla JS, bez zależności. */
+/* iSense — interakcje front-endu (theme oparty na szablonie Figmy). Vanilla JS, bez zależności. */
 (function () {
   "use strict";
 
