@@ -68,8 +68,8 @@ $subjects = $d['subjects'] ?? [];
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Temat *</label>
-                        <select required name="subject" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <label for="contact-subject" class="block text-sm font-medium text-[#1D1D1F] mb-2">Temat *</label>
+                        <select required id="contact-subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
                             <option value="">Wybierz temat</option>
                             <?php foreach ($subjects as $s): if (empty($s['label'])) continue; ?><option value="<?= esc($s['label'], 'attr') ?>"><?= esc($s['label']) ?></option><?php endforeach; ?>
                         </select>

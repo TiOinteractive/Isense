@@ -57,8 +57,8 @@ $devices = ['iphone' => 'iPhone', 'ipad' => 'iPad', 'macbook' => 'MacBook', 'ima
                         <input type="email" name="email" placeholder="jan@example.com" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Typ urządzenia</label>
-                        <select name="device" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <label for="pickup-device" class="block text-sm font-medium text-[#1D1D1F] mb-2">Typ urządzenia</label>
+                        <select id="pickup-device" name="device" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
                             <option value="">Wybierz urządzenie</option>
                             <?php foreach ($devices as $v => $l): ?><option value="<?= $v ?>"><?= esc($l) ?></option><?php endforeach; ?>
                         </select>
