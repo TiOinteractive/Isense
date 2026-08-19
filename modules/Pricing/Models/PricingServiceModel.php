@@ -45,8 +45,8 @@ class PricingServiceModel extends Model
     public function getWithCategory($id, $id_lang): array
     {
         $row = $this->db->table('pricing_service ps')
-            ->join('pricing_service_lang psl', 'ps.id=psl.id_service AND psl.id_lang=' . (int) $id_lang, 'left', false)
-            ->join('pricing_category_lang pcl', 'pcl.id_category=ps.id_category AND pcl.id_lang=' . (int) $id_lang, 'left', false)
+            ->join('pricing_service_lang psl', 'ps.id=psl.id_service AND psl.id_lang=' . (int) $id_lang, 'left')
+            ->join('pricing_category_lang pcl', 'pcl.id_category=ps.id_category AND pcl.id_lang=' . (int) $id_lang, 'left')
             ->select('ps.id,ps.id_category,ps.publish,psl.name,pcl.name as category_name')
             ->where('ps.id', $id)
             ->get()->getRowArray();
