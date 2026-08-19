@@ -7,7 +7,7 @@ helper(['url', 'isense']);
 ?>
 <div class="isense-theme min-h-screen flex flex-col bg-white text-[#1D1D1F]">
     <?= view('isense/partials/header') ?>
-    <main class="flex-1">
+    <main class="flex-1 isense-main">
         <?php if (!empty($content)): ?>
             <?php foreach ($content as $cont): ?>
                 <?php if (!empty($cont) && !empty($cont['template'])): ?>
