@@ -122,7 +122,7 @@ header.main-header.fixed .main-menu .menu > .menu-item > a:after {height:15px;}
 .mobile .main-menu {display:none;}
 .mobile .main-header .select_lang {margin-left:0px;margin-right:4px;margin-top:0px;}
 .mobile .main-header .select_lang.open {margin-top:-25px;width:90px;}
-.resinet-news-other .news-item.news-big .photo,.entertainment-news-list-2 .list .news-item.news-big .photo {width:100%;padding:0px;position:relative;}
+.resinet-news-other .news-item.news-big .photo {width:100%;padding:0px;position:relative;}
 .mobile header.main-header.fixed .boxes .box.newsletter-box {display:none;}
 header.main-header.fixed {position:fixed;top:0px;width:100%;z-index:6;-webkit-box-shadow: 1px 3px 22px -18px rgba(28, 30, 31, 1);-moz-box-shadow: 1px 3px 22px -18px rgba(28, 30, 31, 1);box-shadow: 1px 3px 22px -18px rgba(28, 30, 31, 1);}
 header.main-header.fixed .menu .menu-item .ico,header.main-header.fixed .boxes .box.date-box,header.main-header.fixed .boxes .box.newsletter-box span,header.main-header.fixed .boxes .social-box {display:none;}

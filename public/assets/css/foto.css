@@ -1289,17 +1289,17 @@ header.main-header.fixed .boxes .box.users-box .account span {display:none;}
 #news-home-boxy .flex figure:hover img {transform: scale(1.1);}
 #news-home-boxy .flex .box {position:relative;width:33.3333%;border-right:2px solid white;}
 #news-home-boxy .flex .caption {position:absolute;bottom:10px;left:40px;right:40px;}
-#news-home-boxy h3,.resinet-news-other .news-item.news-big .photo .box h3,.resinet-news-other .news-item.news-big .photo .box,.entertainment-news-list-2 .list .news-item.news-big .box h3 {font-weight:800;font-size:18px;text-transform:uppercase;margin:0px;text-shadow: 1px 1px 5px rgba(1, 1, 1, 0.32); }
+#news-home-boxy h3,.resinet-news-other .news-item.news-big .photo .box h3,.resinet-news-other .news-item.news-big .photo .box {font-weight:800;font-size:18px;text-transform:uppercase;margin:0px;text-shadow: 1px 1px 5px rgba(1, 1, 1, 0.32); }
 .resinet-news-other .news-item.news-big .photo .box {text-transform:none;}
-#news-home-boxy h3 a,#news-home-boxy h2 a:hover,#news-home-box .flex .left-column .box h3 a,#news-home-box .flex .left-column .box h2 a:hover,#home-bigbox  #news-home-box  .news-list .item h2 a:hover,.resinet-news-other .news-item.news-big .photo .box h3 a,.resinet-news-other .news-item.news-big .photo .box h2 a:hover,.entertainment-news-list-2 .list .news-item.news-big .box h3 a,.entertainment-news-list-2 .list .news-item.news-big .box h2 a:hover {color:#ffc800;}
-#news-home-boxy h3 a:hover,#news-home-boxy h2 a,#news-home-box .flex .left-column .box h3 a:hover,#news-home-box .flex .left-column .box h2 a,#home-bigbox  #news-home-box  .news-list .item h2 a,#home-bigbox  #news-home-box  .news-list .item h3 a:hover,.resinet-news-other .news-item.news-big .photo .box h3 a:hover,.resinet-news-other .news-item.news-big .photo .box h2 a,.entertainment-news-list-2 .list .news-item.news-big .box h2 a,.entertainment-news-list-2 .list .news-item.news-big .box h3 a:hover {color:white;}
-#news-home-boxy h2,#news-home-box .flex .left-column .box h2,.resinet-news-other .news-item.news-big .photo .box h2,.entertainment-news-list-2 .list .news-item.news-big .box h2 {font-weight:bold;font-size:36px;margin:10px 0px 30px 0px;text-shadow: 1px 1px 5px rgba(1, 1, 1, 0.32); }
+#news-home-boxy h3 a,#news-home-boxy h2 a:hover,#news-home-box .flex .left-column .box h3 a,#news-home-box .flex .left-column .box h2 a:hover,#home-bigbox  #news-home-box  .news-list .item h2 a:hover,.resinet-news-other .news-item.news-big .photo .box h3 a,.resinet-news-other .news-item.news-big .photo .box h2 a:hover {color:#ffc800;}
+#news-home-boxy h3 a:hover,#news-home-boxy h2 a,#news-home-box .flex .left-column .box h3 a:hover,#news-home-box .flex .left-column .box h2 a,#home-bigbox  #news-home-box  .news-list .item h2 a,#home-bigbox  #news-home-box  .news-list .item h3 a:hover,.resinet-news-other .news-item.news-big .photo .box h3 a:hover,.resinet-news-other .news-item.news-big .photo .box h2 a {color:white;}
+#news-home-boxy h2,#news-home-box .flex .left-column .box h2,.resinet-news-other .news-item.news-big .photo .box h2 {font-weight:bold;font-size:36px;margin:10px 0px 30px 0px;text-shadow: 1px 1px 5px rgba(1, 1, 1, 0.32); }
 #news-home-box .flex .left-column .box h2 {font-size: 45px;line-height: 54px;}
 #news-home-box .flex {display:flex;}
 #news-home-box .flex .left-column {position:relative;}
-#news-home-box .flex .left-column .box,.resinet-news-other .news-item.news-big .photo .box,.entertainment-news-list-2 .list .news-item.news-big .box {position:absolute;bottom:20px;left:40px;right:40px;}
-#news-home-box .flex .left-column .box h2,.resinet-news-other .news-item.news-big .photo .box h2,.entertainment-news-list-2 .list .news-item.news-big .box h2 {margin:0px;}
-#news-home-box .flex .left-column .box h3,.resinet-news-other .news-item.news-big .photo .box h3,.entertainment-news-list-2 .list .news-item.news-big .box h3 {margin-bottom:10px;color: #ffc800; font-weight: 600;}
+#news-home-box .flex .left-column .box,.resinet-news-other .news-item.news-big .photo .box {position:absolute;bottom:20px;left:40px;right:40px;}
+#news-home-box .flex .left-column .box h2,.resinet-news-other .news-item.news-big .photo .box h2 {margin:0px;}
+#news-home-box .flex .left-column .box h3,.resinet-news-other .news-item.news-big .photo .box h3 {margin-bottom:10px;color: #ffc800; font-weight: 600;}
 #home-bigbox  #news-home-box  .news-list .item {width:100%;padding:0px;position:relative;}
 #home-bigbox  #news-home-box  .news-list .item .caption {position:absolute;bottom:20px;left:20px;right:20px;}
 #home-bigbox  #news-home-box  .news-list .item:nth-child(2) {margin-top:30px;}
@@ -1314,7 +1314,6 @@ header.main-header.fixed .boxes .box.users-box .account span {display:none;}
 #news-home-boxy h2 {font-size:34px;line-height:38px;}
 
 
-.mobile-footer.main-footer .panorama .container {background-size:100% auto;height:60px;} 
 .mobile-footer.main-footer .bottom-footer {background-size:cover;padding-top:20px;}
 .mobile-footer.main-footer  .bottom-footer .flex-footer {margin:0px;}
 .mobile-footer.main-footer .logo,.main-footer .section_address {margin-bottom:20px;}
@@ -1439,10 +1438,6 @@ footer.flavor-footer.main-footer.mobile ul#stopka {display:block;font-size:16px;
 footer.flavor-footer.main-footer.mobile .contact h4 {margin-top:20px;margin-bottom:10px;}
 footer.flavor-footer.main-footer.mobile .contact .box {margin-right:0px;margin-top:15px;}
 
-.main-footer.foto-footer .panorama .container {
-  background-image: url("/assets/gfx/footer/panorama_white.png");
-}
-.main-footer.foto-footer .panorama {background: rgb(28,30,31);background: linear-gradient(0deg, rgba(28,30,31,1) 45%, rgba(0,0,0,1) 100%);padding-top:50px;border-bottom:1px solid white;}
 
 #home-smaki .resinet-title {display:flex;justify-content: space-between;align-items: center;margin:40px 0px 0px 0px;}
 #home-smaki .resinet-title ul,.title-with-menu ul { display: flex;margin: 0px;padding: 0px;list-style: none;text-transform: uppercase;font-size: 14px;}
@@ -1521,8 +1516,6 @@ text-shadow: 1px 1px 5px rgba(1, 1, 1, 0.32); }
 .section-wyswig .wyswig a {color: #000;border-bottom: 2px solid #ffc800;}
 .section-wyswig .wyswig a:hover {color: #ffc800;}
 
-.event-single h2.main_title {color:black;font-size:30px;font-weight:800;text-transform:uppercase;margin-top:0px;padding-bottom:25px;position:relative;}	
-.event-single h2.main_title:before {width:80px;height:6px;background:#ffc000;content:"";position:absolute;bottom:0px;left:0px;}
 
 .event-single .event-header .photo {width:100%;padding:0px;}
 .event-single .event-header {padding:0px;background:none;display:block;margin-bottom:0px;}
@@ -1585,7 +1578,6 @@ text-transform:uppercase;font-weight: 800;font-size: 24px;line-height: 24px;
 .mobile .news-single .social-share-buttons a svg {width:15px;}
 .mobile .news-single .photo {border-radius:0px;}
 
-.mobile .event-single h2.main_title {font-size:24px;}
 .mobile .event-single .event-header .photo .caption {padding-top:40px;}
 .mobile .event-single .event-header .photo .date {margin-left:15px;}
 .mobile .event-single .event-header .photo .date strong {font-size:26px;}
@@ -1656,8 +1648,6 @@ text-transform:uppercase;font-weight: 800;font-size: 24px;line-height: 24px;
 .mobile .entertainment-news-list .list .news-item {width:100%;}
 .mobile .entertainment-news-list .list .news-item .info h3 {font-size:18px;line-height:24px;}
 .mobile .entertainment-row {flex-wrap:wrap !important;}
-.mobile .entertainment-news-list-2 .list .news-item .info .introduction {display:none;}
-.mobile .entertainment-news-list-2 .list .news-item .info h2 {font-size:18px;line-height:24px;}
 .mobile .title.entertainment-title .h-1 {font-size:18px;line-height:24px;}
 .mobile .title.entertainment-title .more {top:70%;}
 .mobile .repertoire-list .list .movie-item {width:33.3333%;}
@@ -1680,7 +1670,6 @@ text-transform:uppercase;font-weight: 800;font-size: 24px;line-height: 24px;
 .closest-events-list .list-2 .event-item .photo .source, .closest-events-list .list .event-item .photo .source, .recommended-events-list .list .event-item .photo .source {position: absolute; top: 5px; right: 5px; width: auto; border: none; background: #de0403; color: #fff; border-radius: 5px; padding: 8px 15px; text-transform: uppercase; font-size: 13px; line-height: 15px; font-weight: 800;}
 .title-with-menu {display: flex;justify-content: space-between;align-items: center;flex-wrap:wrap;}
 footer.foto-footer {border-top:1px solid white;}
-.entertainment-news-list-2 .list .news-item.news-big {margin:0px;}
 .mobile .resinet-news-other .news-item .info .introduction {display:none;}
 .mobile .news-item.news-big .photo .box h2 {font-size: 21px;font-weight: 800;line-height: 26px;}
 .mobile .news-item.news-big .photo .box h3 {font-size: 14px;text-transform: uppercase;font-weight: 800;}
@@ -1780,7 +1769,6 @@ footer.foto-footer {border-top:1px solid white;}
 -moz-border-radius: 6px;border-radius: 6px;font-size:18px;font-weight:bold;text-align:center;padding:16px 20px;margin:40px 0px;}
 .place-single .place_details .btn {width:100%;margin:0px 15px;}
 .place-single .place_details .btn .fa-solid {margin-left:10px;}
-.place-single #place-map:focus,.place-single #place-map div:focus {outline: none;border:0px;}
 .place-single .resinet-title h2.h-1 {font-size:30px;text-transform:uppercase;font-weight:800;border:0px;padding:0px;margin-bottom:10px;}
 .place-single h1 {font-size:40px;line-height:48px;font-weight:800;margin:10px 0px;}
 .place-single h3.place_type {margin:5px 0px 20px 0px;}

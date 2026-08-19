@@ -106,7 +106,6 @@ header.main-header.fixed .main-menu .menu > .menu-item > a:after {height:15px;}
 .resinet-title-sidebar h2 {margin: 0; font-weight: 800;}
 .resinet-title-sidebar h2:after,.place-single .sidebar .title.entertainment-title:after {content: ' '; display: block; width: 35px; height: 4px; background: #ffbf00; border-radius: 1px; margin: 8px 0 0 0;}
 .closest-events-list .medium-resinet-title, .cinema-calendar .resinet-title {margin-bottom: 20px;}
-.entertainment-news-list-2 .resinet-title {margin-bottom: 9px;}
 
 .resinet-news-list .list {display: flex; flex-wrap: wrap; margin: 0 -15px;}
 .resinet-news-list .list .news-item {width: 50%; padding: 15px;}
@@ -404,18 +403,6 @@ header.main-header.fixed .main-menu .menu > .menu-item > a:after {height:15px;}
 .entertainment-news-list .btn-box .more {display: inline-block; border: 2px solid #000; font-size: 16px; color: #000; font-weight: 700; line-height: 24px; padding: 5px 15px; border-radius: 5px;}
 .entertainment-news-list .btn-box .more:hover {color: #ffc800; border-color: #ffc800;}
 
-.entertainment-news-list-2 .list .news-item {padding: 15px 0; display: flex; flex-wrap: wrap; margin: 0 -15px;}
-.entertainment-news-list-2 .list .news-item+.news-item {border-top: 1px solid #c5c8cc;}
-.entertainment-news-list-2 .list .news-item .photo {padding: 0 15px; width: 40%;}
-.entertainment-news-list-2 .list .news-item .photo .photo-cont {position: relative; border-radius: 5px; overflow: hidden;}
-.entertainment-news-list-2 .list .news-item .photo img {display: block; width: 100%;}
-.entertainment-news-list-2 .list .news-item .photo img:hover {transform: scale(1.1);}
-.entertainment-news-list-2 .list .news-item .info {padding: 0 15px; width: 60%;}
-.entertainment-news-list-2 .list .news-item .info h2 {margin: 0 0 8px 0; font-size: 24px; line-height: 28px; font-weight: 800;}
-.entertainment-news-list-2 .list .news-item .info h2 a {color: #000;}
-.entertainment-news-list-2 .list .news-item .info .date {font-size: 15px; line-height: 22px; margin: 0; font-weight: 600; color: #959595;}
-.entertainment-news-list-2 .list .news-item .info .introduction {font-size: 15px; line-height: 22px; margin: 0; font-weight: 600;}
-
 .entertainment-news-sidebar .list {padding: 5px 0;}
 .entertainment-news-sidebar .news-item {display: flex; flex-wrap: wrap; padding: 10px 0;}
 .entertainment-news-sidebar .news-item .photo {width: 42%; padding: 0 15px 0 0; margin: 0;}
@@ -699,22 +686,6 @@ header.main-header.fixed .main-menu .menu > .menu-item > a:after {height:15px;}
 .place-types-with-home-places .list .type-box a {color: #fff;}
 .place-types-with-home-places .list .type-box a:hover {color: #ffc800;}
 
-.place-type-single .places-list {display: flex; flex-wrap: wrap; margin: 0 -15px;} 
-.place-type-single .places-list .place-item {width: 25%; padding: 15px;}
-.place-type-single .places-list .place-item .photo {padding: 15px; border: 1px solid #ccc; border-radius: 5px;}
-.place-type-single .places-list .place-item .photo img {display: block;}
-.place-type-single .places-list .place-item .info h2 {font-size: 16px; line-height: 24px; text-transform: uppercase; text-align: center; font-weight: 700;}
-.place-type-single .places-list .place-item .info h2 a {color: #000;}
-.place-type-single .places-list .place-item .info h2 a:hover {color: #ffc800;}
-
-.place-single .info-box {display: flex; margin: 0 -15px;}
-.place-single .info-box .details {width: 100%; padding: 15px;}
-.place-single .info-box .details table {width: 100%; border: none; font-size: 16px; line-height: 24px;}
-.place-single .info-box .details table .label {padding: 0 10px 10px 0; color: #78828e; font-weight: 400;}
-.place-single .info-box .details table .data {padding: 0 0 10px 0; font-weight: 700;}
-.place-single .info-box .details table a {color: #000;}
-.place-single .info-box .details table a:hover {color: #ffc800;}
-.place-single .info-box .logo {width: 220px; padding: 15px; flex-shrink: 0;}
 .place-single .photos {display: flex; flex-wrap: wrap; margin: 0 -15px;}
 .place-single .photos .photo {padding: 15px; width: 25%;}
 .place-single .photos .photo.main {width: 100%;}
@@ -908,8 +879,6 @@ header.main-header.fixed .main-menu .menu > .menu-item > a:after {height:15px;}
 .login-register-box .login-quest-box, .login-register-box .register-box {width: 600px; max-width: 100%; padding: 15px; margin: 0 auto 40px auto;}
 .login-register-box .login-box {margin: 0 0 20px 0;}
 .login-register-box .login-box .login-form {padding: 30px 40px; border: 1px solid #d1d1d1; border-radius: 10px;}
-.login-register-box .guest-box {padding: 30px 40px; font-size: 17px; line-height: 26px;}
-.login-register-box .guest-box .btn {display: block; padding: 18px 10px; font-weight: 700; margin: 0 auto 0 0; text-align: center; width: 100%; font-size: 24px; line-height: 28px; cursor: pointer; text-transform: uppercase; border-radius: 8px; position: relative; border: 1px solid #000; color: #000; text-decoration: none;}
 .login-register-box .register-box {padding: 15px; font-size: 17px; line-height: 26px;}
 .login-register-box .register-box .register-cont {border: 1px solid #d1d1d1; border-radius: 10px; padding: 30px 40px;}
 .login-register-box .register-box ul {margin: 0 0 40px 0; padding: 0; list-style: none;}
@@ -943,7 +912,7 @@ form input[name="field_h"] {display: none;}
 .login-form .field.error input, .registration-form .field.error input, .newsletter-form .field.error input, .comments-form .field.error input {border-color: #e63225;}
 .login-form .field input[type="submit"], .registration-form .field input[type="submit"], .newsletter-form .field input[type="submit"], .comments-form .field input[type="submit"] {cursor: pointer; border: 2px solid #ffbf00; background: #ffbf00; font-weight: 700; font-size: 17px; line-height: 22px; color: #000; text-transform: uppercase;}
 .field.password {text-align: right;}
-.field.password input, .basket .field.password input {padding-right: 80px;}
+.field.password input {padding-right: 80px;}
 .field.password .show-password {position: absolute; width: 70px; text-align: center; right: 0; top: 0; height: 100%; cursor: pointer; background: none; border: none; color: #ccc; z-index: 2; outline: none; box-shadow: none;}
 .field.password .password-remind {color: #000; font-size: 15px; position: relative; padding: 0 15px 0 0; margin: 5px 0 20px 0; display: inline-block;}
 .field.password .password-remind::before, .field.password .password-remind:after {content: ' '; display: block; width: 2px; height: 7px; background: #000; position: absolute; right: 5px; top: 50%; transform: translate(0, -50%); transition: background 0.4s;}
@@ -975,7 +944,6 @@ form input[name="field_h"] {display: none;}
 .registration-form .agreement label a, .newsletter-form .agreement label a {color: #000; text-decoration: none;}
 .registration-form .agreement label a:hover, .newsletter-form .agreement label a:hover {color: #ffbf00;}
 .registration-form .agreement input, .newsletter-form .agreement input {position: absolute; opacity: 0; width: 1px; height: 1px;}
-.registration-form .agreement .field-flashdata, .newsletter-form .agreement.field-flashdata {color: #b4031c; font-size: 14px; line-height: 20px; display: block; font-weight: 400; padding: 0 0 0 30px}
 
 .fb-login-btn {width: 100%; border: 2px solid #3578e5; background: #3578e5; border-radius: 5px; color: #fff; font-weight: 700; font-size: 14px; line-height: 24px; padding: 11px 10px; margin: 0 0 20px 0; cursor: pointer; transition: color .4s, background-color .4s;}
 .fb-login-btn svg {display: inline-block; fill: #fff; height: 24px; width: auto; vertical-align: bottom; margin: 0 5px 0 0; transition: fill .4s;}
@@ -1172,7 +1140,6 @@ form input[name="field_h"] {display: none;}
 .main-footer {position: relative;}
 .main-footer .bottom-footer {background:url('/assets/gfx/footer/footer_bg.png') no-repeat top center;background-size:100% auto;color:white;font-size:14px;padding:50px 0 90px 0;}
 .main-footer .bottom-footer .flex-footer {display: flex; flex-wrap: wrap; justify-content: space-between; margin: 0 -10px;}
-.main-footer .panorama .container {height:110px;background:url('/assets/gfx/footer/panorama.png') no-repeat bottom center;background-size:auto 100%;}
 .main-footer .column-right {flex-grow:1;margin-left:80px;}
 .main-footer .logo {margin-bottom:30px;}
 .main-footer h4 {margin:0px 0px 12px 0px;}
