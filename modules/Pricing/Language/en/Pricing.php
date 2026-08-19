@@ -53,16 +53,14 @@ return [
     'ModelEditError'   => 'Could not save the model',
     'NoModelResult'    => 'No models in this service — add them one by one or paste a list below.',
     'Price'            => 'Price',
-    'PriceHint'        => 'Free text — e.g. "from PLN 1200", "free", "PLN 599".',
+    'PriceHint'        => 'A number with up to two decimal places, shared across all languages.',
     'Time'             => 'Turnaround time',
     'TimeHint'         => 'E.g. "24 h", "2–3 business days".',
-    'Warranty'         => 'Warranty',
-    'WarrantyHint'     => 'E.g. "12 months", "90 days".',
 
     // Bulk add
     'ImportHeader'     => 'Quick model entry',
     'ImportLabel'      => 'Model list',
-    'ImportHint'       => 'One line per model, fields separated by "|": Name | price | time | warranty. Fields after the name are optional. The same text is saved for every language — refine translations by editing the model.',
+    'ImportHint'       => 'One line per model, fields separated by "|": Name | price | time. Fields after the name are optional. The same text is saved for every language — refine translations by editing the model.',
     'ImportSubmit'     => 'Add models',
     'ImportSuccess'    => 'Models added: {no}',
     'ImportEmpty'      => 'No model was added — check the list format',

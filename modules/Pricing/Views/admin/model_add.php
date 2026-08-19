@@ -37,15 +37,6 @@
                         </div>
                         <div class="form-row">
                             <div class="form-label">
-                                <label><?= lang('Pricing.Price'); ?></label>
-                                <div class="desc"><?= lang('Pricing.PriceHint'); ?></div>
-                            </div>
-                            <div class="form-field">
-                                <input type="text" name="lang[<?= $lid; ?>][price]" value="<?= ! empty($model['lang'][$lid]['price']) ? esc($model['lang'][$lid]['price']) : ''; ?>" />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-label">
                                 <label><?= lang('Pricing.Time'); ?></label>
                                 <div class="desc"><?= lang('Pricing.TimeHint'); ?></div>
                             </div>
@@ -53,18 +44,19 @@
                                 <input type="text" name="lang[<?= $lid; ?>][time]" value="<?= ! empty($model['lang'][$lid]['time']) ? esc($model['lang'][$lid]['time']) : ''; ?>" />
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-label">
-                                <label><?= lang('Pricing.Warranty'); ?></label>
-                                <div class="desc"><?= lang('Pricing.WarrantyHint'); ?></div>
-                            </div>
-                            <div class="form-field">
-                                <input type="text" name="lang[<?= $lid; ?>][warranty]" value="<?= ! empty($model['lang'][$lid]['warranty']) ? esc($model['lang'][$lid]['warranty']) : ''; ?>" />
-                            </div>
-                        </div>
                     </div>
                 <?php ++$l; endforeach; ?>
                 <?php if (! empty($languages) && count($languages) > 1): ?></div><?php endif; ?>
+            </div>
+            <!-- Cena — liczba wspólna dla wszystkich wersji językowych (poza zakładkami języków) -->
+            <div class="form-row">
+                <div class="form-label">
+                    <label><?= lang('Pricing.Price'); ?></label>
+                    <div class="desc"><?= lang('Pricing.PriceHint'); ?></div>
+                </div>
+                <div class="form-field">
+                    <input type="number" step="0.01" min="0" name="price" value="<?= isset($model['price']) && $model['price'] !== null && $model['price'] !== '' ? esc(number_format((float) $model['price'], 2, '.', '')) : ''; ?>" />
+                </div>
             </div>
             <div class="form-row-space"></div>
             <div class="form-row nag">

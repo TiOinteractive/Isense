@@ -29,7 +29,6 @@
                 </div>
                 <div class="list-col center w120"><?= lang('Pricing.Price'); ?></div>
                 <div class="list-col center w120 hide-1200"><?= lang('Pricing.Time'); ?></div>
-                <div class="list-col center w120 hide-1200"><?= lang('Pricing.Warranty'); ?></div>
                 <div class="list-col center w100 hide-1200"><?= lang('Pricing.Edit'); ?></div>
                 <div class="list-col center w100 hide-500<?= ! empty($filters['order_array']['publish']) ? ' ' . $filters['order_array']['publish'] : ''; ?>" data-order="publish">
                     <?= lang('Pricing.Publish'); ?>
@@ -44,9 +43,8 @@
                             <div class="list-col">
                                 <a href="<?= $admin; ?>/pricing/model-edit/<?= $service['id']; ?>/<?= $model['id']; ?>" title="<?= esc($model['name']); ?>"><strong><?= esc($model['name']); ?></strong></a>
                             </div>
-                            <div class="list-col center w120"><?= esc($model['price']); ?></div>
+                            <div class="list-col center w120"><?= $model['price'] !== null && $model['price'] !== '' ? esc(number_format((float) $model['price'], 2, ',', ' ')) : ''; ?></div>
                             <div class="list-col center w120 hide-1200"><?= esc($model['time']); ?></div>
-                            <div class="list-col center w120 hide-1200"><?= esc($model['warranty']); ?></div>
                             <div class="list-col center w100 hide-1200">
                                 <a href="<?= $admin; ?>/pricing/model-edit/<?= $service['id']; ?>/<?= $model['id']; ?>" title="<?= lang('Pricing.Edit'); ?>"><i class="fa-solid fa-pencil fa-xl"></i></a>
                             </div>

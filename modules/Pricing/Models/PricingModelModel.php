@@ -7,16 +7,16 @@ use CodeIgniter\Model;
 /**
  * Model urządzenia wyceniony w ramach usługi (np. „iPhone 15 Pro" przy wymianie wyświetlacza).
  *
- * Cena, czas realizacji i gwarancja to pola tekstowe — w cenniku występują wpisy typu
- * „bezpłatnie", „od 1200 zł", „2–3 dni robocze", więc każde ograniczenie do liczby by przeszkadzało.
- * Trzymamy je w tabeli językowej, bo w wersji obcojęzycznej muszą brzmieć inaczej.
+ * Cena jest liczbą wspólną dla wszystkich wersji językowych — trzymamy ją w `pricing_model.price`.
+ * Czas realizacji zostaje polem tekstowym w tabeli językowej: w cenniku występują wpisy
+ * typu „2–3 dni robocze", które w innym języku muszą brzmieć inaczej.
  */
 class PricingModelModel extends Model
 {
     use OrderableTrait;
 
     protected $table         = 'pricing_model';
-    protected $allowedFields = ['id_service', 'order', 'publish', 'edited_at', 'created_at'];
+    protected $allowedFields = ['id_service', 'price', 'order', 'publish', 'edited_at', 'created_at'];
 
     public $id = null;
 
@@ -26,11 +26,9 @@ class PricingModelModel extends Model
         if (empty($model)) {
             return [];
         }
-        $model['lang']     = $this->getLang($id);
-        $model['name']     = $model['lang'][$id_lang]['name'] ?? '';
-        $model['price']    = $model['lang'][$id_lang]['price'] ?? '';
-        $model['time']     = $model['lang'][$id_lang]['time'] ?? '';
-        $model['warranty'] = $model['lang'][$id_lang]['warranty'] ?? '';
+        $model['lang'] = $this->getLang($id);
+        $model['name'] = $model['lang'][$id_lang]['name'] ?? '';
+        $model['time'] = $model['lang'][$id_lang]['time'] ?? '';
 
         return $model;
     }
@@ -48,7 +46,7 @@ class PricingModelModel extends Model
 
     public function getListForAdmin(int $id_service, array $get, int $id_lang): array
     {
-        $query = $this->select('pricing_model.id,pricing_model.publish,pricing_model.order,pml.name,pml.price,pml.time,pml.warranty')
+        $query = $this->select('pricing_model.id,pricing_model.publish,pricing_model.order,pricing_model.price,pml.name,pml.time')
             ->join('pricing_model_lang pml', 'pricing_model.id=pml.id_model')
             ->where('pml.id_lang', $id_lang)
             ->where('pricing_model.id_service', $id_service);
@@ -65,6 +63,9 @@ class PricingModelModel extends Model
         switch ($tmp[0]) {
             case 'name':
                 $query->orderBy('pml.name', $dir);
+                break;
+            case 'price':
+                $query->orderBy('pricing_model.price', $dir);
                 break;
             case 'publish':
                 $query->orderBy('pricing_model.publish', $dir);
@@ -83,6 +84,7 @@ class PricingModelModel extends Model
         }
         $data = [
             'id_service' => (int) $id_service,
+            'price'      => $this->normalizePrice($post['price'] ?? null),
             'publish'    => ! empty($post['publish']) ? 1 : 0,
             'edited_at'  => date('Y-m-d H:i:s'),
         ];
@@ -104,6 +106,14 @@ class PricingModelModel extends Model
         return $this->db->transStatus();
     }
 
+    /** Pusta lub nieliczbowa wartość = brak ceny (NULL); przecinek dziesiętny i spacje są dopuszczalne. */
+    private function normalizePrice($price): ?float
+    {
+        $price = str_replace([' ', "\xC2\xA0", ','], ['', '', '.'], trim((string) $price));
+
+        return $price === '' || ! is_numeric($price) ? null : round((float) $price, 2);
+    }
+
     private function saveLang($id_model, array $lang_data): void
     {
         foreach ($lang_data as $id_lang => $lang) {
@@ -111,9 +121,7 @@ class PricingModelModel extends Model
                 'id_model' => $id_model,
                 'id_lang'  => $id_lang,
                 'name'     => trim((string) ($lang['name'] ?? '')),
-                'price'    => trim((string) ($lang['price'] ?? '')),
                 'time'     => trim((string) ($lang['time'] ?? '')),
-                'warranty' => trim((string) ($lang['warranty'] ?? '')),
             ];
             $existing = $this->db->table('pricing_model_lang')->select('id')->where('id_model', $id_model)->where('id_lang', $id_lang)->get()->getRowArray();
             if (! empty($existing)) {
@@ -126,8 +134,8 @@ class PricingModelModel extends Model
 
     /**
      * Szybkie dodawanie wielu modeli — jedna linia na model:
-     * „Nazwa | cena | czas | gwarancja" (pola po nazwie są opcjonalne).
-     * Ta sama treść trafia do wszystkich języków; tłumaczenie zostaje do poprawienia w edycji modelu.
+     * „Nazwa | cena | czas" (pola po nazwie są opcjonalne).
+     * Nazwa i czas trafiają do wszystkich języków; tłumaczenie zostaje do poprawienia w edycji modelu.
      * Zwraca liczbę dodanych modeli.
      */
     public function importModels($id_service, string $text, array $languages): int
@@ -146,13 +154,11 @@ class PricingModelModel extends Model
             $lang_data = [];
             foreach ($languages as $language) {
                 $lang_data[$language['id']] = [
-                    'name'     => $cols[0],
-                    'price'    => $cols[1] ?? '',
-                    'time'     => $cols[2] ?? '',
-                    'warranty' => $cols[3] ?? '',
+                    'name' => $cols[0],
+                    'time' => $cols[2] ?? '',
                 ];
             }
-            if ($this->saveModel(0, $id_service, ['publish' => 1, 'lang' => $lang_data])) {
+            if ($this->saveModel(0, $id_service, ['publish' => 1, 'price' => $cols[1] ?? '', 'lang' => $lang_data])) {
                 ++$added;
             }
         }

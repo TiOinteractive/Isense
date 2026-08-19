@@ -53,16 +53,14 @@ return [
     'ModelEditError'   => 'Nie udało się zapisać modelu',
     'NoModelResult'    => 'Brak modeli w tej usłudze — dodaj pojedynczo lub wklej listę poniżej.',
     'Price'            => 'Cena',
-    'PriceHint'        => 'Pole tekstowe — np. „od 1200 zł", „bezpłatnie", „599 zł".',
+    'PriceHint'        => 'Liczba z dokładnością do dwóch miejsc po przecinku, wspólna dla wszystkich wersji językowych.',
     'Time'             => 'Czas realizacji',
     'TimeHint'         => 'Np. „24 h", „2–3 dni robocze".',
-    'Warranty'         => 'Gwarancja',
-    'WarrantyHint'     => 'Np. „12 miesięcy", „90 dni".',
 
     // Szybkie dodawanie
     'ImportHeader'     => 'Szybkie dodawanie modeli',
     'ImportLabel'      => 'Lista modeli',
-    'ImportHint'       => 'Jedna linia = jeden model, pola oddzielone znakiem „|": Nazwa | cena | czas | gwarancja. Pola po nazwie są opcjonalne. Treść trafia do wszystkich języków — tłumaczenia popraw w edycji modelu.',
+    'ImportHint'       => 'Jedna linia = jeden model, pola oddzielone znakiem „|": Nazwa | cena | czas. Pola po nazwie są opcjonalne. Treść trafia do wszystkich języków — tłumaczenia popraw w edycji modelu.',
     'ImportSubmit'     => 'Dodaj modele',
     'ImportSuccess'    => 'Dodano modele: {no}',
     'ImportEmpty'      => 'Nie dodano żadnego modelu — sprawdź format listy',
