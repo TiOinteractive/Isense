@@ -65,6 +65,15 @@ return [
     'ImportSuccess'    => 'Dodano modele: {no}',
     'ImportEmpty'      => 'Nie dodano żadnego modelu — sprawdź format listy',
 
+
+    // Blok cennika na stronie (Strony → Treść)
+    'PageShowCategories'     => 'Kategorie na cenniku',
+    'PageShowCategoriesHint' => 'Zaznacz kategorie, które mają się pokazać. Nic nie zaznaczone = wszystkie opublikowane. Przy jednej kategorii belka z zakładkami się nie pojawia.',
+    'PageNoCategories'       => 'Nie ma jeszcze żadnej opublikowanej kategorii cennika. Dodaj ją w module:',
+    'NoServices'             => 'Brak usług w tej kategorii.',
+    'NoModels'               => 'Brak modeli w tej usłudze.',
+    'PriceOnRequest'         => 'wycena indywidualna',
+
     // Wspólne
     'BasicInformation' => 'Informacje podstawowe',
     'Settings'         => 'Ustawienia',

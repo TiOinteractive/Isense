@@ -65,6 +65,15 @@ return [
     'ImportSuccess'    => 'Models added: {no}',
     'ImportEmpty'      => 'No model was added — check the list format',
 
+
+    // Price list block on a page (Pages -> Content)
+    'PageShowCategories'     => 'Categories shown',
+    'PageShowCategoriesHint' => 'Tick the categories to display. Nothing ticked = every published category. With a single category the tab bar is not rendered.',
+    'PageNoCategories'       => 'There is no published price list category yet. Add one in the module:',
+    'NoServices'             => 'No services in this category.',
+    'NoModels'               => 'No models in this service.',
+    'PriceOnRequest'         => 'individual quote',
+
     // Shared
     'BasicInformation' => 'Basic information',
     'Settings'         => 'Settings',

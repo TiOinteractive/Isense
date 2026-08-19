@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `pricing_service_lang` (
 CREATE TABLE IF NOT EXISTS `pricing_model` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_service` int(11) NOT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
   `order` int(11) NOT NULL DEFAULT 0,
   `publish` tinyint(1) NOT NULL DEFAULT 1,
   `edited_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
@@ -62,15 +63,14 @@ CREATE TABLE IF NOT EXISTS `pricing_model` (
   KEY `id_service_order` (`id_service`,`order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Cena / czas / gwarancja są tekstem: w cenniku występuje „bezpłatnie", „od 1200 zł", „2–3 dni".
+-- Cena jest liczbą wspólną dla wszystkich języków (pricing_model.price).
+-- Czas realizacji zostaje tekstem: w cenniku występuje „24 h", „2–3 dni robocze".
 CREATE TABLE IF NOT EXISTS `pricing_model_lang` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_model` int(11) NOT NULL,
   `id_lang` int(11) NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
-  `price` varchar(100) NOT NULL DEFAULT '',
   `time` varchar(100) NOT NULL DEFAULT '',
-  `warranty` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `id_model_id_lang` (`id_model`,`id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -87,3 +87,18 @@ SELECT m.id, l.id, IF(l.lang_code LIKE 'pl%', 'Cennik', 'Price list'), NOW()
 FROM `module` m
 CROSS JOIN `language` l
 WHERE m.slug = 'Pricing';
+
+-- ---------------------------------------------------------------------------
+-- Element modułu — pozwala podpiąć cennik jako blok treści strony
+-- (Strony → Treść → Przypisane moduły).
+-- ---------------------------------------------------------------------------
+
+INSERT INTO `module_element` (`id_module`, `publish`, `created_at`, `slug`, `sidebar`)
+SELECT m.id, 1, NOW(), 'pricing', 0 FROM `module` m WHERE m.slug = 'Pricing';
+
+INSERT INTO `module_element_lang` (`id_module_el`, `id_lang`, `name`, `created_at`)
+SELECT me.id, l.id, IF(l.lang_code LIKE 'pl%', 'Cennik', 'Price list'), NOW()
+FROM `module_element` me
+JOIN `module` m ON m.id = me.id_module
+CROSS JOIN `language` l
+WHERE m.slug = 'Pricing' AND me.slug = 'pricing';

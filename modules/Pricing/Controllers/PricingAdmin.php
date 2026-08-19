@@ -97,6 +97,21 @@ class PricingAdmin extends BaseController
         return ['js' => [], 'css' => [], 'css_footer' => []];
     }
 
+    /**
+     * Konfiguracja bloku cennika przypiętego do strony (Strony → Treść).
+     * Wywoływane przez App\Controllers\Admin; $slug to slug elementu modułu.
+     */
+    public function pageContent($id_content, $slug = '')
+    {
+        helper('filesystem');
+
+        return [
+            'categories'   => $this->categoryModel->getForSelect($this->id_lang, true),
+            'pc_templates' => get_templates_by_dir('modules/Pricing/Views/user/pricing'),
+            'form_view'    => 'Modules\Pricing\Views\admin\pricing_config',
+        ];
+    }
+
     // ─────────────────────────────── Kategorie ───────────────────────────────
 
     private function categoryList()

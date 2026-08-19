@@ -94,6 +94,88 @@ class PricingCategoryModel extends Model
         return $query->orderBy('pc.order', 'ASC')->get()->getResultArray();
     }
 
+    /**
+     * Całe drzewo cennika (kategorie → usługi → modele) dla bloku na stronie.
+     *
+     * Jedno zapytanie zamiast pętli po poziomach. Filtry `publish` usług i modeli muszą siedzieć
+     * w warunku JOIN, nie w WHERE — inaczej LEFT JOIN zachowuje się jak INNER i wypadają
+     * kategorie bez usług oraz usługi bez modeli, a te chcemy pokazać z komunikatem.
+     *
+     * @param array $id_categories puste = wszystkie opublikowane kategorie
+     */
+    public function getTreeForFront(int $id_lang, array $id_categories = []): array
+    {
+        $id_lang = (int) $id_lang;
+        $query   = $this->db->table('pricing_category c')
+            ->join('pricing_category_lang cl', 'cl.id_category=c.id AND cl.id_lang=' . $id_lang, 'left')
+            ->join('pricing_service s', 's.id_category=c.id AND s.publish=1', 'left')
+            ->join('pricing_service_lang sl', 'sl.id_service=s.id AND sl.id_lang=' . $id_lang, 'left')
+            ->join('pricing_model m', 'm.id_service=s.id AND m.publish=1', 'left')
+            ->join('pricing_model_lang ml', 'ml.id_model=m.id AND ml.id_lang=' . $id_lang, 'left')
+            ->select('c.id as id_category,cl.name as category_name,cl.slug as category_slug,'
+                . 's.id as id_service,sl.name as service_name,'
+                . 'm.id as id_model,ml.name as model_name,m.price')
+            ->where('c.publish', 1);
+
+        if (! empty($id_categories)) {
+            $query->whereIn('c.id', $id_categories);
+        }
+
+        $rows = $query->orderBy('c.order', 'ASC')->orderBy('c.id', 'ASC')
+            ->orderBy('s.order', 'ASC')->orderBy('s.id', 'ASC')
+            ->orderBy('m.order', 'ASC')->orderBy('m.id', 'ASC')
+            ->get()->getResultArray();
+
+        $tree = [];
+        foreach ($rows as $row) {
+            $id_category = (int) $row['id_category'];
+            // Kategoria bez tłumaczenia nie ma czym podpisać zakładki — pomijamy ją w całości.
+            if (trim((string) $row['category_name']) === '') {
+                continue;
+            }
+            if (! isset($tree[$id_category])) {
+                $tree[$id_category] = [
+                    'id'       => $id_category,
+                    'name'     => $row['category_name'],
+                    'slug'     => $row['category_slug'],
+                    'services' => [],
+                ];
+            }
+
+            $id_service = (int) $row['id_service'];
+            if (empty($id_service) || trim((string) $row['service_name']) === '') {
+                continue;
+            }
+            if (! isset($tree[$id_category]['services'][$id_service])) {
+                $tree[$id_category]['services'][$id_service] = [
+                    'id'     => $id_service,
+                    'name'   => $row['service_name'],
+                    'models' => [],
+                ];
+            }
+
+            $id_model = (int) $row['id_model'];
+            if (empty($id_model) || trim((string) $row['model_name']) === '') {
+                continue;
+            }
+            $tree[$id_category]['services'][$id_service]['models'][$id_model] = [
+                'id'    => $id_model,
+                'name'  => $row['model_name'],
+                'price' => $row['price'],
+            ];
+        }
+
+        // Klucze były potrzebne tylko do składania drzewa — widok iteruje po listach.
+        foreach ($tree as $k => $category) {
+            foreach ($category['services'] as $s => $service) {
+                $tree[$k]['services'][$s]['models'] = array_values($service['models']);
+            }
+            $tree[$k]['services'] = array_values($tree[$k]['services']);
+        }
+
+        return array_values($tree);
+    }
+
     public function saveCategory($id, array $post): bool
     {
         if (empty($post)) {
