@@ -1045,31 +1045,37 @@ form input[name="field_h"] {display: none;}
 .section-wyswig.isense .wyswig a {color: #1D1D1F; border-bottom: 0; text-decoration: underline;}
 .section-wyswig.isense .wyswig a:hover {color: #3b81f7; text-decoration: underline;}
 /* Cennik (modul Pricing) - blok tresci strony: zakladki kategorii + uslugi | modele */
-.pricing-block {padding: 96px 0; background: #fff;}
-.pricing-block .head {margin: 0 0 16px 0; font-size: 36px; line-height: 1.2; font-weight: 700; color: #1D1D1F;}
+.pricing-block {padding: 96px 0; background: #F5F5F7;}
+.pricing-block .head {margin: 0 0 16px 0; font-size: 36px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: #1D1D1F;}
 .pricing-block .pricing-lead {margin: 0 0 32px 0; font-size: 18px; line-height: 1.625; color: #6E6E73;}
-.pricing-block button {background: none; border: 0; font: inherit; color: inherit; cursor: pointer;}
+.pricing-block button {background: none; border: 0; font-family: inherit; cursor: pointer;}
 .pricing-block [hidden] {display: none;}
-.pricing-tabs {display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 32px 0; border-bottom: 1px solid #E5E5EA;}
-.pricing-tab {padding: 14px 20px; margin: 0 0 -1px 0; font-size: 16px; font-weight: 600; color: #6E6E73; border-bottom: 2px solid transparent; border-radius: 4px 4px 0 0; transition: color 0.15s ease, background-color 0.15s ease;}
-.pricing-tab:hover {color: #1D1D1F; background: #F5F5F7;}
-.pricing-tab.is-active {color: #1D1D1F; background: #F5F5F7; border-bottom-color: #3b81f7;}
-.pricing-tab:focus-visible, .pricing-service:focus-visible {outline: 2px solid #3b81f7; outline-offset: 2px;}
-.pricing-cols {display: flex; align-items: flex-start; gap: 48px;}
-.pricing-col-services {flex: 0 0 320px; max-width: 320px;}
-.pricing-col-models {flex: 1 1 0; min-width: 0; padding: 0 0 0 48px; border-left: 1px solid #E5E5EA;}
+/* Aktywna zakladka ma to samo biale tlo co panel ponizej - razem tworza jedna plaszczyzne, */
+/* wiec od razu widac, ze belka steruje tym, co jest pod nia. */
+.pricing-tabs {display: flex; flex-wrap: wrap; margin: 0;}
+.pricing-tab {position: relative; padding: 18px 32px; font-size: 16px; font-weight: 700; color: #6E6E73; transition: color 0.2s ease, background-color 0.2s ease;}
+.pricing-tab:hover {color: #1D1D1F; background: rgba(255, 255, 255, 0.5);}
+.pricing-tab.is-active {color: #3b81f7; background: #fff;}
+.pricing-tab.is-active:after {content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: #3b81f7;}
+.pricing-tab:focus-visible, .pricing-service:focus-visible {outline: 2px solid #3b81f7; outline-offset: -2px;}
+.pricing-panel {background: #fff;}
+.pricing-cols {display: flex; align-items: stretch; gap: 0;}
+.pricing-col-services {flex: 0 0 340px; max-width: 340px; padding: 24px 0;}
+.pricing-col-models {flex: 1 1 0; min-width: 0; padding: 24px 40px; border-left: 1px solid #E5E5EA;}
 .pricing-services {margin: 0; padding: 0; list-style: none;}
-.pricing-services li {margin: 0 0 4px 0;}
-.pricing-service {display: block; width: 100%; padding: 12px 16px; text-align: left; font-size: 16px; line-height: 1.4; color: #6E6E73; border: 1px solid transparent; border-radius: 4px; transition: color 0.15s ease, background-color 0.15s ease;}
-.pricing-service:hover {color: #1D1D1F; background: #F5F5F7;}
-.pricing-service.is-active {color: #3b81f7; background: #F5F5F7; border-color: #E5E5EA; font-weight: 600;}
+.pricing-services li {margin: 0;}
+.pricing-service {display: block; width: 100%; padding: 14px 32px; text-align: left; font-size: 16px; line-height: 1.45; color: #6E6E73; border-left: 3px solid transparent; transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;}
+.pricing-service:hover {color: #1D1D1F; background: #FAFAFA;}
+.pricing-service.is-active {color: #3b81f7; font-weight: 600; border-left-color: #3b81f7;}
 .pricing-model-list {margin: 0; padding: 0; list-style: none;}
-.pricing-model {display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 16px 0; border-bottom: 1px solid #E5E5EA;}
+.pricing-model {display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 18px 0; border-bottom: 1px solid #F0F0F0;}
 .pricing-model:last-child {border-bottom: 0;}
 .pricing-model-name {color: #1D1D1F; font-size: 16px; line-height: 1.4;}
-.pricing-model-price {flex-shrink: 0; font-size: 16px; font-weight: 700; color: #1D1D1F; white-space: nowrap;}
-.pricing-model-price.is-empty {font-weight: 400; color: #6E6E73;}
-.pricing-empty {margin: 0; padding: 16px 0; color: #6E6E73;}
+.pricing-model-price {flex-shrink: 0; font-size: 16px; font-weight: 700; color: #1D1D1F; white-space: nowrap; font-variant-numeric: tabular-nums;}
+.pricing-model-price.is-empty {font-weight: 400; color: #86868B;}
+.pricing-empty {margin: 0; padding: 8px 32px; color: #6E6E73;}
+.pricing-col-models .pricing-empty {padding: 8px 0;}
+.pricing-panel > .pricing-empty {padding: 32px;}
 .section-113 {margin: 0 0 20px 0;}
 
 .banners-type-bar .banner-zone {margin: 20px 0 0 0;}
@@ -1264,10 +1270,10 @@ form input[name="field_h"] {display: none;}
     .pricing-block {padding: 64px 0;}
     .pricing-block .head {font-size: 30px;}
     .pricing-tabs {flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;}
-    .pricing-tab {white-space: nowrap;}
-    .pricing-cols {gap: 32px;}
+    .pricing-tab {white-space: nowrap; padding: 16px 24px;}
     .pricing-col-services {flex: 0 0 260px; max-width: 260px;}
-    .pricing-col-models {padding: 0 0 0 32px;}
+    .pricing-service {padding: 14px 24px;}
+    .pricing-col-models {padding: 24px 28px;}
     .section-wyswig.repair .cols, .section-wyswig.repair-2 .cols {gap: 32px;}
     .section-wyswig.repair .col-text, .section-wyswig.repair-2 .col-text, .section-wyswig.repair .col-image, .section-wyswig.repair-2 .col-image {flex: 0 0 100%;}
 }
@@ -1292,12 +1298,12 @@ form input[name="field_h"] {display: none;}
     .section-wyswig.isense h2.head {font-size: 26px; margin-bottom: 20px;}
     .pricing-block {padding: 40px 0;}
     .pricing-block .head {font-size: 26px;}
-    .pricing-cols {flex-wrap: wrap; gap: 24px;}
+    .pricing-tab {padding: 14px 20px; font-size: 15px;}
+    .pricing-cols {flex-wrap: wrap;}
     .pricing-col-services, .pricing-col-models {flex: 0 0 100%; max-width: none;}
-    .pricing-col-models {padding: 0; border-left: 0;}
-    .pricing-services {display: flex; flex-wrap: wrap; gap: 8px;}
-    .pricing-services li {margin: 0;}
-    .pricing-service {width: auto; padding: 8px 14px; border-color: #E5E5EA; border-radius: 999px;}
+    .pricing-col-services {padding: 12px 0;}
+    .pricing-col-models {padding: 8px 20px 24px 20px; border-left: 0; border-top: 1px solid #E5E5EA;}
+    .pricing-service {padding: 12px 20px;}
     .section-wyswig.repair .cols, .section-wyswig.repair-2 .cols {gap: 24px;}
     .section-wyswig.repair .col-text, .section-wyswig.repair-2 .col-text, .section-wyswig.repair .col-image, .section-wyswig.repair-2 .col-image {flex: 0 0 100%;}
 }
