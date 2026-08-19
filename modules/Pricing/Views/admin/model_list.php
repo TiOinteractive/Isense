@@ -76,7 +76,7 @@
                     <div class="desc"><?= lang('Pricing.ImportHint'); ?></div>
                 </div>
                 <div class="form-field">
-                    <textarea name="models_text" rows="6" placeholder="iPhone 15 Pro Max | od 1200 zł | 24 h | 12 miesięcy"></textarea>
+                    <textarea name="models_text" rows="6" placeholder="iPhone 15 Pro Max | 1200.00 | 24 h"></textarea>
                 </div>
             </div>
             <div class="form-row submit">
