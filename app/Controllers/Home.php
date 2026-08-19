@@ -229,6 +229,11 @@ class Home extends BaseController {
                             $metatags['favicon'] = base_url() . 'image/' . $settings['favicon_flavor']['path'];
                             $metatags['apple_icon'] = base_url() . 'image/' . $settings['favicon_flavor']['path'];
                         }
+                        // Szablon iSense ma wlasny naglowek/stopke - jego CSS/JS musi sie zaladowac
+                        // takze wtedy, gdy strona nie zawiera zadnego bloku modulu Isense.
+                        if (!empty($page['template']) && strpos($page['template'], 'isense') === 0) {
+                            $this->assetsClass->addAssets(array('css' => array('/assets/isense/css/isense.css'), 'js' => array('/assets/isense/js/isense.js')));
+                        }
                         echo view('user/head', array('metatags' => $metatags, 'settings' => $settings, 'global_links' => $global_links, 'session_user' => $session_user, 'languages' => $languages, 'locale' => $language['slug'], 'css_files' => $this->assetsClass->getCss(), 'environment' => ENVIRONMENT, 'mobile' => $is_mobile, 'home' => !empty($page['home']), 'id_lang' => $id_lang, 'page' => $this->pageClass->page, 'breadcrumbs' => $breadcrumbs));
                         //echo view($is_mobile && file_exists(APPPATH . 'Views/user/m_header.php') ? 'user/m_header' : 'user/header', array('id_lang' => $id_lang, 'page' => $this->pageClass->page, 'breadcrumbs' => $breadcrumbs));
                         if (!empty($data)) {
@@ -354,6 +359,11 @@ class Home extends BaseController {
                         }
                         if (!empty($page['custom_data']['custom_data']['custom_meta'])) {
                             $metatags = array_merge($metatags, $page['custom_data']['custom_data']['custom_meta']);
+                        }
+                        // Szablon iSense ma wlasny naglowek/stopke - jego CSS/JS musi sie zaladowac
+                        // takze wtedy, gdy strona nie zawiera zadnego bloku modulu Isense.
+                        if (!empty($page['template']) && strpos($page['template'], 'isense') === 0) {
+                            $this->assetsClass->addAssets(array('css' => array('/assets/isense/css/isense.css'), 'js' => array('/assets/isense/js/isense.js')));
                         }
                         echo view('user/head', array('metatags' => $metatags, 'settings' => $settings, 'global_links' => $global_links, 'session_user' => $session_user, 'languages' => $languages, 'locale' => $language['slug'], 'css_files' => $this->assetsClass->getCss(), 'environment' => ENVIRONMENT, 'mobile' => $is_mobile, 'home' => !empty($page['home']), 'id_lang' => $id_lang, 'page' => $this->pageClass->page, 'breadcrumbs' => $bread));
                         //echo view($is_mobile && file_exists(APPPATH . 'Views/user/m_header.php') ? 'user/m_header' : 'user/header', array('id_lang' => $id_lang, 'page' => $this->pageClass->page, 'breadcrumbs' => $bread));
