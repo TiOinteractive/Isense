@@ -217,7 +217,13 @@ class FormModel extends Model{
                     $this->saveFieldOptions($id_field, !empty($field['option']) ? $field['option'] : array(), $option_key_to_id);
                 }
 
+                // `has_parent_key` odroznia "uzytkownik wybral — brak —" (klucz jest
+                // w POSCIE, pusty) od "klucza w ogole nie bylo". Bez tego rozroznienia
+                // niepelny POST — inna sciezka kodu, uciety formularz, bot — kasowal
+                // WSZYSTKIE warunki formularza, bo przebieg 2 zapisuje parent_field
+                // dla kazdego pola z $pending.
                 $pending[$id_field] = array(
+                    'has_parent_key' => array_key_exists('parent_key', $field),
                     'parent_key' => !empty($field['parent_key']) ? $field['parent_key'] : '',
                     'parent_values' => !empty($field['parent_values']) ? (array) $field['parent_values'] : array(),
                     'order' => (int) $field['order'],
@@ -247,6 +253,12 @@ class FormModel extends Model{
 
         // ---------- PRZEBIEG 2: przepisanie kluczy na realne ID ----------
         foreach($pending as $id_field => $p) {
+            // Klucza nie bylo w POSCIE — zostawiamy warunek nietkniety. Zerowanie
+            // ma znaczyc "uzytkownik wybral — brak —", a nie "pole nie dojechalo".
+            if(empty($p['has_parent_key'])) {
+                continue;
+            }
+
             $parent_field = 0;
             $parent_values = '';
 
@@ -271,6 +283,19 @@ class FormModel extends Model{
                         $parent_field = $candidate;
                         $parent_values = implode(',', $values);
                     }
+                }
+            }
+
+            // Utrata warunku bywa niezamierzona — np. gdy JS panelu nie zdazyl
+            // wypelnic `select.parent-select` opcjami, przez co przyszedl pusty,
+            // nieodroznialny od swiadomego "— brak —". Zapisujemy to w logu,
+            // zeby taka strata przestala byc cicha.
+            if($parent_field === 0) {
+                $before = $this->db->table('form_field')->select('parent_field')->where('id', $id_field)->get()->getRowArray();
+                if(!empty($before['parent_field'])) {
+                    log_message('warning', 'FormModel: pole ' . $id_field . ' traci warunek (parent_field '
+                        . $before['parent_field'] . ' -> 0). Jesli to nie byla swiadoma zmiana w panelu, '
+                        . 'sprawdz czy formularz wyslal `parent_key`.');
                 }
             }
 
