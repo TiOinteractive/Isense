@@ -256,7 +256,11 @@ class Form {
             default :
                 $assets['js'][] = '/assets/js/page.js';
                 $assets['js'][] = '/assets/js/form.js';
-                if ($template === 'form_isense') {
+                // Prefiks, nie porownanie — obejmuje wszystkie warianty szablonu
+                // (form_isense, form_isense_2col, ...). Bez tego nowy wariant
+                // renderowal sie bez form.css, wiec podswietlanie bledu na zgodzie
+                // RODO nie dzialalo.
+                if (strpos($template, 'form_isense') === 0) {
                     // Assets dedupuje, wiec nadmiarowy wpis jest nieszkodliwy —
                     // a formularz musi sie wyswietlic poprawnie takze wtedy, gdy
                     // jest jedynym blokiem iSense na stronie.
