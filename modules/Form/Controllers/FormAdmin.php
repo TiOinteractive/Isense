@@ -7,22 +7,33 @@ use App\Libraries\Breadcrumb;
 
 class FormAdmin extends BaseController
 {
+    protected $session;
+    protected $formModel;
+
+    /* Ustawiane z zewnatrz przez app/Controllers/Admin.php po instancjonowaniu. */
+    public $id_lang;
+    public $locale;
+    public $languages;
+
     public function __construct()
-    {   
+    {
         $this->request = \Config\Services::request();
         $this->response = \Config\Services::response();
         $this->session = \Config\Services::session();
         $this->formModel = new FormModel();
     }
     
-    public function pageContent($id_content, $slug='') 
+    public function pageContent($id_content, $slug='')
     {
-        helper('filesystem');
+        helper(array('filesystem', 'form_limits'));
         $form = $this->formModel->getFormByContentId($id_content);
         $templates = get_templates_by_dir('modules/Form/Views/user');
         return array(
             'form_data' => $form,
             'templates' => $templates,
+            // Podpowiedz przy konfiguracji uploadu, zeby admin nie wpisywal
+            // limitu wiekszego niz i tak przyjmie Config\Images / php.ini.
+            'max_upload_kb' => form_effective_max_kb(),
             'form_view' => 'Modules\Form\Views\admin\form'
         );
     }
@@ -44,9 +55,18 @@ class FormAdmin extends BaseController
         }
     }
     
-    private function addField($post=array()) 
+    private function addField($post=array())
     {
-        $html = view('Modules\Form\Views\admin\add_field', array('no' => $post['no'], 'languages' => $this->languages));
+        helper('form_limits');
+        $html = view('Modules\Form\Views\admin\add_field', array(
+            'no' => (int) $post['no'],
+            // Klucz lokalny wiersza. Warunki („pokaz gdy") wskazuja pola po kluczu,
+            // bo nowe pole nie ma jeszcze ID w bazie. Losowy, bo `no` = max+1 latwo
+            // powtorzyc po usunieciu wiersza, a kolizja kluczy zepsulaby warunki.
+            'key' => 'n' . bin2hex(random_bytes(5)),
+            'languages' => $this->languages,
+            'max_upload_kb' => form_effective_max_kb(),
+        ));
         return $this->response->setJSON(array(
             'status' => true,
             'html' => base64_encode(urlencode($html))
@@ -67,7 +87,8 @@ class FormAdmin extends BaseController
 			$fields = $this->formModel->db->table('form_field')->select('id')->where('id_form', $form['id'])->get()->getResultArray();
 			if(!empty($fields)) {
 				foreach($fields as $f) {
-					$this->formModel->db->table('form_field_lang')->where('id_field', $f['id'])->delete();
+					// Kaskada obejmuje takze opcje selectow (form_field_option*).
+					$this->formModel->deleteFieldCascade($f['id']);
 				}
 			}
 			$this->formModel->db->table('form_lang')->where('id_form', $form['id'])->delete();

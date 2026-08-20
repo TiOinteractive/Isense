@@ -13,6 +13,7 @@ class ClearCache
         }
         if(empty($data) || empty($data[0]) || (!empty($data[0]) && strtotime($data[0]) < strtotime(date('Y-m-d')))) {
             $this->clearTmpFolder();
+            $this->clearFormUploads();
             write_file($date_file, date('Y-m-d') . PHP_EOL . (!empty($data[1]) ? $data[1] : ''));
         }
         if(empty($data) || empty($data[1]) || (!empty($data[1]) && strtotime($data[1]) < strtotime('-30 days'))) {
@@ -42,7 +43,37 @@ class ClearCache
         }
     }
     
-    private function clearCache() 
+    /**
+     * Retencja zdjec przeslanych przez formularze kontaktowe (modul Form).
+     * Katalogi maja postac writable/uploads/form/RRRRMM — kasujemy te starsze
+     * niz form.uploadsKeepMonths (domyslnie 12 miesiecy).
+     */
+    private function clearFormUploads()
+    {
+        $base = WRITEPATH . 'uploads/form';
+        if(!is_dir($base)) {
+            return;
+        }
+        $keep_months = (int) (env('form.uploadsKeepMonths') ?: 12);
+        $cut = date('Ym', strtotime('-' . $keep_months . ' months'));
+        $map = directory_map($base, 1, true);
+        if(empty($map)) {
+            return;
+        }
+        foreach($map as $m) {
+            $name = trim($m, '/\\');
+            if(!preg_match('/^\d{6}$/', $name) || !is_dir($base . '/' . $name)) {
+                continue;
+            }
+            if($name < $cut) {
+                if(delete_files($base . '/' . $name, true)) {
+                    @rmdir($base . '/' . $name);
+                }
+            }
+        }
+    }
+
+    private function clearCache()
     {
         if(is_dir(WRITEPATH . 'cache/uploads')) {
             $map = directory_map(WRITEPATH . 'cache/uploads');

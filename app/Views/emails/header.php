@@ -17,7 +17,11 @@
                     <table class="tab-header" cellspacing="10" cellpadding="10">
                         <tr>
                             <td>
-                                <img src="cid:<?= $cid_logo; ?>" alt="" />
+                                <?php /* Bez logo nie emitujemy <img src="cid:"> — klient pocztowy
+                                         pokazalby ikone zepsutego obrazka. */ ?>
+                                <?php if(!empty($cid_logo)): ?>
+                                    <img src="cid:<?= $cid_logo; ?>" alt="" />
+                                <?php endif; ?>
                             </td>
                             <td align="right">
                                 <?= lang('Users.form.PhoneNumber'); ?>: <?= $settings['phone']; ?>

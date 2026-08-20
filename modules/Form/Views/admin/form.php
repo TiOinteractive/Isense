@@ -99,10 +99,18 @@
     <h3><?=lang('Form.FormFields'); ?></h3>
     <a href="<?=$locale ? '/' . $locale : ''; ?>/<?=env('ADMIN_PANEL_SLUG'); ?>/form/field-add" class="btn add-field" title=""><?=lang('Form.fields.AddField');?></a>
 </div>
-<div class="order-box form-fields-box">
+<div class="order-box form-fields-box" data-lang-none="<?=lang('Form.fields.ShowWhenNone'); ?>">
+    <?php /* Sentinel: bez niego POST bez sekcji pol (blad JS, zwinieta sekcja)
+             skasowalby cala konfiguracje pol — patrz FormModel::saveFormFields(). */ ?>
+    <input type="hidden" name="form_data[fields_present]" value="1" />
     <?php if(!empty($form_data['fields'])): ?>
         <?php foreach($form_data['fields'] as $no=>$field): ?>
-            <?=view('Modules\Form\Views\admin\add_field', array('field'=>$field, 'no'=>$no)); ?>
+            <?=view('Modules\Form\Views\admin\add_field', array(
+                'field' => $field,
+                'no' => $no,
+                'languages' => $languages,
+                'max_upload_kb' => !empty($max_upload_kb) ? $max_upload_kb : 0,
+            )); ?>
         <?php endforeach; ?>
     <?php endif; ?>
-</div> 
+</div>

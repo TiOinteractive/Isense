@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
 Formularz 1
 */
 ?>
@@ -20,15 +20,28 @@ Formularz 1
                     <h2 class="form-name"><?=$data['name']; ?></h2>
                 <?php endif; ?>
                 <?php if(!empty($data['fields'])): ?>
-                    <form id="form-<?=$data['id']; ?>" class="form form-<?=$data['id']; ?> ajax" method="post" action="<?=uri_string(); ?>">
+                    <form id="form-<?=$data['id']; ?>" class="form form-<?=$data['id']; ?> ajax" method="post" enctype="multipart/form-data" action="<?=uri_string(); ?>">
                         <input type="hidden" name="content" value="<?=$id_cont; ?>" />
                         <div class="field-box h">
                             <input type="text" name="field_h" value="" />
                         </div>
                         <?php foreach($data['fields'] as $field): ?>
-                            <div class="field-box<?=$field['required'] ? ' required' : ''; ?>">
+                            <?php
+                                // Pole warunkowe: /assets/js/form.js pokazuje je dopiero, gdy select
+                                // wskazany przez data-parent ma wybrana jedna z data-parent-options.
+                                // Ukrycie inline, zeby pole nie mignelo przed zaladowaniem JS.
+                                $cond_attr = '';
+                                $cond_cls = '';
+                                if(!empty($field['parent_field'])) {
+                                    $cond_attr = ' data-parent="field_' . (int) $field['parent_field'] . '"'
+                                               . ' data-parent-options="' . esc($field['parent_values'], 'attr') . '"'
+                                               . ' style="display:none"';
+                                    $cond_cls = ' conditional h-cond';
+                                }
+                            ?>
+                            <div class="field-box<?=$field['required'] ? ' required' : ''; ?><?=$cond_cls; ?>" data-field="field_<?=(int) $field['id']; ?>"<?=$cond_attr; ?>>
                                 <?php
-								if(!empty($field['description'])) {$placeholder=' placeholder="'.$field['description'].'" ';} else {$placeholder='';} 	
+									if(!empty($field['description'])) {$placeholder=' placeholder="'.$field['description'].'" ';} else {$placeholder='';}
                                     switch($field['type']) {
                                         case 'textarea':
                                             echo '<div class="label"><label for="field-' . $field['id'] . '">' . $field['name'] . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
@@ -41,6 +54,31 @@ Formularz 1
                                         case 'checkbox':
                                             echo '<div class="label"><input type="checkbox" name="field_' . $field['id'] . '" value="1" id="field-' . $field['id'] . '" /></div>';
                                             echo '<div><label for="field-' . $field['id'] . '">' . ($field['required'] ? '<span class="req">*</span> ' : '') . $field['name'] . '</label></div>';
+                                            break;
+                                        case 'select':
+                                            echo '<div class="label"><label for="field-' . $field['id'] . '">' . esc($field['name']) . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
+                                            echo '<div><select name="field_' . $field['id'] . '" id="field-' . $field['id'] . '">';
+                                            echo '<option value="">' . esc(!empty($field['description']) ? $field['description'] : lang('Form.field.Choose')) . '</option>';
+                                            // value = ID opcji: stabilne, niezalezne od etykiety i jezyka.
+                                            foreach($field['options'] as $option) {
+                                                echo '<option value="' . (int) $option['id'] . '">' . esc($option['name']) . '</option>';
+                                            }
+                                            echo '</select></div>';
+                                            break;
+                                        case 'file':
+                                            $max_files = max(1, (int) $field['max_files']);
+                                            echo '<div class="label"><label for="field-' . $field['id'] . '">' . esc($field['name']) . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
+                                            // Nazwa zawsze z [] — serwer ma wtedy jedna sciezke kodu
+                                            // (getFileMultiple() zwraca tablice takze dla 1 pliku).
+                                            // Jawna lista MIME zamiast image/*: przy image/* iOS Safari
+                                            // wyslalby HEIC, ktorego images.imageMimeIn nie akceptuje.
+                                            echo '<div><input type="file" name="field_' . $field['id'] . '[]" id="field-' . $field['id'] . '"'
+                                               . ($max_files > 1 ? ' multiple="multiple"' : '')
+                                               . ' accept="image/jpeg,image/png,image/webp,image/gif"'
+                                               . ' data-max-files="' . $max_files . '" /></div>';
+                                            if(!empty($field['description'])) {
+                                                echo '<div class="hint">' . esc($field['description']) . '</div>';
+                                            }
                                             break;
                                         default:
                                             echo '<div class="label"><label for="field-' . $field['id'] . '">' . $field['name'] . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
