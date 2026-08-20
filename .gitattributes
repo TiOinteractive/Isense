@@ -1,0 +1,69 @@
+# Normalizacja koncow linii.
+#
+# Repozytorium trzyma pliki tekstowe z LF, a katalog roboczy na Windows
+# dostaje CRLF przez core.autocrlf=true. Ten plik utrwala te zasade jawnie,
+# niezaleznie od lokalnej konfiguracji kazdego dewelopera — bez .gitattributes
+# ten sam plik moze trafic do repo raz z LF, raz z CRLF, zaleznie od tego,
+# kto go commituje.
+#
+# Uwaga: NIE dodawac tu regul `-text` dla sledzonych katalogow (np. vendor/).
+# Bloby sa juz zapisane z LF; `-text` kazaloby gitowi wziac zawartosc z dysku
+# bez konwersji, czyli zacommitowac CRLF i przepisac cala zawartosc plikow.
+
+* text=auto
+
+# ── Skrypty uruchamiane na serwerze (Linux) ─────────────────────────────────
+# Shebang z CRLF konczy sie bledem "bad interpreter: /bin/bash^M",
+# dlatego te pliki musza miec LF rowniez w katalogu roboczym.
+spark                                 text eol=lf
+modules/Newsletter/send_at_newsletter text eol=lf
+
+# ── Jawne typy tekstowe ─────────────────────────────────────────────────────
+*.php      text
+*.css      text
+*.scss     text
+*.less     text
+*.js       text
+*.json     text
+*.sql      text
+*.xml      text
+*.xsd      text
+*.yml      text
+*.yaml     text
+*.md       text
+*.txt      text
+*.html     text
+*.tpl      text
+*.svg      text
+*.htaccess text
+*.dist     text
+
+# ── Binaria: bez konwersji i bez diffow tekstowych ──────────────────────────
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.webp   binary
+*.bmp    binary
+*.pdf    binary
+*.zip    binary
+*.gz     binary
+*.mp4    binary
+*.webm   binary
+*.ttf    binary
+*.otf    binary
+*.eot    binary
+*.woff   binary
+*.woff2  binary
+
+# ── Metryki fontow dompdf: tekstowe, ale generowane i ogromne ───────────────
+# Tylko `-diff` (bez `binary`/`-text`) — patrz uwaga na gorze pliku.
+*.afm    -diff
+*.ufm    -diff
+
+# ── Pliki generowane: bez szumu w diffach i statystykach GitHuba ────────────
+composer.lock                       linguist-generated=true -diff
+theme-build/package-lock.json       linguist-generated=true -diff
+public/assets/isense/css/isense.css linguist-generated=true
+vendor/**                           linguist-vendored=true
