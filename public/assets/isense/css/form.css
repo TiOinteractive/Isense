@@ -1,0 +1,75 @@
+/*
+ * Stany formularza (modul Form, szablon form_isense.php).
+ *
+ * Te klasy dokłada w locie assets/js/form.js — nie ma ich w markupie, wiec
+ * Tailwind (theme-build) by ich nie wygenerowal. Stad zwykly CSS.
+ * Kolory zgodne z paleta motywu iSense.
+ */
+
+.isense-form .error-info {
+    display: block;
+    margin-top: .375rem;
+    font-size: .75rem;
+    line-height: 1rem;
+    color: #d4183d;
+}
+
+.isense-form .field-box.error input,
+.isense-form .field-box.error select,
+.isense-form .field-box.error textarea {
+    border-color: #d4183d;
+}
+
+/* Checkbox zgody: bledem oznaczany jest <label> (rodzic inputa). */
+.isense-form .field-box label.error {
+    border-color: #d4183d;
+    background: #fdeef1;
+}
+
+/* Komunikat bledu jest wstrzykiwany zaraz za inputem — wewnatrz flexowego
+   <label> musi zlamac wiersz, zeby nie wyladowal obok tresci zgody.
+   Tresc zgody dostaje `flex: 1 1 0`, inaczej jej naturalna szerokosc
+   zepchnelaby ja pod checkbox, gdy tylko wlaczymy zawijanie. */
+.isense-form .field-box > label {
+    flex-wrap: wrap;
+}
+
+.isense-form .field-box > label > span:not(.error-info) {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Komunikat trafia w DOM zaraz za inputem, wiec `order` przesuwa go pod tresc. */
+.isense-form .field-box > label > .error-info {
+    flex: 0 0 100%;
+    order: 3;
+}
+
+.isense-form .form-result {
+    margin: 0 0 .25rem;
+    padding: .75rem 1rem;
+    border-radius: .5rem;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    border: 1px solid #E5E5EA;
+    background: #F5F5F7;
+    color: #1D1D1F;
+}
+
+.isense-form.success .form-result {
+    border-color: #a7d8b4;
+    background: #edf9f1;
+    color: #14663a;
+}
+
+.isense-form.error .form-result {
+    border-color: #f0b6c2;
+    background: #fdeef1;
+    color: #a01230;
+}
+
+/* Blokada podwojnej wysylki — klase `sending` zdejmuje formCallback(). */
+.isense-form form.sending {
+    opacity: .6;
+    pointer-events: none;
+}

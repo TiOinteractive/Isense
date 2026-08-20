@@ -268,6 +268,17 @@ SET @f := LAST_INSERT_ID();
 INSERT INTO `tio_form_field_lang` (`id_field`,`id_lang`,`name`,`description`)
 VALUES (@f,@id_lang,'Uwagi','Wpisz swoje uwagi, dane do faktury, kod do urządzenia');
 
+-- ===========================================================================
+-- 24. ZGODA RODO — wymagana, widoczna zawsze (bez warunku), na samym koncu.
+--     Nazwa pola jest jednoczesnie trescia klauzuli na froncie; szablon
+--     form_isense.php renderuje `checkbox` jako szara ramke zgody.
+-- ===========================================================================
+INSERT INTO `tio_form_field` (`id_form`,`type`,`order`,`required`,`publish`,`parent_field`,`parent_values`)
+VALUES (@id_form,'checkbox',24,1,1,0,'');
+SET @f_zgoda := LAST_INSERT_ID();
+INSERT INTO `tio_form_field_lang` (`id_field`,`id_lang`,`name`,`description`)
+VALUES (@f_zgoda,@id_lang,'Wyrażam zgodę na przetwarzanie moich danych osobowych, podanych w powyższym formularzu, wyłącznie w celu udzielenia odpowiedzi na wysłaną przeze mnie wiadomość. Przesłane w formularzu dane osobowe będą przetwarzane przez administratora zgodnie przepisami ustawy z dnia 29 sierpnia 1997 roku o ochronie danych osobowych (t.j. Dz.U. z 2002 roku Nr 101, poz. 926 z późn. zm.). Podanie danych jest dobrowolne. Administrator umożliwia wgląd do własnych danych osobowych i zapewnia prawo ich poprawiania, jak i usunięcia.','');
+
 -- --- Kontrola ---------------------------------------------------------------
 SELECT ff.`id`, ff.`order`, ff.`type`, ff.`required`, ff.`parent_field`, ff.`parent_values`, ffl.`name`
   FROM `tio_form_field` ff

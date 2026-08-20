@@ -53,6 +53,7 @@ return [
         'EMail' => 'Adres e-mail',
         'Send' => 'Wyślij',
         'Choose' => '-- wybierz --',
+        'CheckboxRequired' => 'Zaznaczenie tego pola jest wymagane.',
     ],
     'file' => [
         'NotUploaded' => 'Nie wybrano pliku lub przesyłanie się nie powiodło.',

@@ -22,8 +22,11 @@ Formularz 1
                 <?php if(!empty($data['fields'])): ?>
                     <form id="form-<?=$data['id']; ?>" class="form form-<?=$data['id']; ?> ajax" method="post" enctype="multipart/form-data" action="<?=uri_string(); ?>">
                         <input type="hidden" name="content" value="<?=$id_cont; ?>" />
-                        <div class="field-box h">
-                            <input type="text" name="field_h" value="" />
+                        <?php /* Honeypot — ukryty inline, bo dla klasy .field-box.h nie ma
+                                 zadnej reguly CSS i pole bylo widoczne dla uzytkownikow,
+                                 a jego wypelnienie odrzuca cala wysylke. */ ?>
+                        <div class="field-box h" style="display:none" aria-hidden="true">
+                            <input type="text" name="field_h" value="" tabindex="-1" autocomplete="off" />
                         </div>
                         <?php foreach($data['fields'] as $field): ?>
                             <?php

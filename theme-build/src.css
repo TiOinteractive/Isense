@@ -7,6 +7,8 @@
 @source "../app/Views/user/page/_isense_*.php";
 @source "../app/Views/user/errors/404.php";
 @source "../modules/Isense/Views/**/*.php";
+/* Szablon form_isense.php modulu Form uzywa tej samej palety klas co sekcje iSense. */
+@source "../modules/Form/Views/user/*.php";
 @source "../app/Helpers/isense_helper.php";
 /* Klasy dodawane dynamicznie przez JS (brak w markupie) */
 @source inline("rotate-180");

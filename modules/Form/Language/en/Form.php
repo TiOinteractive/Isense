@@ -53,6 +53,7 @@ return [
         'EMail' => 'E-mail adress',
         'Send' => 'Send',
         'Choose' => '-- choose --',
+        'CheckboxRequired' => 'This box must be checked.',
     ],
     'file' => [
         'NotUploaded' => 'No file selected or the upload failed.',

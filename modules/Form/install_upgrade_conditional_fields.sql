@@ -47,7 +47,14 @@ ALTER TABLE `tio_form_field`
   ADD COLUMN IF NOT EXISTS `repeat_max`    int(11)      NOT NULL DEFAULT 0  AFTER `repeatable`,
   ADD COLUMN IF NOT EXISTS `id_group`      int(11)      NOT NULL DEFAULT 0  AFTER `repeat_max`;
 
--- --- 2. Indeksy -------------------------------------------------------------
+-- --- 2. Dluzsza nazwa pola --------------------------------------------------
+-- Nazwa pola typu `checkbox` jest jednoczesnie jego etykieta na froncie, a
+-- klauzula zgody na przetwarzanie danych (RODO) ma kilkaset znakow i nie
+-- miescila sie w varchar(250).
+ALTER TABLE `tio_form_field_lang`
+  MODIFY `name` text NOT NULL;
+
+-- --- 3. Indeksy -------------------------------------------------------------
 -- form_field nie mial ZADNEGO indeksu poza PK, a front filtruje
 -- WHERE id_form=? AND publish=1 ORDER BY `order`.
 ALTER TABLE `tio_form_field`
@@ -64,7 +71,7 @@ ALTER TABLE `tio_form_lang`
 ALTER TABLE `tio_form`
   ADD INDEX IF NOT EXISTS `id_page_cont` (`id_page_cont`);
 
--- --- 3. Opcje selecta -------------------------------------------------------
+-- --- 4. Opcje selecta -------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `tio_form_field_option` (
   `id`         int(11)      NOT NULL AUTO_INCREMENT,
   `id_field`   int(11)      NOT NULL,

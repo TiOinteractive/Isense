@@ -48,8 +48,78 @@ class Form {
                 ->first();
         if (!empty($form)) {
             $form['fields'] = $this->loadFields($form['id'], $id_lang);
+            if ($form['template'] === 'form_isense.php') {
+                $form['contact'] = $this->loadIsenseContact($content['id'], $id_lang);
+            }
         }
         return $form;
+    }
+
+    /**
+     * Dane lewej kolumny szablonu form_isense.php — adres, telefon, mail,
+     * godziny i mapa.
+     *
+     * Zrodlem jest sekcja `contact` modulu Isense stojaca na tej samej stronie,
+     * zeby te same dane nie byly wpisywane dwa razy. Jesli tej sekcji nie ma
+     * (albo zostala usunieta razem ze swoim statycznym formularzem), wracamy do
+     * kopii zapasowej ponizej — inaczej kolumna renderowalaby sie pusta.
+     * Wartosci lustrzane wobec Modules\Isense\Libraries\Isense::defaults('contact').
+     */
+    private function loadIsenseContact($id_page_cont, $id_lang) {
+        $fallback = array(
+            'left_heading' => 'Dane kontaktowe',
+            'address' => "ul. Dobra 56/66, Budynek Biblioteki UW\n(minus 1, lok. nr A32), 00-312 Warszawa",
+            'phone' => '+48 504 806 905',
+            'email' => 'dobra@isense.pl',
+            'hours' => "Poniedziałek – Piątek: 9:00 – 19:00\nSobota – Niedziela: Nieczynne",
+            'map' => 'https://www.google.com/maps?q=Biblioteka+Uniwersytecka+w+Warszawie,+Dobra+56/66,+Warszawa&output=embed',
+            'map_link' => 'https://maps.google.com/?q=ul.+Dobra+56/66+Warszawa',
+        );
+
+        $db = $this->formModel->db;
+
+        // Blok `contact` modulu Isense z tej samej strony co formularz.
+        $row = $db->table('page_content pc')
+                ->join('page_content pc_self', 'pc_self.id_page = pc.id_page')
+                ->join('module_element me', 'me.id = pc.id_module_element')
+                ->join('module m', 'm.id = me.id_module')
+                ->select('pc.id')
+                ->where('pc_self.id', $id_page_cont)
+                ->where('m.slug', 'Isense')
+                ->where('me.slug', 'contact')
+                ->where('pc.publish', 1)
+                ->orderBy('pc.order', 'ASC')
+                ->limit(1)
+                ->get()->getRowArray();
+
+        if (empty($row)) {
+            return $fallback;
+        }
+
+        $data = $db->table('isense_section s')
+                ->join('isense_section_lang sl', 's.id = sl.id_isense_section')
+                ->select('sl.data')
+                ->where('s.id_page_cont', $row['id'])
+                ->where('sl.id_lang', $id_lang)
+                ->get()->getRowArray();
+
+        if (empty($data['data'])) {
+            return $fallback;
+        }
+        $fields = json_decode($data['data'], true);
+        if (!is_array($fields)) {
+            return $fallback;
+        }
+        // Puste pola sekcji uzupelniamy kopia zapasowa, zeby nie gubic kolumny.
+        // Bierzemy tylko klucze lewej kolumny i tylko wartosci tekstowe — sekcja
+        // trzyma w tym samym JSON-ie takze tablice (np. `subjects`).
+        $picked = array();
+        foreach (array_keys($fallback) as $key) {
+            if (!empty($fields[$key]) && is_string($fields[$key])) {
+                $picked[$key] = $fields[$key];
+            }
+        }
+        return array_merge($fallback, $picked);
     }
 
     /**
@@ -144,6 +214,13 @@ class Form {
             default :
                 $assets['js'][] = '/assets/js/page.js';
                 $assets['js'][] = '/assets/js/form.js';
+                if ($template === 'form_isense') {
+                    // Assets dedupuje, wiec nadmiarowy wpis jest nieszkodliwy —
+                    // a formularz musi sie wyswietlic poprawnie takze wtedy, gdy
+                    // jest jedynym blokiem iSense na stronie.
+                    $assets['css'][] = '/assets/isense/css/isense.css';
+                    $assets['css'][] = '/assets/isense/css/form.css';
+                }
                 if($data['captcha']) {
                     $assets['js'][] = 'https://www.google.com/recaptcha/api.js';
                     $assets['js_code'] .= 'function reCaptchaForm' . $data['id'] . 'Submit(token) {$("#form-' . $data['id'] . '").submit();}';
@@ -268,6 +345,12 @@ class Form {
                     default: // text / textarea / number / checkbox
                         if ($field['required']) {
                             $rules[] = 'required';
+                            if ($field['type'] === 'checkbox') {
+                                // Nazwa checkboxa to cala jego etykieta (np. klauzula RODO
+                                // ma kilkaset znakow), wiec domyslne „Pole {nazwa} jest
+                                // wymagane" byloby nie do przeczytania.
+                                $messages['required'] = lang('Form.field.CheckboxRequired');
+                            }
                         }
                         if ($field['validation']) {
                             switch ($field['validation']) {
@@ -290,7 +373,9 @@ class Form {
 
                 if (!empty($rules)) {
                     $validation_rules[$key] = array(
-                        'label' => $field['name'],
+                        // Etykieta trafia do komunikatow bledow — dluga nazwa pola
+                        // (klauzula zgody) rozsadzilaby je, wiec przycinamy.
+                        'label' => mb_strimwidth($field['name'], 0, 80, '…'),
                         'rules' => implode('|', $rules),
                         'errors' => $messages
                     );
