@@ -139,6 +139,30 @@
                 </div>
             </div>
 
+            <!-- Dane kontaktowe na stronie /kontakt (lewa kolumna formularza) -->
+            <div class="form-row-space"></div>
+            <div class="form-row nag">
+                <h3>Strona kontaktu — lokalizacja i godziny</h3>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Lokalizacja na mapie</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="map_location" value="<?= !empty($settings['map_location']) ? esc($settings['map_location'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">Adres wpisywany do Google Maps, np. <em>Biblioteka Uniwersytecka w Warszawie, Dobra 56/66, Warszawa</em>. Z tego pola powstaje mapa i link „Otwórz w Google Maps”. Puste pole = mapa się nie wyświetla.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Godziny otwarcia</label>
+                </div>
+                <div class="form-field">
+                    <textarea name="opening_hours" rows="3"><?= !empty($settings['opening_hours']) ? esc($settings['opening_hours']) : ''; ?></textarea>
+                    <div class="shortcodes">Każda linia wyświetli się osobno.</div>
+                </div>
+            </div>
+
             <!-- Pasek ogłoszeniowy (góra strony) — pod ustawieniami globalnymi -->
             <div class="form-row-space"></div>
             <div class="form-row nag">

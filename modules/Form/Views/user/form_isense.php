@@ -28,46 +28,46 @@ $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus
 
             <!-- Dane kontaktowe -->
             <div>
-                <h2 class="text-3xl font-bold text-[#1D1D1F] mb-8"><?= esc(!empty($c['left_heading']) ? $c['left_heading'] : 'Dane kontaktowe') ?></h2>
+                <h2 class="text-3xl font-bold text-[#1D1D1F] mb-8"><?= esc(!empty($c['left_heading']) ? $c['left_heading'] : lang('User.contact.ContactData')) ?></h2>
                 <div class="space-y-6 mb-12">
                     <?php if (!empty($c['address'])): ?>
                     <div class="flex gap-4">
                         <div class="w-12 h-12 bg-[#3b81f7]/10 rounded-xl flex items-center justify-center flex-shrink-0"><?= isense_icon('map-pin', 'w-6 h-6 text-[#3b81f7]') ?></div>
-                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1">Adres</h3><p class="text-[#6E6E73] whitespace-pre-line"><?= esc($c['address']) ?></p></div>
+                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1"><?= lang('User.contact.Address') ?></h3><p class="text-[#6E6E73] whitespace-pre-line"><?= esc($c['address']) ?></p></div>
                     </div>
                     <?php endif; ?>
                     <?php if (!empty($c['phone'])): ?>
                     <div class="flex gap-4">
                         <div class="w-12 h-12 bg-[#3b81f7]/10 rounded-xl flex items-center justify-center flex-shrink-0"><?= isense_icon('phone', 'w-6 h-6 text-[#3b81f7]') ?></div>
-                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1">Telefon</h3><a href="tel:<?= esc(preg_replace('/\s+/', '', $c['phone']), 'attr') ?>" class="text-[#6E6E73] hover:text-[#3b81f7] transition-colors"><?= esc($c['phone']) ?></a></div>
+                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1"><?= lang('User.contact.Phone') ?></h3><a href="tel:<?= esc(preg_replace('/\s+/', '', $c['phone']), 'attr') ?>" class="text-[#6E6E73] hover:text-[#3b81f7] transition-colors"><?= esc($c['phone']) ?></a></div>
                     </div>
                     <?php endif; ?>
                     <?php if (!empty($c['email'])): ?>
                     <div class="flex gap-4">
                         <div class="w-12 h-12 bg-[#3b81f7]/10 rounded-xl flex items-center justify-center flex-shrink-0"><?= isense_icon('mail', 'w-6 h-6 text-[#3b81f7]') ?></div>
-                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1">E-mail</h3><a href="mailto:<?= esc($c['email'], 'attr') ?>" class="text-[#6E6E73] hover:text-[#3b81f7] transition-colors"><?= esc($c['email']) ?></a></div>
+                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1"><?= lang('User.contact.Email') ?></h3><a href="mailto:<?= esc($c['email'], 'attr') ?>" class="text-[#6E6E73] hover:text-[#3b81f7] transition-colors"><?= esc($c['email']) ?></a></div>
                     </div>
                     <?php endif; ?>
                     <?php if (!empty($c['hours'])): ?>
                     <div class="flex gap-4">
                         <div class="w-12 h-12 bg-[#3b81f7]/10 rounded-xl flex items-center justify-center flex-shrink-0"><?= isense_icon('clock', 'w-6 h-6 text-[#3b81f7]') ?></div>
-                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1">Godziny otwarcia</h3><div class="text-[#6E6E73] whitespace-pre-line"><?= esc($c['hours']) ?></div></div>
+                        <div><h3 class="font-semibold text-[#1D1D1F] mb-1"><?= lang('User.contact.OpeningHours') ?></h3><div class="text-[#6E6E73] whitespace-pre-line"><?= esc($c['hours']) ?></div></div>
                     </div>
                     <?php endif; ?>
                 </div>
                 <?php if (!empty($c['map'])): ?>
                 <div class="rounded-2xl overflow-hidden border border-[#D2D2D7] h-80">
-                    <iframe title="Mapa — iSense" class="w-full h-full" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="<?= esc($c['map'], 'attr') ?>"></iframe>
+                    <iframe title="<?= esc(lang('User.contact.MapTitle'), 'attr') ?>" class="w-full h-full" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="<?= esc($c['map'], 'attr') ?>"></iframe>
                 </div>
                 <?php endif; ?>
                 <?php if (!empty($c['map_link'])): ?>
-                <a href="<?= esc($c['map_link'], 'attr') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-3 text-sm text-[#3b81f7] hover:underline"><?= isense_icon('map-pin', 'w-4 h-4') ?>Otwórz w Google Maps</a>
+                <a href="<?= esc($c['map_link'], 'attr') ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-3 text-sm text-[#3b81f7] hover:underline"><?= isense_icon('map-pin', 'w-4 h-4') ?><?= lang('User.contact.OpenInGoogleMaps') ?></a>
                 <?php endif; ?>
             </div>
 
             <!-- Formularz -->
             <div class="form form-<?= (int) $data['id'] ?> isense-form">
-                <h2 class="text-3xl font-bold text-[#1D1D1F] mb-8"><?= esc(!empty($title) ? $title : (!empty($data['name']) ? $data['name'] : 'Napisz do nas')) ?></h2>
+                <h2 class="text-3xl font-bold text-[#1D1D1F] mb-8"><?= esc(!empty($title) ? $title : (!empty($data['name']) ? $data['name'] : lang('User.contact.WriteToUs'))) ?></h2>
                 <?php if (!empty($data['description'])): ?>
                     <div class="text-[#6E6E73] mb-8"><?= $data['description'] ?></div>
                 <?php endif; ?>
@@ -118,8 +118,16 @@ $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus
                                         <?php endforeach; ?>
                                     </select>
                                 <?php elseif ($field['type'] === 'file'): ?>
-                                    <?php $max_files = max(1, (int) $field['max_files']); ?>
-                                    <input type="file" name="field_<?= $id ?>[]" id="field-<?= $id ?>"<?= $max_files > 1 ? ' multiple="multiple"' : '' ?> accept="image/jpeg,image/png,image/webp,image/gif" data-max-files="<?= $max_files ?>" class="<?= $cls_input ?>" />
+                                    <?php
+                                        $max_files = max(1, (int) $field['max_files']);
+                                        // Ta sama lista, ktora waliduje Libraries/Form::ajax()
+                                        // (regula mime_in) — inaczej okienko wyboru pliku
+                                        // przepuszczaloby typy odrzucane potem przez backend.
+                                        // Jawna lista zamiast image/*: przy image/* iOS Safari
+                                        // wyslalby HEIC, ktorego images.imageMimeIn nie akceptuje.
+                                        $accept = config('Images')->imageMimeIn;
+                                    ?>
+                                    <input type="file" name="field_<?= $id ?>[]" id="field-<?= $id ?>"<?= $max_files > 1 ? ' multiple="multiple"' : '' ?><?= $accept !== '' ? ' accept="' . esc($accept, 'attr') . '"' : '' ?> data-max-files="<?= $max_files ?>" class="<?= $cls_input ?>" />
                                 <?php elseif ($field['type'] === 'number'): ?>
                                     <input type="number" name="field_<?= $id ?>" id="field-<?= $id ?>" value=""<?= $ph ?> class="<?= $cls_input ?>" />
                                 <?php else: ?>
@@ -130,12 +138,20 @@ $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus
                     <?php endforeach; ?>
 
                     <div class="field-box submit">
-                        <?php if (!empty($data['captcha'])): ?>
-                            <button class="g-recaptcha w-full bg-[#3b81f7] text-white px-8 py-4 rounded-lg hover:bg-[#2563eb] transition-colors font-medium flex items-center justify-center gap-2" data-sitekey="<?= esc($settings['recaptchav3_site_key'], 'attr') ?>" data-callback="reCaptchaForm<?= (int) $data['id'] ?>Submit" data-action="submit"><?= isense_icon('send', 'w-5 h-5') ?><?= lang('Form.field.Send') ?></button>
+                        <?php
+                            /* Przycisk g-recaptcha tylko gdy klucz witryny jest ustawiony.
+                               Bez tego warunku wlaczenie captchy przy pustym
+                               settings.recaptchav3_site_key dawalo przycisk z pustym
+                               data-sitekey — reCAPTCHA nie odpalala callbacku i formularza
+                               nie dalo sie wyslac. Teraz degradujemy do zwyklego submitu. */
+                            $sitekey = !empty($settings['recaptchav3_site_key']) ? $settings['recaptchav3_site_key'] : '';
+                        ?>
+                        <?php if (!empty($data['captcha']) && $sitekey !== ''): ?>
+                            <button class="g-recaptcha w-full bg-[#3b81f7] text-white px-8 py-4 rounded-lg hover:bg-[#2563eb] transition-colors font-medium flex items-center justify-center gap-2" data-sitekey="<?= esc($sitekey, 'attr') ?>" data-callback="reCaptchaForm<?= (int) $data['id'] ?>Submit" data-action="submit"><?= isense_icon('send', 'w-5 h-5') ?><?= lang('Form.field.Send') ?></button>
                         <?php else: ?>
                             <button type="submit" name="submit" class="w-full bg-[#3b81f7] text-white px-8 py-4 rounded-lg hover:bg-[#2563eb] transition-colors font-medium flex items-center justify-center gap-2"><?= isense_icon('send', 'w-5 h-5') ?><?= lang('Form.field.Send') ?></button>
                         <?php endif; ?>
-                        <p class="text-xs text-[#6E6E73] mt-3">* Pola wymagane</p>
+                        <p class="text-xs text-[#6E6E73] mt-3"><?= lang('User.contact.RequiredFields') ?></p>
                     </div>
                 </form>
                 <?php endif; ?>

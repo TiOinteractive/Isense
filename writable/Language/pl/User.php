@@ -54,6 +54,18 @@ return [
       'HomePage' => 'Strona główna',
       'Tags' => 'Tagi',
   ],
+  // Strona kontaktu — szablon modules/Form/Views/user/form_isense.php
+  'contact' => [
+      'ContactData' => 'Dane kontaktowe',
+      'Address' => 'Adres',
+      'Phone' => 'Telefon',
+      'Email' => 'E-mail',
+      'OpeningHours' => 'Godziny otwarcia',
+      'MapTitle' => 'Mapa — iSense',
+      'OpenInGoogleMaps' => 'Otwórz w Google Maps',
+      'WriteToUs' => 'Napisz do nas',
+      'RequiredFields' => '* Pola wymagane',
+  ],
   'cookies' => [
       'Cookies' => 'Ciasteczka',
       'CookiesTitle' => 'Drogi Kliencie!',

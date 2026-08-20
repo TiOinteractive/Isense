@@ -59,22 +59,16 @@ class Form {
      * Dane lewej kolumny szablonu form_isense.php — adres, telefon, mail,
      * godziny i mapa.
      *
-     * Zrodlem jest sekcja `contact` modulu Isense stojaca na tej samej stronie,
-     * zeby te same dane nie byly wpisywane dwa razy. Jesli tej sekcji nie ma
-     * (albo zostala usunieta razem ze swoim statycznym formularzem), wracamy do
-     * kopii zapasowej ponizej — inaczej kolumna renderowalaby sie pusta.
+     * Kolejnosc zrodel: sekcja `contact` modulu Isense stojaca na tej samej
+     * stronie (nadpisanie per-strona) -> ustawienia globalne panelu.
+     *
+     * Sekcja pozwala pokazac inne dane na konkretnej podstronie. Gdy jej nie ma
+     * — a tak jest dzis w calym serwisie — kolumna leci z ustawien globalnych,
+     * dzieki czemu adres, telefon, mail, godziny i mapa sa edytowalne z panelu.
      * Wartosci lustrzane wobec Modules\Isense\Libraries\Isense::defaults('contact').
      */
     private function loadIsenseContact($id_page_cont, $id_lang) {
-        $fallback = array(
-            'left_heading' => 'Dane kontaktowe',
-            'address' => "ul. Dobra 56/66, Budynek Biblioteki UW\n(minus 1, lok. nr A32), 00-312 Warszawa",
-            'phone' => '+48 504 806 905',
-            'email' => 'dobra@isense.pl',
-            'hours' => "Poniedziałek – Piątek: 9:00 – 19:00\nSobota – Niedziela: Nieczynne",
-            'map' => 'https://www.google.com/maps?q=Biblioteka+Uniwersytecka+w+Warszawie,+Dobra+56/66,+Warszawa&output=embed',
-            'map_link' => 'https://maps.google.com/?q=ul.+Dobra+56/66+Warszawa',
-        );
+        $fallback = $this->contactFromSettings();
 
         $db = $this->formModel->db;
 
@@ -120,6 +114,54 @@ class Form {
             }
         }
         return array_merge($fallback, $picked);
+    }
+
+    /**
+     * Lewa kolumna zlozona z ustawien globalnych panelu (tabela `settings`).
+     *
+     * `address`, `phone` i `email` istnialy tam od dawna — wczesniej te same
+     * wartosci byly zaszyte w kodzie, wiec zmiana w panelu nie dawala efektu.
+     * `opening_hours` i `map_location` to pola dodane razem z ta zmiana
+     * (app/Views/admin/settings/form.php).
+     *
+     * `left_heading` celowo puste — form_isense.php ma wlasny domyslny naglowek.
+     */
+    private function contactFromSettings() {
+        $settings = !empty($this->settings) ? $this->settings : array();
+
+        $get = function ($key) use ($settings) {
+            return !empty($settings[$key]) && is_string($settings[$key]) ? trim($settings[$key]) : '';
+        };
+
+        $contact = array(
+            'left_heading' => '',
+            'address' => $get('address'),
+            'phone' => $get('phone'),
+            'email' => $get('email'),
+            'hours' => $get('opening_hours'),
+        );
+
+        return array_merge($contact, $this->buildMapUrls($get('map_location')));
+    }
+
+    /**
+     * Adres wpisany w panelu -> URL osadzenia mapy i link do Google Maps.
+     *
+     * Format `?q=...&output=embed` nie wymaga klucza API — to ten sam wariant,
+     * ktory byl tu wczesniej zapisany na sztywno.
+     *
+     * Pusty adres zwraca puste ciagi: form_isense.php oslania oba miejsca przez
+     * !empty(), wiec mapa i link po prostu sie nie renderuja.
+     */
+    private function buildMapUrls($location) {
+        if ($location === '') {
+            return array('map' => '', 'map_link' => '');
+        }
+        $q = rawurlencode($location);
+        return array(
+            'map' => 'https://www.google.com/maps?q=' . $q . '&output=embed',
+            'map_link' => 'https://maps.google.com/?q=' . $q,
+        );
     }
 
     /**
@@ -221,7 +263,11 @@ class Form {
                     $assets['css'][] = '/assets/isense/css/isense.css';
                     $assets['css'][] = '/assets/isense/css/form.css';
                 }
-                if($data['captcha']) {
+                // Skrypt Google tylko gdy captcha jest wlaczona I klucz witryny
+                // uzupelniony — przy pustym kluczu widok renderuje zwykly submit,
+                // wiec api.js byloby zbednym zapytaniem do zewnetrznego serwisu.
+                $sitekey = !empty($this->settings['recaptchav3_site_key']) ? $this->settings['recaptchav3_site_key'] : '';
+                if(!empty($data['captcha']) && $sitekey !== '') {
                     $assets['js'][] = 'https://www.google.com/recaptcha/api.js';
                     $assets['js_code'] .= 'function reCaptchaForm' . $data['id'] . 'Submit(token) {$("#form-' . $data['id'] . '").submit();}';
                 }
@@ -246,15 +292,27 @@ class Form {
             $form['fields'] = $this->loadFields($form['id'], $id_lang);
         }
         if (!empty($form) && !empty($form['addressee']) && file_exists(ROOTPATH . 'modules/Form/Views/user/mails/' . $form['template'])) {
+            $secret = array();
             if($form['captcha']){
                 $secret = $this->formModel->db->table('settings')->select('value')->where('name', 'recaptchav3_secret_key')->get()->getRowArray();
+            }
+            // Captcha wlaczona, ale klucze nieuzupelnione w Ustawieniach -> pomijamy
+            // weryfikacje zamiast odrzucac kazde zgloszenie. Widok w tej samej
+            // sytuacji renderuje zwykly submit (brak tokenu do sprawdzenia), wiec
+            // bez tego warunku formularza nie dalo sie wyslac w ogole.
+            if($form['captcha'] && empty($secret['value'])){
+                log_message('warning', 'Form ' . $form['id'] . ': captcha wlaczona, ale settings.recaptchav3_secret_key jest puste — weryfikacja pominieta.');
+            }
+            if($form['captcha'] && !empty($secret['value'])){
                 if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
                     $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
                 }
                 $post_data = http_build_query(
                     array(
                         'secret' => $secret['value'],
-                        'response' => $post['g-recaptcha-response'],
+                        // Brak tokenu (np. zablokowany skrypt Google) to nie blad PHP,
+                        // tylko nieudana weryfikacja — Google odrzuci puste `response`.
+                        'response' => !empty($post['g-recaptcha-response']) ? $post['g-recaptcha-response'] : '',
                         'remoteip' => $_SERVER['REMOTE_ADDR']
                     )
                 );

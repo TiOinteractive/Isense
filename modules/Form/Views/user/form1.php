@@ -75,9 +75,12 @@ Formularz 1
                                             // (getFileMultiple() zwraca tablice takze dla 1 pliku).
                                             // Jawna lista MIME zamiast image/*: przy image/* iOS Safari
                                             // wyslalby HEIC, ktorego images.imageMimeIn nie akceptuje.
+                                            // Lista brana z tego samego zrodla co regula mime_in
+                                            // w Libraries/Form::ajax(), zeby sie nie rozjechaly.
+                                            $accept = config('Images')->imageMimeIn;
                                             echo '<div><input type="file" name="field_' . $field['id'] . '[]" id="field-' . $field['id'] . '"'
                                                . ($max_files > 1 ? ' multiple="multiple"' : '')
-                                               . ' accept="image/jpeg,image/png,image/webp,image/gif"'
+                                               . ($accept !== '' ? ' accept="' . esc($accept, 'attr') . '"' : '')
                                                . ' data-max-files="' . $max_files . '" /></div>';
                                             if(!empty($field['description'])) {
                                                 echo '<div class="hint">' . esc($field['description']) . '</div>';
@@ -93,8 +96,14 @@ Formularz 1
                         <?php endforeach; ?>
                         <div class="field-box submit">
                            <div class="label">&nbsp;</div><div>
-                                <?php if($data['captcha']): ?>
-                                    <button class="g-recaptcha trans400" data-sitekey="<?=$settings['recaptchav3_site_key']; ?>" data-callback='reCaptchaForm<?=$data['id']; ?>Submit' data-action='submit'><?=lang('Form.field.Send'); ?></button>
+                                <?php
+                                    /* Przycisk g-recaptcha tylko gdy klucz witryny jest ustawiony —
+                                       przy pustym settings.recaptchav3_site_key reCAPTCHA nie
+                                       odpalala callbacku i formularza nie dalo sie wyslac. */
+                                    $sitekey = !empty($settings['recaptchav3_site_key']) ? $settings['recaptchav3_site_key'] : '';
+                                ?>
+                                <?php if(!empty($data['captcha']) && $sitekey !== ''): ?>
+                                    <button class="g-recaptcha trans400" data-sitekey="<?=esc($sitekey, 'attr'); ?>" data-callback='reCaptchaForm<?=(int) $data['id']; ?>Submit' data-action='submit'><?=lang('Form.field.Send'); ?></button>
                                 <?php else: ?>
                                     <input type="submit" name="submit" value="<?=lang('Form.field.Send'); ?>" class="trans400">
                                 <?php endif; ?>
