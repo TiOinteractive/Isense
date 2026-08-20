@@ -46,7 +46,10 @@
 }
 
 .isense-form .form-result {
-    margin: 0 0 .25rem;
+    /* Jawne marginesy zamiast polegania na `space-y-6` formularza — regula
+       o wyzszej specyficznosci i tak by je nadpisala. Sasiadujace marginesy
+       sie zlewaja, wiec odstep od przycisku wysylki nie podwaja sie. */
+    margin: 1.5rem 0;
     padding: .75rem 1rem;
     border-radius: .5rem;
     font-size: .875rem;

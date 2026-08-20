@@ -75,7 +75,12 @@ function formAjaxSend(url, formData, $form) {
     .fail(function (xhr) {
         // Najczestsza przyczyna: przekroczony post_max_size — PHP gubi wtedy
         // $_POST, Home::index() renderuje strone HTML i parsowanie JSON pada.
-        $form.removeClass('sending block').addClass('error');
+        // Klasa stanu musi trafic takze na zewnetrzny .isense-form — to on nosi
+        // selektor kolorujacy komunikat. Na samym <form> nic by nie pokolorowala.
+        // `.closest()` jest puste dla szablonu form1.php, wiec `.add()` zostawia
+        // wtedy sam formularz i nic sie nie psuje.
+        $form.removeClass('sending block');
+        $form.add($form.closest('.isense-form')).removeClass('success').addClass('error');
         $form.find('.form-result').remove();
         $form.find('.field-box.submit').before(
             $('<p></p>').addClass('form-result').text($form.data('msg-error') || 'Nie udalo sie wyslac formularza.')
@@ -117,6 +122,13 @@ function formCallback(response) {
     setTimeout(function () {
         $wrap.removeClass('block');
     }, 600);
+
+    // Zdejmujemy OBIE klasy stanu, zanim nadamy wlasciwa. Handler `submit`
+    // czysci je tylko na samym <form>, a $wrap lapie takze zewnetrzny
+    // <div class="form form-N isense-form"> — to on nosi klase `isense-form`,
+    // od ktorej zalezy kolor komunikatu. Bez tego reset div zostawal na zawsze
+    // w stanie `error` i kazda kolejna UDANA wysylka miala czerwona ramke.
+    $wrap.removeClass('success error');
 
     if (response.result) {
         $wrap.addClass('success');
