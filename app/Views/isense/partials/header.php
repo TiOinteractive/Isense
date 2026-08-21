@@ -2,6 +2,8 @@
 helper(['url', 'isense']);
 $assets = $assets ?? rtrim(base_url('assets/isense'), '/');
 $announcement = isense_announcement();
+// Logotyp — panel → Ustawienia → „Logo"; bez ustawienia wracamy do pliku statycznego
+$logo = isense_logo() ?: $assets . '/img/logo.png';
 // Górne menu — zarządzane w panelu → Menu → „Menu górne" (id 1)
 $topMenu = isense_menu(1);
 // Awaryjne ikony dla pozycji bez ikony ustawionej w panelu (dopasowanie po nazwie)
@@ -43,11 +45,11 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
         <div class="max-w-[1300px] mx-auto px-4 lg:px-12">
             <div class="flex items-center justify-between py-8 text-[#1D1D1F] text-sm">
                 <a href="<?= site_url('/') ?>" class="hidden md:flex items-center flex-shrink-0">
-                    <img src="<?= $assets ?>/img/logo.png" alt="iSense logo" class="h-[56px] w-auto object-contain">
+                    <img src="<?= esc($logo, 'attr') ?>" alt="iSense logo" class="h-[56px] w-auto object-contain">
                     <span class="text-[25px] text-[#1D1D1F] font-semibold ml-6">Serwis i naprawa sprzętu Apple</span>
                 </a>
                 <a href="<?= site_url('/') ?>" class="flex md:hidden">
-                    <img src="<?= $assets ?>/img/logo.png" alt="iSense logo" class="h-[45px] w-auto object-contain">
+                    <img src="<?= esc($logo, 'attr') ?>" alt="iSense logo" class="h-[45px] w-auto object-contain">
                 </a>
                 <div class="flex items-center gap-4">
                     <a href="tel:+48504806905" class="flex items-center gap-2 text-[20px] font-semibold hover:text-[#3b81f7] transition-colors">

@@ -98,6 +98,30 @@ if (! function_exists('isense_setting')) {
     }
 }
 
+if (! function_exists('isense_logo')) {
+    /**
+     * URL logotypu z ustawień (panel → Ustawienia → Logo / Logo na ciemnym tle).
+     * W tabeli settings pod nazwą 'logo'/'logo_dark' siedzi id pliku z tio_files.
+     * Zwraca pusty string, gdy logo nie jest ustawione — wtedy widok bierze plik statyczny.
+     */
+    function isense_logo(string $name = 'logo'): string
+    {
+        static $cache = [];
+        if (array_key_exists($name, $cache)) {
+            return $cache[$name];
+        }
+        $id = isense_setting($name);
+        if (! ctype_digit($id)) {
+            return $cache[$name] = '';
+        }
+        $db   = \Config\Database::connect();
+        $row  = $db->table('tio_files')->select('path')->where('id', (int) $id)->get()->getRowArray();
+        $path = trim((string) ($row['path'] ?? ''));
+
+        return $cache[$name] = $path === '' ? '' : base_url('image/original/' . $path);
+    }
+}
+
 if (! function_exists('isense_menu')) {
     /**
      * Zwraca drzewo menu CMS (zarządzane w panelu → Menu) z rozwiązanymi URL-ami.
