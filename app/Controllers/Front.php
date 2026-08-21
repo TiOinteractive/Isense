@@ -215,6 +215,6 @@ class Front extends BaseController
         }
 
         log_message('error', 'iSense form send failed: ' . $mail->printDebugger(['headers', 'subject']));
-        return $this->response->setStatusCode(500)->setJSON(['ok' => false, 'error' => 'Nie udało się wysłać wiadomości. Spróbuj ponownie lub zadzwoń: +48 504 806 905.']);
+        return $this->response->setStatusCode(500)->setJSON(['ok' => false, 'error' => 'Nie udało się wysłać wiadomości. Spróbuj ponownie lub zadzwoń: ' . isense_phone() . '.']);
     }
 }

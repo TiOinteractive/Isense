@@ -2,6 +2,20 @@
 helper(['url', 'isense']);
 $assets = $assets ?? rtrim(base_url('assets/isense'), '/');
 
+// Dane kontaktowe — panel → Ustawienia. Fallbacki trzymaja dotychczasowe
+// wartosci, zeby puste pole w panelu nie zostawilo w stopce dziury.
+$address = isense_setting('address', "ul. Dobra 56/66, Budynek Biblioteki UW\n(minus 1, lok. nr A32), 00-312 Warszawa");
+$email   = isense_setting('email', 'dobra@isense.pl');
+$hours   = isense_setting('opening_hours', 'Pon–Pt: 9:00–19:00');
+$company = isense_setting('company_name', 'iSense');
+
+// Logotyp na ciemnym tle. „Logo w trybie ciemnym" jest juz jasne, wiec idzie
+// bez filtra; zwykle logo (grafika pod jasne tlo) i plik statyczny wymagaja
+// odwrocenia na bialo.
+$logoDark  = isense_logo('logo_dark');
+$logo      = $logoDark ?: (isense_logo() ?: $assets . '/img/logo-footer.png');
+$logoClass = $logoDark ? '' : ' brightness-0 invert';
+
 // Ikony społecznościowe — adresy z konfiguracji (Ustawienia → Portale społecznościowe).
 // Renderowane tylko te, które mają ustawiony URL.
 $socialLinks = [];
@@ -55,24 +69,24 @@ $linkGrid = static function (string $title, array $items) {
             <!-- Logo & kontakt -->
             <div>
                 <a href="<?= site_url('/') ?>" class="flex items-center mb-6">
-                    <img src="<?= $assets ?>/img/logo-footer.png" alt="iSense logo" class="h-10 w-auto object-contain brightness-0 invert">
+                    <img src="<?= esc($logo, 'attr') ?>" alt="<?= esc($company, 'attr') ?>" class="h-10 w-auto object-contain<?= $logoClass ?>">
                 </a>
                 <ul class="space-y-3 text-sm text-[#86868B]">
                     <li class="flex items-start gap-2">
                         <?= isense_icon('map-pin', 'w-4 h-4 flex-shrink-0 mt-0.5 text-[#3b81f7]') ?>
-                        <span>ul. Dobra 56/66, Budynek Biblioteki UW<br>(minus 1, lok. nr A32), 00-312 Warszawa</span>
+                        <span><?= nl2br(esc($address)) ?></span>
                     </li>
                     <li class="flex items-center gap-2">
                         <?= isense_icon('phone', 'w-4 h-4 flex-shrink-0 text-[#3b81f7]') ?>
-                        <a href="tel:+48504806905" class="hover:text-white transition-colors">+48 504 806 905</a>
+                        <a href="tel:<?= esc(isense_tel(), 'attr') ?>" class="hover:text-white transition-colors"><?= esc(isense_phone()) ?></a>
                     </li>
                     <li class="flex items-center gap-2">
                         <?= isense_icon('mail', 'w-4 h-4 flex-shrink-0 text-[#3b81f7]') ?>
-                        <a href="mailto:dobra@isense.pl" class="hover:text-white transition-colors">dobra@isense.pl</a>
+                        <a href="mailto:<?= esc($email, 'attr') ?>" class="hover:text-white transition-colors"><?= esc($email) ?></a>
                     </li>
                     <li class="flex items-center gap-2">
                         <?= isense_icon('clock', 'w-4 h-4 flex-shrink-0 text-[#3b81f7]') ?>
-                        <span>Pon–Pt: 9:00–19:00</span>
+                        <span><?= nl2br(esc($hours)) ?></span>
                     </li>
                 </ul>
                 <?php if (! empty($socialLinks)): ?>
@@ -106,7 +120,8 @@ $linkGrid = static function (string $title, array $items) {
 
         <!-- Bottom bar -->
         <div class="border-t border-[#2C2C2E] mt-12 pt-8 text-center text-sm text-[#86868B]">
-            <p>© 2026 iSense. Wszystkie prawa zastrzeżone. Nie jesteśmy autoryzowanym serwisem Apple Inc.</p>
+            <?php /* Rok z daty biezacej — inaczej stopka zestarzeje sie 1 stycznia. */ ?>
+            <p>© <?= date('Y') ?> <?= esc($company) ?>. Wszystkie prawa zastrzeżone. Nie jesteśmy autoryzowanym serwisem Apple Inc.</p>
         </div>
     </div>
 </footer>

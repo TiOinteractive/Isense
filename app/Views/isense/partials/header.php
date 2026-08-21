@@ -4,6 +4,8 @@ $assets = $assets ?? rtrim(base_url('assets/isense'), '/');
 $announcement = isense_announcement();
 // Logotyp — panel → Ustawienia → „Logo"; bez ustawienia wracamy do pliku statycznego
 $logo = isense_logo() ?: $assets . '/img/logo.png';
+// Telefon — panel → Ustawienia → „Numer telefonu"
+$phone = isense_phone();
 // Górne menu — zarządzane w panelu → Menu → „Menu górne" (id 1)
 $topMenu = isense_menu(1);
 // Awaryjne ikony dla pozycji bez ikony ustawionej w panelu (dopasowanie po nazwie)
@@ -52,9 +54,9 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
                     <img src="<?= esc($logo, 'attr') ?>" alt="iSense logo" class="h-[45px] w-auto object-contain">
                 </a>
                 <div class="flex items-center gap-4">
-                    <a href="tel:+48504806905" class="flex items-center gap-2 text-[20px] font-semibold hover:text-[#3b81f7] transition-colors">
+                    <a href="tel:<?= esc(isense_tel(), 'attr') ?>" class="flex items-center gap-2 text-[20px] font-semibold hover:text-[#3b81f7] transition-colors">
                         <?= isense_icon('phone', 'w-[22px] h-[22px]') ?>
-                        +48 504 806 905
+                        <?= esc($phone) ?>
                     </a>
                     <a href="#naprawa-wysylkowa" class="bg-white text-[#1D1D1F] border border-[#1D1D1F] px-5 py-1.5 rounded text-[20px] font-bold hover:bg-[#F5F5F7] transition-colors">
                         Naprawa wysyłkowa

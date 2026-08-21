@@ -52,6 +52,6 @@ $n = count($timeline);
     <?php endif; ?>
     <div class="mt-8 text-center">
         <p class="text-[#6E6E73] mb-4">Masz pytania dotyczące naprawy?</p>
-        <a href="tel:+48504806905" class="inline-block text-[#3b81f7] font-medium hover:underline">Zadzwoń: +48 504 806 905</a>
+        <a href="tel:<?= esc(isense_tel(), 'attr') ?>" class="inline-block text-[#3b81f7] font-medium hover:underline">Zadzwoń: <?= esc(isense_phone()) ?></a>
     </div>
 </div>

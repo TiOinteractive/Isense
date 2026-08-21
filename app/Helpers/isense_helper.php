@@ -83,42 +83,76 @@ if (! function_exists('isense_icon')) {
     }
 }
 
+if (! function_exists('isense_settings')) {
+    /**
+     * Cała tablica ustawień serwisu dla bieżącego języka — dokładnie to samo
+     * źródło, co zmienna $settings w widokach CMS-a (SettingsModel::getSettings).
+     * Wartości per-język są już spłaszczone do stringów, a logo/favicon/meta_photo
+     * to tablice rekordu z tio_files (klucz 'path').
+     *
+     * Widoki motywu iSense nie dostają $settings od kontrolera — partiale są
+     * włączane z pięciu miejsc przez dwa kontrolery — więc zamiast przepychać
+     * tablicę przez wszystkie te ścieżki, biorą ją stąd. Jedno zapytanie na
+     * request, wynik trzymany statycznie.
+     */
+    function isense_settings(): array
+    {
+        static $settings = null;
+        if ($settings === null) {
+            $settings = (new \App\Models\SettingsModel())->getSettings(isense_lang_id());
+        }
+
+        return $settings;
+    }
+}
+
 if (! function_exists('isense_setting')) {
-    /** Wartość globalnego ustawienia serwisu (tio_settings.value), z cache. */
+    /**
+     * Pojedyncze ustawienie z tablicy isense_settings(). Klucze plikowe
+     * (logo, favicon…) są tablicami — dla nich zwracamy $default, bo funkcja
+     * ma kontrakt stringowy; od nich jest isense_logo().
+     */
     function isense_setting(string $name, string $default = ''): string
     {
-        static $cache = [];
-        if (array_key_exists($name, $cache)) {
-            return $cache[$name];
+        $val = isense_settings()[$name] ?? null;
+        if ($val === null || $val === '' || ! is_scalar($val)) {
+            return $default;
         }
-        $db  = \Config\Database::connect();
-        $row = $db->table('settings')->select('value')->where('name', $name)->get()->getRowArray();
-        $val = $row['value'] ?? null;
-        return $cache[$name] = ($val === null || $val === '') ? $default : $val;
+
+        return (string) $val;
+    }
+}
+
+if (! function_exists('isense_phone')) {
+    /**
+     * Numer telefonu serwisu (panel → Ustawienia → Numer telefonu).
+     * Fallback trzyma dotychczasowy numer, żeby pusta wartość w panelu
+     * nie skasowała telefonu z nagłówka i stopki.
+     */
+    function isense_phone(): string
+    {
+        return isense_setting('phone', '+48 504 806 905');
+    }
+}
+
+if (! function_exists('isense_tel')) {
+    /** Ten sam numer w formacie do href="tel:" — bez spacji, myślników i nawiasów. */
+    function isense_tel(): string
+    {
+        return preg_replace('/[^0-9+]/', '', isense_phone());
     }
 }
 
 if (! function_exists('isense_logo')) {
     /**
      * URL logotypu z ustawień (panel → Ustawienia → Logo / Logo na ciemnym tle).
-     * W tabeli settings pod nazwą 'logo'/'logo_dark' siedzi id pliku z tio_files.
      * Zwraca pusty string, gdy logo nie jest ustawione — wtedy widok bierze plik statyczny.
      */
     function isense_logo(string $name = 'logo'): string
     {
-        static $cache = [];
-        if (array_key_exists($name, $cache)) {
-            return $cache[$name];
-        }
-        $id = isense_setting($name);
-        if (! ctype_digit($id)) {
-            return $cache[$name] = '';
-        }
-        $db   = \Config\Database::connect();
-        $row  = $db->table('tio_files')->select('path')->where('id', (int) $id)->get()->getRowArray();
-        $path = trim((string) ($row['path'] ?? ''));
+        $path = trim((string) (isense_settings()[$name]['path'] ?? ''));
 
-        return $cache[$name] = $path === '' ? '' : base_url('image/original/' . $path);
+        return $path === '' ? '' : base_url('image/original/' . $path);
     }
 }
 
@@ -202,22 +236,11 @@ if (! function_exists('isense_announcement')) {
      */
     function isense_announcement(): array
     {
-        static $cache = null;
-        if ($cache !== null) {
-            return $cache;
-        }
-        $db = \Config\Database::connect();
-        $en = $db->table('settings')->select('value')->where('name', 'announcement_enabled')->get()->getRowArray();
-        $enabled = ! empty($en) && (string) $en['value'] !== '0' && $en['value'] !== null && $en['value'] !== '';
+        // isense_settings() rozwiązuje już wersję językową announcement_text,
+        // więc pasek nie potrzebuje własnych zapytań.
+        $enabled = isense_setting('announcement_enabled') !== '' && isense_setting('announcement_enabled') !== '0';
+        $text    = $enabled ? trim(isense_setting('announcement_text')) : '';
 
-        $text = '';
-        if ($enabled) {
-            $langId = isense_lang_id($db);
-            $row = $db->table('settings s')->join('settings_lang sl', 'sl.id_settings = s.id')
-                ->select('sl.value')->where('s.name', 'announcement_text')->where('sl.id_lang', $langId)
-                ->get()->getRowArray();
-            $text = trim((string) ($row['value'] ?? ''));
-        }
-        return $cache = ['enabled' => $enabled && $text !== '', 'text' => $text];
+        return ['enabled' => $enabled && $text !== '', 'text' => $text];
     }
 }
