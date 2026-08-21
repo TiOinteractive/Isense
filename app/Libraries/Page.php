@@ -319,13 +319,6 @@ class Page {
                         'email' => $settings['email'],
                         'availableLanguage' => ["Polish"],
                     ],
-                    [
-                        '@type' => 'ContactPoint',
-                        'contactType' => 'advertising',
-                        'telephone' => $settings['advert_phone'],
-                        'email' => $settings['advert_email'],
-                        'availableLanguage' => ["Polish"],
-                    ]
                 ],
                 'areaServed' => [
                     [

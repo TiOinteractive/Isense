@@ -3,7 +3,7 @@
 // bywa spowodowany awaria DB, wiec pobranie logo nie moze rzucic kolejnego bledu.
 $logoSvg = '';
 try {
-    $row = (new \App\Models\SettingsModel())->where('name', 'logo_resinet_svg')->first();
+    $row = (new \App\Models\SettingsModel())->where('name', 'logo_svg')->first();
     if (!empty($row['value'])) {
         $logoSvg = $row['value'];
     }

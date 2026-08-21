@@ -61,7 +61,9 @@
                     <label><?=lang('Admin.settings.Address');?></label>
                 </div>
                 <div class="form-field">
-                    <input type="text" name="address" value="<?= !empty($settings['address']) ? $settings['address'] : ''; ?>" >
+                    <?php /* textarea, a nie input — adres bywa wieloliniowy (np. nazwa budynku
+                             w drugiej linii). Odbiorcy musza go wypuszczac przez nl2br(). */ ?>
+                    <textarea name="address"><?= !empty($settings['address']) ? $settings['address'] : ''; ?></textarea>
                 </div>
             </div>
             <div class="form-row">
@@ -102,40 +104,6 @@
                 </div>
                 <div class="form-field">
                     <input type="text" name="bank_name" value="<?= !empty($settings['bank_name']) ? $settings['bank_name'] : ''; ?>" >
-                </div>
-            </div>
-		
-			  <div class="form-row">
-                <div class="form-label">
-                    <label><?=lang('Admin.settings.AdvertEmail');?></label>
-                </div>
-                <div class="form-field">
-                    <input type="text" name="advert_email" value="<?= !empty($settings['advert_email']) ? $settings['advert_email'] : ''; ?>" >
-                </div>
-            </div>
-			<div class="form-row">
-                <div class="form-label">
-                    <label><?=lang('Admin.settings.AdvertPhone');?></label>
-                </div>
-                <div class="form-field">
-                    <input type="text" name="advert_phone" value="<?= !empty($settings['advert_phone']) ? $settings['advert_phone'] : ''; ?>" >
-                </div>
-            </div>
-			
-			  <div class="form-row">
-                <div class="form-label">
-                    <label><?=lang('Admin.settings.FlavorEmail');?></label>
-                </div>
-                <div class="form-field">
-                    <input type="text" name="flavor_email" value="<?= !empty($settings['flavor_email']) ? $settings['flavor_email'] : ''; ?>" >
-                </div>
-            </div>
-			<div class="form-row">
-                <div class="form-label">
-                    <label><?=lang('Admin.settings.FlavorEmail2');?></label>
-                </div>
-                <div class="form-field">
-                    <input type="text" name="flavor_email2" value="<?= !empty($settings['flavor_email2']) ? $settings['flavor_email2'] : ''; ?>" >
                 </div>
             </div>
 
@@ -208,10 +176,10 @@
             </div>
 			<div class="form-row">
                 <div class="form-label">
-                    <label><?=lang('Admin.settings.LogoResinet');?></label>
+                    <label><?=lang('Admin.settings.LogoSvgCode');?></label>
                 </div>
                 <div class="form-field">
-                    <textarea name="logo_resinet_svg"><?=!empty($settings['logo_resinet_svg']) && !empty($settings['logo_resinet_svg']) ? $settings['logo_resinet_svg'] : ''; ?></textarea>
+                    <textarea name="logo_svg"><?=!empty($settings['logo_svg']) && !empty($settings['logo_svg']) ? $settings['logo_svg'] : ''; ?></textarea>
                 </div>
             </div>
 			

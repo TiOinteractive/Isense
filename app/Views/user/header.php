@@ -3,7 +3,7 @@
 		      <div class="container">
             <?php if(!empty($settings['logo'])):?>
                 <div class="logo">
-                    <a href="/<?=$locale;?>" title="<?=$settings['company_name'];?>"><?php if(!empty($settings['logo_resinet_svg'])):?><?=$settings['logo_resinet_svg'];?><?php else:?><img src="/image/r/300/100/<?=$settings['logo']['path'];?>" alt="<?=$settings['company_name'];?>" /><?php endif;?></a>
+                    <a href="/<?=$locale;?>" title="<?=$settings['company_name'];?>"><?php if(!empty($settings['logo_svg'])):?><?=$settings['logo_svg'];?><?php else:?><img src="/image/r/300/100/<?=$settings['logo']['path'];?>" alt="<?=$settings['company_name'];?>" /><?php endif;?></a>
                 </div>
             <?php endif; ?>
             <div class="boxes">
