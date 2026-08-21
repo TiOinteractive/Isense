@@ -8,6 +8,9 @@ $logo = isense_logo() ?: $assets . '/img/logo.png';
 $phone = isense_phone();
 // Górne menu — zarządzane w panelu → Menu → „Menu górne" (id 1)
 $topMenu = isense_menu(1);
+// Przyciski CTA — panel → Menu → „Nagłówek — przyciski" (id 9). Każda pozycja
+// tego menu renderuje się jako osobny przycisk, w trzech miejscach naraz.
+$buttonsMenu = 9;
 // Awaryjne ikony dla pozycji bez ikony ustawionej w panelu (dopasowanie po nazwie)
 $fallbackIcons = [
     'słuchawk' => 'headphones',
@@ -58,9 +61,7 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
                         <?= isense_icon('phone', 'w-[22px] h-[22px]') ?>
                         <?= esc($phone) ?>
                     </a>
-                    <a href="#naprawa-wysylkowa" class="bg-white text-[#1D1D1F] border border-[#1D1D1F] px-5 py-1.5 rounded text-[20px] font-bold hover:bg-[#F5F5F7] transition-colors">
-                        Naprawa wysyłkowa
-                    </a>
+                    <?= view_cell('\App\Libraries\IsenseMenu::buttons', ['id_menu' => $buttonsMenu, 'variant' => 'desktop']) ?>
                 </div>
             </div>
         </div>
@@ -127,7 +128,7 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
                                 <a href="<?= $item['url'] ?>"<?= $item['target'] ? ' target="' . esc($item['target'], 'attr') . '"' : '' ?> class="block py-2 text-sm font-medium text-white"><?= esc($item['name']) ?></a>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                        <a href="#naprawa-wysylkowa" class="block bg-[#3b81f7] text-white px-5 py-3 rounded text-center text-sm font-bold mt-2">Naprawa wysyłkowa</a>
+                        <?= view_cell('\App\Libraries\IsenseMenu::buttons', ['id_menu' => $buttonsMenu, 'variant' => 'mobile']) ?>
                     </div>
                 </div>
             </div>
@@ -136,6 +137,6 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
 
     <!-- Mobilny sticky CTA -->
     <div class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#D2D2D7] p-3 z-40">
-        <a href="#naprawa-wysylkowa" class="block bg-[#3b81f7] text-white py-3 rounded text-center text-sm font-bold">Naprawa wysyłkowa</a>
+        <?= view_cell('\App\Libraries\IsenseMenu::buttons', ['id_menu' => $buttonsMenu, 'variant' => 'sticky']) ?>
     </div>
 </div>
