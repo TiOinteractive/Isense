@@ -71,7 +71,7 @@ DELETE FROM `tio_form_field` WHERE `id_form` = @id_form;
 -- 1-3. Pola wspolne
 -- ===========================================================================
 INSERT INTO `tio_form_field` (`id_form`,`type`,`validation`,`order`,`required`,`publish`)
-VALUES (@id_form,'text','',1,1,1);
+VALUES (@id_form,'text','name',1,1,1);
 SET @f_name := LAST_INSERT_ID();
 INSERT INTO `tio_form_field_lang` (`id_field`,`id_lang`,`name`,`description`)
 VALUES (@f_name,@id_lang,'Imię i nazwisko','');

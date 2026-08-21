@@ -515,6 +515,22 @@ class Form {
                     }
                 }
 
+                // --- Imie i nazwisko zglaszajacego --------------------------------
+                // Znacznikiem jest walidacja 'name' ustawiana przy polu w panelu
+                // (nie dodaje zadnej reguly — patrz switch w bloku walidacji).
+                // Trafia na koniec tematu maila i do naglowka tresci.
+                $submitter = '';
+                foreach ($form['fields'] as $field) {
+                    if ($field['validation'] !== 'name' || empty($visible[$field['id']])) {
+                        continue;
+                    }
+                    $value = isset($post['field_' . $field['id']]) ? trim((string) $post['field_' . $field['id']]) : '';
+                    if ($value !== '') {
+                        $submitter = mb_strimwidth($value, 0, 60, '…');
+                        break;
+                    }
+                }
+
                 // --- Mail ---------------------------------------------------------
                 $email = \Config\Services::email();
                 $email->setFrom($config->fromEmail, $config->fromName);
@@ -525,17 +541,31 @@ class Form {
                 if (!empty($form['addressee_bcc'])) {
                     $email->setBCC($form['addressee_bcc']);
                 }
-                $email->setSubject($form['name']);
+                $subject = $form['name'];
+                if ($submitter !== '') {
+                    $subject .= lang('Form.mail.SubjectSuffix', array($submitter));
+                }
+                $email->setSubject($subject);
 
                 // Logo w naglowku maila (emails/header.php) osadzamy inline przez CID.
                 // Bez tego szablon wypuszcza <img src="cid:"> — w kliencie pocztowym
                 // to ikona zepsutego obrazka.
                 $cid_logo = '';
                 $settings = !empty($this->settings) ? $this->settings : array();
-                if (!empty($settings['logo']['path']) && is_file(WRITEPATH . 'uploads/' . $settings['logo']['path'])) {
-                    $logo_path = WRITEPATH . 'uploads/' . $settings['logo']['path'];
+                // Pasek naglowka maila jest bialy, wiec bierzemy zwykle logo;
+                // wersja na ciemne tlo jest zapasem dla instalacji, ktore maja
+                // wypelnione tylko ja.
+                foreach (array('logo', 'logo_dark') as $logo_key) {
+                    if (empty($settings[$logo_key]['path'])) {
+                        continue;
+                    }
+                    $logo_path = WRITEPATH . 'uploads/' . $settings[$logo_key]['path'];
+                    if (!is_file($logo_path)) {
+                        continue;
+                    }
                     $email->attach($logo_path);
                     $cid_logo = $email->setAttachmentCID($logo_path);
+                    break;
                 }
 
                 $message = view('Modules\Form\Views\user/mails/' . $form['template'], array(
@@ -547,6 +577,9 @@ class Form {
                     // emails/header.php uzywa obu — bez nich PHP 8 sypie warningami.
                     'settings' => $settings,
                     'cid_logo' => $cid_logo,
+                    // Wyliczone wyzej — szablon nie musi drugi raz przeszukiwac pol.
+                    'submitter' => $submitter,
+                    'submitted_at' => date('d.m.Y H:i'),
                 ));
                 $email->setMessage($message);
                 foreach ($attachments as $list) {

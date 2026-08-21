@@ -68,8 +68,14 @@ return [
         'Attachments' => 'Załączniki',
         'Yes' => 'Tak',
         'No' => 'Nie',
+        'NewSubmission' => 'Nowe zgłoszenie z formularza',
+        'SubmittedAt' => 'Data zgłoszenia',
+        'FileSize' => '{0} KB',
+        // Doklejane na koncu tematu maila. {0} to imie i nazwisko zglaszajacego.
+        'SubjectSuffix' => ' — {0}',
     ],
     'validation' => [
+        'Name' => 'Imię i nazwisko (do tematu maila)',
         'Email' => 'Adres e-mail',
         'Phone' => 'Numer telefonu',
         'ZipCode' => 'Kod pocztowy',

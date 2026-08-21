@@ -68,8 +68,14 @@ return [
         'Attachments' => 'Attachments',
         'Yes' => 'Yes',
         'No' => 'No',
+        'NewSubmission' => 'New form submission',
+        'SubmittedAt' => 'Submitted at',
+        'FileSize' => '{0} KB',
+        // Appended to the mail subject. {0} is the sender's full name.
+        'SubjectSuffix' => ' — {0}',
     ],
     'validation' => [
+        'Name' => 'Full name (used in mail subject)',
         'Email' => 'E-mail adress',
         'Phone' => 'Phone number',
         'ZipCode' => 'ZIP code',

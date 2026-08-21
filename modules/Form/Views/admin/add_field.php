@@ -106,6 +106,9 @@ $renderOption = function ($oi, $opt) use ($n, $languages) {
         <div class="form-field">
             <select name="<?=$n; ?>[validation]">
                 <option value=""></option>
+                <?php /* 'name' nie dodaje zadnej reguly walidacji — to znacznik pola
+                         z imieniem i nazwiskiem, doklejanego na koncu tematu maila. */ ?>
+                <option value="name"<?php if(!empty($field['validation']) && $field['validation'] == 'name'):?> selected="selected"<?php endif; ?>><?=lang('Form.validation.Name'); ?></option>
                 <option value="email"<?php if(!empty($field['validation']) && $field['validation'] == 'email'):?> selected="selected"<?php endif; ?>><?=lang('Form.validation.Email'); ?></option>
                 <option value="phone"<?php if(!empty($field['validation']) && $field['validation'] == 'phone'):?> selected="selected"<?php endif; ?>><?=lang('Form.validation.Phone'); ?></option>
                 <option value="zip_code"<?php if(!empty($field['validation']) && $field['validation'] == 'zip_code'):?> selected="selected"<?php endif; ?>><?=lang('Form.validation.ZipCode'); ?></option>
