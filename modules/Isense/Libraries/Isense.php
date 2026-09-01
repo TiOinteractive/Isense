@@ -39,8 +39,13 @@ class Isense
     /** CSS/JS iSense dokładane do strony tylko gdy występuje blok iSense. */
     public function assets($element_slug = '', $tpl = '', $id = 0, $data = [])
     {
+        $css = ['/assets/isense/css/isense.css'];
+        if ($element_slug === 'hero') {
+            $css[] = '/assets/isense/css/hero.css';
+        }
+
         return [
-            'css' => ['/assets/isense/css/isense.css'],
+            'css' => $css,
             'js'  => ['/assets/isense/js/isense.js'],
         ];
     }

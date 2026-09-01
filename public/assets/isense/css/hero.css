@@ -1,0 +1,48 @@
+/*
+ * Przyciemniajaca (a wlasciwie rozjasniajaca) nakladka pod tekstem hero.
+ *
+ * Problem: naglowek hero jest ciemny (#1D1D1F) i lezy bezposrednio na zdjeciu.
+ * Na mobile kadr zdjecia zaweza sie do sylwetki serwisanta w czarnej koszulce,
+ * ktora wchodzi dokladnie pod H1 — konce wierszy ("uslug", "naprawczych")
+ * zlewaja sie z tlem i wygladaja jak ucinane. Na desktopie tekst siedzi po
+ * lewej, na jasnej czesci kadru, wiec tam wystarczy delikatny welon.
+ *
+ * Zwykly CSS, nie Tailwind: klasy gradientow (bg-gradient-to-r, from-white/90)
+ * nie ma w zbudowanym public/assets/isense/css/isense.css — analogicznie do
+ * form.css.
+ */
+
+.isense-hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1; /* nad <img>, pod trescia (.z-10) */
+    pointer-events: none;
+    /* Mobile: dwie warstwy — pionowa (tekst jest u gory) i pozioma (tekst jest
+       po lewej). Mnoza sie tylko tam, gdzie stoi H1; prawy dol kadru, czyli
+       serwisant i narzedzia, zostaje czytelny. */
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, .55) 0%,
+            rgba(255, 255, 255, .45) 50%,
+            rgba(255, 255, 255, 0) 76%
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, .85) 0%,
+            rgba(255, 255, 255, .6) 60%,
+            rgba(255, 255, 255, 0) 100%
+        );
+}
+
+@media (min-width: 1024px) {
+    /* Desktop: welon tylko na lewej kolumnie z tekstem, serwisant bez zmian. */
+    .isense-hero-scrim {
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, .9) 0%,
+            rgba(255, 255, 255, .6) 40%,
+            rgba(255, 255, 255, 0) 65%
+        );
+    }
+}
