@@ -5,6 +5,7 @@
         <div class="list list-boxes">
             <?php if(!empty($administrations)): ?>
                 <?php foreach($administrations as $administration): ?>
+                    <?php if(!empty($administration['hide'])) continue; ?>
                     <div class="list-box">
                         <div class="bc trans400">
                             <div class="ico"><a href="<?=$locale ? '/' . $locale : ''; ?><?=$administration['link']; ?>" title="<?=$administration['name']; ?>"><?=$administration['ico']; ?><span><?=$administration['name']; ?></span></a></div>
