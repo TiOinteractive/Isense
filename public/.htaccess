@@ -21,6 +21,20 @@ Options All -Indexes
 	# http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
 	# RewriteBase /
 
+	# --- Pliki ukryte (dotfiles) — maja wygladac jak nieistniejace ---------
+	# /.htaccess zwracal 403 (serwerowe `Require all denied` dla ^\.ht), a
+	# /.user.ini bylo serwowane z kodem 200 razem z cala konfiguracja FPM.
+	# Kazdy z tych kodow potwierdza, ze plik istnieje. Kierujemy takie zadania
+	# do front controllera, wiec odpowiedz jest identyczna jak dla dowolnego
+	# nieistniejacego adresu (404 CI4) — nie da sie po niej zgadnac struktury.
+	# Regula MUSI byc przed regula front controllera, bo dla istniejacego pliku
+	# warunek `!-f` by nie przeszedl. mod_rewrite dziala w fazie fixup, czyli
+	# przed autoryzacja, wiec wyprzedza serwerowy zakaz dajacy 403.
+	# Wyjatek: /.well-known/ (ACME, security.txt) musi zostac dostepne.
+	RewriteCond %{REQUEST_URI} (^|/)\.
+	RewriteCond %{REQUEST_URI} !^/\.well-known/
+	RewriteRule ^([\s\S]*)$ index.php?/$1 [L,NC,QSA]
+
 	# Redirect Trailing Slashes...
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_URI} (.+)/$
