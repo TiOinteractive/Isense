@@ -18,6 +18,12 @@ $routes->post('/isense/form-submit', 'Front::formSubmit'); // formularze iSense 
 $routes->get('/isense/status', 'Front::orderStatus'); // wyszukiwanie statusu zlecenia (AJAX)
 $routes->get('naprawy/(:segment)/(:segment)', 'Front::modelPricing/$1/$2'); // strona modelu (cennik) iSense
 $routes->get('/robots.txt', 'Robots::index');
+// llms.txt / llms-full.txt budowane z CMS (App\Controllers\Llms). Trasy dzialaja
+// tylko dopoki tych plikow NIE MA w public/ — .htaccess oddaje zadanie do PHP
+// wylacznie dla nieistniejacych plikow.
+// HEAD obok GET, bo czesc botow sprawdza istnienie pliku samym HEAD.
+$routes->match(['GET', 'HEAD'], '/llms.txt', 'Llms::index');
+$routes->match(['GET', 'HEAD'], '/llms-full.txt', 'Llms::full');
 $routes->get('/sitemap.xml', 'Sitemap::sitemaps');
 $routes->get('/sitemap-(:segment)-(:num).xml', 'Sitemap::singleSitemap/$1/$2');
 $routes->get('/sitemap-(:segment).xml', 'Sitemap::singleSitemap/$1');
