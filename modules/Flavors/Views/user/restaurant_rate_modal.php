@@ -46,7 +46,9 @@
   </form>
 </div>
 <script>
-    $(function() {
+    /* jQuery jest ladowane z `defer` (app/Views/user/foot.php), wiec `$` nie
+       istnieje jeszcze w trakcie parsowania tego bloku — stad DOMContentLoaded. */
+    document.addEventListener('DOMContentLoaded', function() {
 		  $('.modal-restaurant-rate .rate').each(function(){
               var type=$(this).attr('data-type');
               var score=$(this).attr('data-score');
