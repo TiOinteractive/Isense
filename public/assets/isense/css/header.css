@@ -1,0 +1,61 @@
+/*
+ * Naglowek — reguly mobilne, ktorych nie ma w zbudowanym isense.css.
+ *
+ * Problem: bialy pasek naglowka trzymal w jednym rzedzie logo, numer telefonu
+ * (20px) i przycisk CTA. Logo jest obrazkiem, wiec nie kurczy sie ponizej swojej
+ * szerokosci wlasnej (~151px) — przy 375px numer lamal sie na dwie linie, przy
+ * 360px na cztery, rzad wychodzil poza kontener, a scisnieta ikona sluchawki
+ * (SVG maluje poza swoim pudelkiem) ladowala na koncowce „.pl" logotypu.
+ *
+ * Rozwiazanie: ponizej `lg` (1024px) kontakt przenosi sie z bialego paska do
+ * ciemnego paska nawigacji, ktory do tej pory trzymal tam sam hamburger. Numer
+ * jest w nim w jednej linii, a caly link ma pole dotyku 44x44 (WCAG 2.5.8).
+ * Dodatkowo ponizej `md` (768px) bialy pasek zostaje z samym logo i dostaje
+ * stala wysokosc 64px zamiast rosnac razem z zawijanym numerem.
+ *
+ * Zwykly CSS, nie Tailwind: nie ma build stepu (patrz CLAUDE.md), a klas
+ * `h-11`, `min-w-[44px]` czy `tabular-nums` w arkuszu nie ma — analogicznie
+ * do hero.css i form.css.
+ */
+
+@media (max-width: 767px) {
+    /* Stala, przewidywalna wysokosc: 12px + 40px logo + 12px = 64px.
+       `py-8` z Tailwinda dawalo 40px + wysokosc zawijajacego sie numeru. */
+    .isense-header-row {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        min-height: 64px;
+    }
+
+    .isense-header-logo {
+        flex: 0 0 auto;
+    }
+
+    .isense-header-logo img {
+        height: 40px;
+    }
+}
+
+@media (max-width: 1023px) {
+    /* Telefon w ciemnym pasku: jedna linia, cyfry o rownej szerokosci,
+       pole dotyku 44x44 mimo mniejszej ikony i tekstu. */
+    .isense-header-phone {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 44px;
+        min-height: 44px;
+        padding-inline: 0.25rem;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* SVG rysuje poza swoim pudelkiem, wiec ikona nie moze sie kurczyc —
+       to ona nachodzila na logotyp. */
+    .isense-header-phone svg {
+        flex: 0 0 auto;
+    }
+}

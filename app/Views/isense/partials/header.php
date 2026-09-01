@@ -32,6 +32,11 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
     return '';
 };
 ?>
+<?php /* Arkusz naglowka jedzie z partialem — jest on wlaczany z czterech miejsc
+         (isense/layout, user/page/_isense_open, user/page/isense, errors/404),
+         a tylko czesc z nich buduje wlasna sekcje <head>. Tak samo jak
+         _isense_open.php linkuje isense.css. */ ?>
+<link rel="stylesheet" href="<?= rtrim(base_url('assets/isense'), '/') ?>/css/header.css">
 <div class="relative z-50">
     <!-- Pasek ogłoszeniowy (zarządzalny: panel → Ustawienia → „Pasek ogłoszeniowy") -->
     <?php if (! empty($announcement['enabled'])): ?>
@@ -48,17 +53,20 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
     <!-- Biały górny pasek -->
     <div class="bg-white pb-8 border-b border-[#E5E5EA]">
         <div class="max-w-[1300px] mx-auto px-4 lg:px-12">
-            <div class="flex items-center justify-between py-8 text-[#1D1D1F] text-sm">
+            <div class="isense-header-row flex items-center justify-between py-8 text-[#1D1D1F] text-sm">
                 <a href="<?= site_url('/') ?>" class="hidden md:flex items-center flex-shrink-0">
                     <?= isense_img($logo, 'iSense logo', 'h-[56px] w-auto object-contain', ['sizes' => '240px', 'loading' => 'eager']) ?>
                     <span class="text-[25px] text-[#1D1D1F] font-semibold ml-6">Serwis i naprawa sprzętu Apple</span>
                 </a>
-                <a href="<?= site_url('/') ?>" class="flex md:hidden">
+                <a href="<?= site_url('/') ?>" class="isense-header-logo flex md:hidden">
                     <?= isense_img($logo, 'iSense logo', 'h-[45px] w-auto object-contain', ['sizes' => '200px', 'loading' => 'eager']) ?>
                 </a>
-                <div class="flex items-center gap-4">
-                    <a href="tel:<?= esc(isense_tel(), 'attr') ?>" class="flex items-center gap-2 text-[20px] font-semibold hover:text-[#3b81f7] transition-colors">
-                        <?= isense_icon('phone', 'w-[22px] h-[22px]') ?>
+                <?php /* Ponizej `lg` numer i CTA nie mieszcza sie w jednym rzedzie z logo
+                          (patrz css/header.css) — telefon jedzie do ciemnego paska nawigacji,
+                          a CTA jest w menu mobilnym i w sticky pasku na dole. */ ?>
+                <div class="hidden lg:flex items-center gap-4">
+                    <a href="tel:<?= esc(isense_tel(), 'attr') ?>" class="flex items-center gap-2 text-[20px] font-semibold whitespace-nowrap hover:text-[#3b81f7] transition-colors">
+                        <?= isense_icon('phone', 'w-[22px] h-[22px] flex-shrink-0') ?>
                         <?= esc($phone) ?>
                     </a>
                     <?= view_cell('\App\Libraries\IsenseMenu::buttons', ['id_menu' => $buttonsMenu, 'variant' => 'desktop']) ?>
@@ -101,6 +109,12 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </nav>
+
+                        <!-- Telefon (mobile/tablet) — w bialym pasku nie miesci sie obok logo -->
+                        <a href="tel:<?= esc(isense_tel(), 'attr') ?>" class="isense-header-phone lg:hidden" aria-label="<?= esc('Zadzwoń: ' . $phone, 'attr') ?>">
+                            <?= isense_icon('phone', 'w-5 h-5 text-white') ?>
+                            <?= esc($phone) ?>
+                        </a>
 
                         <!-- Mobile burger -->
                         <button type="button" data-mobile-toggle class="lg:hidden p-2 ml-auto" aria-label="Menu">
