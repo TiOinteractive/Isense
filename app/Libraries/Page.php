@@ -271,9 +271,33 @@ class Page {
         // Graf schema.org (WebSite + LocalBusiness) w calosci z ustawien panelu —
         // patrz App\Libraries\SchemaOrg. Wczesniej siedzial tu literal opisujacy
         // zupelnie inny serwis (portal RESinet.pl z Rzeszowa).
+        $settings['price_range'] = $this->priceRange($settings);
         $schema = new SchemaOrg();
         $metatags['microdata'] = $schema->graph($settings, $language);
         return $metatags;
+    }
+
+    /**
+     * priceRange dla wezla organizacji. Ustawienie z panelu ma pierwszenstwo; gdy jest
+     * puste, bierzemy realne widelki z cennika, zeby nie wypuszczac ogolnikowego "$$".
+     * SchemaOrg zostaje niezalezny od modulow — zaleznosc siedzi tutaj, tak jak
+     * pozostale sprawdzenia dostepnosci modulu w aplikacji.
+     */
+    private function priceRange($settings) {
+        $range = !empty($settings['price_range']) && is_string($settings['price_range']) ? trim($settings['price_range']) : '';
+        if ($range !== '') {
+            return $range;
+        }
+        $class = '\Modules\Pricing\Libraries\Pricing';
+        if (!is_dir(ROOTPATH . 'modules/Pricing') || !class_exists($class)) {
+            return '';
+        }
+        $module = $this->pageModel->db->table('module')->select('id')->where('slug', 'Pricing')->where('publish', 1)->get()->getRowArray();
+        if (empty($module)) {
+            return '';
+        }
+
+        return $class::priceRange();
     }
 
     private function getPageParentsIds($re_id) {

@@ -95,6 +95,30 @@ class PricingCategoryModel extends Model
     }
 
     /**
+     * Widełki cenowe całego cennika, np. „430–2510 PLN”, albo pusty string gdy nie ma cen.
+     * Liczone z opublikowanych modeli w opublikowanych usługach i kategoriach.
+     */
+    public function getPriceRange(string $currency = 'PLN'): string
+    {
+        $row = $this->db->table('pricing_model m')
+            ->join('pricing_service s', 's.id=m.id_service')
+            ->join('pricing_category c', 'c.id=s.id_category')
+            ->select('MIN(m.price) AS min_price, MAX(m.price) AS max_price')
+            ->where('m.publish', 1)->where('s.publish', 1)->where('c.publish', 1)
+            ->where('m.price >', 0)
+            ->get()->getRowArray();
+
+        if (empty($row) || ! is_numeric($row['min_price']) || ! is_numeric($row['max_price'])) {
+            return '';
+        }
+
+        $min = (int) round((float) $row['min_price']);
+        $max = (int) round((float) $row['max_price']);
+
+        return ($min === $max ? (string) $min : $min . '–' . $max) . ' ' . $currency;
+    }
+
+    /**
      * Całe drzewo cennika (kategorie → usługi → modele) dla bloku na stronie.
      *
      * Jedno zapytanie zamiast pętli po poziomach. Filtry `publish` usług i modeli muszą siedzieć

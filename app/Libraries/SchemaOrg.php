@@ -98,6 +98,172 @@ class SchemaOrg {
     }
 
     /**
+     * FAQPage z sekcji pytan i odpowiedzi (element `faq` modulu Isense).
+     *
+     * Uwaga: od wrzesnia 2023 Google pokazuje rozwiniecia FAQ w wynikach praktycznie
+     * tylko witrynom rzadowym i medycznym. Wezel zostaje po to, zeby wyszukiwarki
+     * i modele jezykowe rozumialy tresc strony, a nie dla rich resultow.
+     *
+     * @param array  $items lista ['question' => ..., 'answer' => ...]
+     * @param string $url   adres strony, na ktorej sekcja stoi
+     */
+    public function faqNode($items, $url = '') {
+        $questions = array();
+        foreach ((array) $items as $item) {
+            $question = isset($item['question']) ? trim((string) $item['question']) : '';
+            $answer   = isset($item['answer']) ? trim((string) $item['answer']) : '';
+            // Polowa pary nie tworzy sensownego Question — pomijamy cala pozycje.
+            if ($question === '' || $answer === '') {
+                continue;
+            }
+            $questions[] = [
+                '@type'          => 'Question',
+                'name'           => $question,
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => $answer,
+                ],
+            ];
+        }
+
+        if (empty($questions)) {
+            return array();
+        }
+
+        return [
+            '@type'      => 'FAQPage',
+            '@id'        => ($url !== '' ? $url : base_url()) . '#faq',
+            'mainEntity' => $questions,
+        ];
+    }
+
+    /**
+     * Usluga swiadczona przez firme. `provider` celuje w wezel organizacji przez @id,
+     * wiec graf zostaje spojny bez powtarzania NAP-u.
+     *
+     * @param array $params ['name', 'url', 'description', 'serviceType', 'areaServed', 'offerCatalog']
+     */
+    public function serviceNode($params = array()) {
+        $name = isset($params['name']) ? trim((string) $params['name']) : '';
+        if ($name === '') {
+            return array();
+        }
+        $url = isset($params['url']) ? trim((string) $params['url']) : '';
+
+        $node = [
+            '@type'       => 'Service',
+            '@id'         => ($url !== '' ? $url : base_url()) . '#service',
+            'name'        => $name,
+            'url'         => $url,
+            'description' => isset($params['description']) ? trim((string) $params['description']) : '',
+            'serviceType' => isset($params['serviceType']) ? trim((string) $params['serviceType']) : '',
+            'provider'    => ['@id' => base_url() . '#organization'],
+            'areaServed'  => [[
+                '@type' => 'Country',
+                'name'  => ! empty($params['areaServed']) ? $params['areaServed'] : 'Polska',
+            ]],
+        ];
+
+        if (! empty($params['offerCatalog'])) {
+            $node['hasOfferCatalog'] = $params['offerCatalog'];
+        }
+
+        return $node;
+    }
+
+    /**
+     * OfferCatalog z drzewa cennika (PricingCategoryModel::getTreeForFront()):
+     * kategoria → usluga → model z cena. Przy jednej kategorii katalog jest plaski,
+     * przy kilku — kazda kategoria dostaje wlasny zagniezdzony OfferCatalog.
+     *
+     * Cena musi byc surowa liczba; sformatowane "460 zl" z Pricing::formatPrice()
+     * jest dla czlowieka i schema.org go nie przyjmie.
+     *
+     * @param array  $categories drzewo kategorii z modulu Pricing
+     * @param string $name       nazwa katalogu (zwykle tytul strony)
+     * @param string $currency   kod ISO waluty
+     */
+    public function offerCatalogNode($categories, $name = '', $currency = 'PLN') {
+        $groups = array();
+        foreach ((array) $categories as $category) {
+            $offers = $this->categoryOffers($category, $currency);
+            if (empty($offers)) {
+                continue;
+            }
+            $groups[] = [
+                'name'   => isset($category['name']) ? trim((string) $category['name']) : '',
+                'offers' => $offers,
+            ];
+        }
+
+        if (empty($groups)) {
+            return array();
+        }
+
+        // Jedna kategoria = jeden poziom; zagniezdzanie mialoby wtedy pusta wartosc informacyjna.
+        if (count($groups) === 1) {
+            return [
+                '@type'           => 'OfferCatalog',
+                'name'            => $name !== '' ? $name : $groups[0]['name'],
+                'itemListElement' => $groups[0]['offers'],
+            ];
+        }
+
+        $items = array();
+        foreach ($groups as $group) {
+            $items[] = [
+                '@type'           => 'OfferCatalog',
+                'name'            => $group['name'],
+                'itemListElement' => $group['offers'],
+            ];
+        }
+
+        return [
+            '@type'           => 'OfferCatalog',
+            'name'            => $name,
+            'itemListElement' => $items,
+        ];
+    }
+
+    /** Oferty jednej kategorii cennika: po jednej na model z ustalona cena. */
+    private function categoryOffers($category, $currency) {
+        $offers = array();
+        foreach ((array) ($category['services'] ?? array()) as $service) {
+            $service_name = isset($service['name']) ? trim((string) $service['name']) : '';
+            foreach ((array) ($service['models'] ?? array()) as $model) {
+                $price = isset($model['price']) ? $model['price'] : null;
+                // NULL/0 znaczy "wycena indywidualna" — Offer bez ceny wprowadzalby w blad.
+                if (! is_numeric($price) || (float) $price <= 0) {
+                    continue;
+                }
+                $model_name = isset($model['name']) ? trim((string) $model['name']) : '';
+                $offers[] = [
+                    '@type'         => 'Offer',
+                    'name'          => trim($service_name . ($model_name !== '' ? ' — ' . $model_name : '')),
+                    'price'         => $this->price($price),
+                    'priceCurrency' => $currency,
+                    'availability'  => 'https://schema.org/InStock',
+                    'itemOffered'   => [
+                        '@type' => 'Service',
+                        'name'  => $service_name,
+                    ],
+                ];
+            }
+        }
+
+        return $offers;
+    }
+
+    /** "460.00" → "460", "99.50" → "99.50"; kropka dziesietna, bez separatora tysiecy. */
+    private function price($price) {
+        $value = (float) $price;
+        // Grosze zostaja tylko wtedy, gdy sa niezerowe — jak w formatPrice() dla czlowieka.
+        $decimals = (fmod($value, 1.0) === 0.0) ? 0 : 2;
+
+        return number_format($value, $decimals, '.', '');
+    }
+
+    /**
      * PostalAddress w calosci z kluczy address_* panelu. Wyswietlany, wieloliniowy
      * `address` zostaje tekstem dla czlowieka i nie trafia tutaj.
      */

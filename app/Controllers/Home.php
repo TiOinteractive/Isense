@@ -355,6 +355,10 @@ class Home extends BaseController {
                                     $settings = $module->custom_settings($settings);
                                 }
                                 if (method_exists($module, 'getContentMetaTags')) {
+                                    // Metatagi samej strony sa scalane dopiero po tej petli, wiec
+                                    // $metatags['title'] to na tym etapie tytul globalny. Nazwa strony
+                                    // jest potrzebna modulom budujacym wezly schema.org (np. Service).
+                                    $content['page_name'] = !empty($page['name']) ? $page['name'] : '';
                                     $metatags = $module->getContentMetaTags($content, $metatags, !empty($page['content'][$k]['data']) ? $page['content'][$k]['data'] : array(), $settings, $language);
                                 }
                                 if (method_exists($module, 'custom_metatags') and $page['template'] != 'szablon_resinet_main.php') {

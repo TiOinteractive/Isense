@@ -36,6 +36,28 @@ class Isense
         return $data;
     }
 
+    /**
+     * Dane strukturalne bloku. Wołane przez Home::index() dla każdego bloku treści;
+     * kontrakt wymaga zwrócenia CAŁEJ tablicy $metatags, nie tylko własnego fragmentu.
+     *
+     * Dziś odpowiada tylko sekcja FAQ — jej pytania i odpowiedzi to jedyne pola iSense,
+     * które mają wprost odpowiednik w schema.org. Pozostałe sekcje są dekoracją strony.
+     */
+    public function getContentMetaTags($content, $metatags, $data, $settings, $language)
+    {
+        if (empty($data['section']) || $data['section'] !== 'faq' || empty($data['items'])) {
+            return $metatags;
+        }
+
+        $url  = ! empty($metatags['canonical']) ? $metatags['canonical'] : current_url();
+        $node = (new \App\Libraries\SchemaOrg())->faqNode($data['items'], $url);
+        if (! empty($node)) {
+            $metatags['microdata']['faq'] = $node;
+        }
+
+        return $metatags;
+    }
+
     /** CSS/JS iSense dokładane do strony tylko gdy występuje blok iSense. */
     public function assets($element_slug = '', $tpl = '', $id = 0, $data = [])
     {
