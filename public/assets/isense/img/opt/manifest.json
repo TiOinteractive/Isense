@@ -1,0 +1,480 @@
+{
+    "about-hero.jpg": {
+        "w": 1600,
+        "h": 2133,
+        "srcset": [
+            [
+                320,
+                "opt/about-hero-320.webp"
+            ],
+            [
+                640,
+                "opt/about-hero-640.webp"
+            ],
+            [
+                960,
+                "opt/about-hero-960.webp"
+            ],
+            [
+                1050,
+                "opt/about-hero-1050.webp"
+            ]
+        ]
+    },
+    "contact-hero.jpg": {
+        "w": 1600,
+        "h": 1067,
+        "srcset": [
+            [
+                320,
+                "opt/contact-hero-320.webp"
+            ],
+            [
+                640,
+                "opt/contact-hero-640.webp"
+            ],
+            [
+                960,
+                "opt/contact-hero-960.webp"
+            ],
+            [
+                1440,
+                "opt/contact-hero-1440.webp"
+            ],
+            [
+                1600,
+                "opt/contact-hero-1600.webp"
+            ]
+        ]
+    },
+    "favicon-180.png": {
+        "w": 180,
+        "h": 180,
+        "srcset": [
+            [
+                180,
+                "opt/favicon-180-180.webp"
+            ]
+        ]
+    },
+    "favicon.png": {
+        "w": 48,
+        "h": 48,
+        "srcset": [
+            [
+                48,
+                "opt/favicon-48.webp"
+            ]
+        ]
+    },
+    "feature-diagnoza.png": {
+        "w": 500,
+        "h": 500,
+        "srcset": [
+            [
+                320,
+                "opt/feature-diagnoza-320.webp"
+            ],
+            [
+                500,
+                "opt/feature-diagnoza-500.webp"
+            ]
+        ]
+    },
+    "feature-doswiadczenie.png": {
+        "w": 500,
+        "h": 500,
+        "srcset": [
+            [
+                320,
+                "opt/feature-doswiadczenie-320.webp"
+            ],
+            [
+                500,
+                "opt/feature-doswiadczenie-500.webp"
+            ]
+        ]
+    },
+    "feature-serwis.png": {
+        "w": 500,
+        "h": 500,
+        "srcset": [
+            [
+                320,
+                "opt/feature-serwis-320.webp"
+            ],
+            [
+                500,
+                "opt/feature-serwis-500.webp"
+            ]
+        ]
+    },
+    "feature-serwisanci.png": {
+        "w": 500,
+        "h": 500,
+        "srcset": [
+            [
+                320,
+                "opt/feature-serwisanci-320.webp"
+            ],
+            [
+                500,
+                "opt/feature-serwisanci-500.webp"
+            ]
+        ]
+    },
+    "hero.png": {
+        "w": 1672,
+        "h": 941,
+        "srcset": [
+            [
+                320,
+                "opt/hero-320.webp"
+            ],
+            [
+                640,
+                "opt/hero-640.webp"
+            ],
+            [
+                960,
+                "opt/hero-960.webp"
+            ],
+            [
+                1440,
+                "opt/hero-1440.webp"
+            ],
+            [
+                1672,
+                "opt/hero-1672.webp"
+            ]
+        ]
+    },
+    "imac.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/imac-320.webp"
+            ],
+            [
+                640,
+                "opt/imac-640.webp"
+            ],
+            [
+                960,
+                "opt/imac-960.webp"
+            ],
+            [
+                1254,
+                "opt/imac-1254.webp"
+            ]
+        ]
+    },
+    "intro-courier.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/intro-courier-320.webp"
+            ],
+            [
+                640,
+                "opt/intro-courier-640.webp"
+            ],
+            [
+                960,
+                "opt/intro-courier-960.webp"
+            ],
+            [
+                1254,
+                "opt/intro-courier-1254.webp"
+            ]
+        ]
+    },
+    "intro-technician.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/intro-technician-320.webp"
+            ],
+            [
+                640,
+                "opt/intro-technician-640.webp"
+            ],
+            [
+                960,
+                "opt/intro-technician-960.webp"
+            ],
+            [
+                1254,
+                "opt/intro-technician-1254.webp"
+            ]
+        ]
+    },
+    "ipad.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/ipad-320.webp"
+            ],
+            [
+                640,
+                "opt/ipad-640.webp"
+            ],
+            [
+                960,
+                "opt/ipad-960.webp"
+            ],
+            [
+                1254,
+                "opt/ipad-1254.webp"
+            ]
+        ]
+    },
+    "iphone-hero-bg.png": {
+        "w": 1774,
+        "h": 887,
+        "srcset": [
+            [
+                320,
+                "opt/iphone-hero-bg-320.webp"
+            ],
+            [
+                640,
+                "opt/iphone-hero-bg-640.webp"
+            ],
+            [
+                960,
+                "opt/iphone-hero-bg-960.webp"
+            ],
+            [
+                1440,
+                "opt/iphone-hero-bg-1440.webp"
+            ],
+            [
+                1774,
+                "opt/iphone-hero-bg-1774.webp"
+            ]
+        ]
+    },
+    "iphone.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/iphone-320.webp"
+            ],
+            [
+                640,
+                "opt/iphone-640.webp"
+            ],
+            [
+                960,
+                "opt/iphone-960.webp"
+            ],
+            [
+                1254,
+                "opt/iphone-1254.webp"
+            ]
+        ]
+    },
+    "loc-serwis.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/loc-serwis-320.webp"
+            ],
+            [
+                640,
+                "opt/loc-serwis-640.webp"
+            ],
+            [
+                960,
+                "opt/loc-serwis-960.webp"
+            ],
+            [
+                1254,
+                "opt/loc-serwis-1254.webp"
+            ]
+        ]
+    },
+    "loc-sklep.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/loc-sklep-320.webp"
+            ],
+            [
+                640,
+                "opt/loc-sklep-640.webp"
+            ],
+            [
+                960,
+                "opt/loc-sklep-960.webp"
+            ],
+            [
+                1254,
+                "opt/loc-sklep-1254.webp"
+            ]
+        ]
+    },
+    "loc-wysylka.png": {
+        "w": 1254,
+        "h": 1254,
+        "srcset": [
+            [
+                320,
+                "opt/loc-wysylka-320.webp"
+            ],
+            [
+                640,
+                "opt/loc-wysylka-640.webp"
+            ],
+            [
+                960,
+                "opt/loc-wysylka-960.webp"
+            ],
+            [
+                1254,
+                "opt/loc-wysylka-1254.webp"
+            ]
+        ]
+    },
+    "logo-footer.png": {
+        "w": 4999,
+        "h": 1218,
+        "srcset": [
+            [
+                320,
+                "opt/logo-footer-320.webp"
+            ],
+            [
+                640,
+                "opt/logo-footer-640.webp"
+            ],
+            [
+                960,
+                "opt/logo-footer-960.webp"
+            ],
+            [
+                1440,
+                "opt/logo-footer-1440.webp"
+            ],
+            [
+                1920,
+                "opt/logo-footer-1920.webp"
+            ],
+            [
+                4999,
+                "opt/logo-footer-4999.webp"
+            ]
+        ]
+    },
+    "logo.png": {
+        "w": 4999,
+        "h": 1218,
+        "srcset": [
+            [
+                320,
+                "opt/logo-320.webp"
+            ],
+            [
+                640,
+                "opt/logo-640.webp"
+            ],
+            [
+                960,
+                "opt/logo-960.webp"
+            ],
+            [
+                1440,
+                "opt/logo-1440.webp"
+            ],
+            [
+                1920,
+                "opt/logo-1920.webp"
+            ],
+            [
+                4999,
+                "opt/logo-4999.webp"
+            ]
+        ]
+    },
+    "status-hero.jpg": {
+        "w": 1600,
+        "h": 2000,
+        "srcset": [
+            [
+                320,
+                "opt/status-hero-320.webp"
+            ],
+            [
+                640,
+                "opt/status-hero-640.webp"
+            ],
+            [
+                960,
+                "opt/status-hero-960.webp"
+            ],
+            [
+                1120,
+                "opt/status-hero-1120.webp"
+            ]
+        ]
+    },
+    "trade-in-hero.jpg": {
+        "w": 1600,
+        "h": 2133,
+        "srcset": [
+            [
+                320,
+                "opt/trade-in-hero-320.webp"
+            ],
+            [
+                640,
+                "opt/trade-in-hero-640.webp"
+            ],
+            [
+                960,
+                "opt/trade-in-hero-960.webp"
+            ],
+            [
+                1050,
+                "opt/trade-in-hero-1050.webp"
+            ]
+        ]
+    },
+    "watch.jpg": {
+        "w": 1000,
+        "h": 1250,
+        "srcset": [
+            [
+                320,
+                "opt/watch-320.webp"
+            ],
+            [
+                640,
+                "opt/watch-640.webp"
+            ],
+            [
+                960,
+                "opt/watch-960.webp"
+            ],
+            [
+                1000,
+                "opt/watch-1000.webp"
+            ]
+        ]
+    }
+}

@@ -8,7 +8,8 @@
     <?php if (! empty($description)): ?>
         <meta name="description" content="<?= esc($description, 'attr') ?>">
     <?php endif; ?>
-    <link rel="icon" type="image/png" href="<?= $assets ?>/img/logo.png">
+    <link rel="icon" type="image/png" href="<?= $assets ?>/img/favicon.png">
+    <link rel="apple-touch-icon" href="<?= $assets ?>/img/favicon-180.png">
     <link rel="stylesheet" href="<?= $assets ?>/css/isense.css">
 </head>
 <body class="bg-background text-foreground antialiased">

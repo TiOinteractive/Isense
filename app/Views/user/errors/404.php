@@ -9,7 +9,7 @@ $assets = rtrim(base_url('assets/isense'), '/');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>404 — nie znaleziono strony | iSense</title>
-    <link rel="icon" type="image/png" href="<?= $assets ?>/img/logo.png">
+    <link rel="icon" type="image/png" href="<?= $assets ?>/img/favicon.png">
     <link rel="stylesheet" href="<?= $assets ?>/css/isense.css">
 </head>
 <body class="bg-white text-[#1D1D1F] antialiased">

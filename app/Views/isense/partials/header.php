@@ -50,11 +50,11 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
         <div class="max-w-[1300px] mx-auto px-4 lg:px-12">
             <div class="flex items-center justify-between py-8 text-[#1D1D1F] text-sm">
                 <a href="<?= site_url('/') ?>" class="hidden md:flex items-center flex-shrink-0">
-                    <img src="<?= esc($logo, 'attr') ?>" alt="iSense logo" class="h-[56px] w-auto object-contain">
+                    <?= isense_img($logo, 'iSense logo', 'h-[56px] w-auto object-contain', ['sizes' => '240px', 'loading' => 'eager']) ?>
                     <span class="text-[25px] text-[#1D1D1F] font-semibold ml-6">Serwis i naprawa sprzętu Apple</span>
                 </a>
                 <a href="<?= site_url('/') ?>" class="flex md:hidden">
-                    <img src="<?= esc($logo, 'attr') ?>" alt="iSense logo" class="h-[45px] w-auto object-contain">
+                    <?= isense_img($logo, 'iSense logo', 'h-[45px] w-auto object-contain', ['sizes' => '200px', 'loading' => 'eager']) ?>
                 </a>
                 <div class="flex items-center gap-4">
                     <a href="tel:<?= esc(isense_tel(), 'attr') ?>" class="flex items-center gap-2 text-[20px] font-semibold hover:text-[#3b81f7] transition-colors">

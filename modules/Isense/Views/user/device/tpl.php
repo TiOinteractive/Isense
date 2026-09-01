@@ -7,7 +7,9 @@ $bg = ($d['bg'] ?? 'gray') === 'white' ? 'bg-white' : 'bg-[#F5F5F7]';
 $repairs = $d['repairs'] ?? [];
 $paras = preg_split('/\n\s*\n/', trim($d['body'] ?? ''));
 
-$imgCol = '<div class="rounded-md overflow-hidden' . ($side === 'left' ? ' order-2 lg:order-1' : '') . '"><img src="' . esc($d['image'] ?? '', 'attr') . '" alt="' . esc($d['heading'] ?? '', 'attr') . '" class="w-full h-full object-cover"></div>';
+$imgCol = '<div class="rounded-md overflow-hidden' . ($side === 'left' ? ' order-2 lg:order-1' : '') . '">'
+    . isense_img($d['image'] ?? '', $d['heading'] ?? '', 'w-full h-full object-cover', ['sizes' => '(min-width: 1024px) 50vw, 100vw'])
+    . '</div>';
 ob_start(); ?>
 <div class="<?= $side === 'left' ? 'order-1 lg:order-2' : '' ?>">
     <h2 class="text-3xl lg:text-5xl font-bold text-[#1D1D1F] mb-6"><?= esc($d['heading'] ?? '') ?></h2>

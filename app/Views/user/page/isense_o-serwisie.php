@@ -28,7 +28,7 @@ $isAssets = rtrim(base_url('assets/isense'), '/'); ?>
                 </div>
             </div>
             <div class="rounded-3xl overflow-hidden">
-                <img src="<?= $isAssets ?>/img/loc-serwis.png" alt="Serwis iSense" class="w-full h-full object-cover">
+                <?= isense_img('loc-serwis.png', 'Serwis iSense', 'w-full h-full object-cover', ['sizes' => '(min-width: 1024px) 50vw, 100vw']) ?>
             </div>
         </div>
     </div>

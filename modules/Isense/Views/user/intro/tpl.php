@@ -9,7 +9,7 @@
             <?php foreach ($cards as $card): ?>
                 <div class="flex flex-col items-center text-center">
                     <div class="relative h-72 w-full flex items-end justify-center mb-6">
-                        <img src="<?= esc($card['image'] ?? '', 'attr') ?>" alt="<?= esc($card['title'] ?? '', 'attr') ?>" class="h-full w-auto object-contain">
+                        <?= isense_img($card['image'] ?? '', $card['title'] ?? '', 'h-full w-auto object-contain', ['sizes' => '288px']) ?>
                     </div>
                     <h3 class="text-2xl font-bold text-[#1D1D1F] mb-4"><?= esc($card['title'] ?? '') ?></h3>
                     <p class="text-[#6E6E73] leading-relaxed"><?= esc($card['text'] ?? '') ?></p>

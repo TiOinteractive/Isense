@@ -82,6 +82,15 @@ Shared services the controllers compose (instantiated directly with `new`, not D
 - `ClearCache` — cache invalidation, constructed in `Admin`'s constructor so admin actions bust caches.
 - `UploadHandler` / file manager — back the `FileMenager`/`FileBrowser`/`Files` controllers and the Jodit editor integration (`JoditRestApplication`, `jodit/connector`).
 
+### Theme images (iSense)
+
+Static theme graphics live in `public/assets/isense/img`. The sources (PNG/JPG) are **not** served to browsers — `php spark isense:images` (`app/Commands/OptimizeIsenseImages.php`) renders WebP variants at several widths into `img/opt/` plus `opt/manifest.json`, and the front-end emits them through helpers in `app/Helpers/isense_helper.php`:
+
+- `isense_img($src, $alt, $class, ['sizes' => …, 'loading' => …, 'fetchpriority' => …])` — full `<img>` with `srcset`/`sizes`, intrinsic `width`/`height` and `loading="lazy"` by default.
+- `isense_img_url($src, $targetWidth)` — a single variant URL, for CSS `background-image`.
+
+Both accept a bare filename, a `/assets/isense/img/...` path or a CMS URL; anything outside the manifest falls through to the original URL unchanged. After adding or replacing a source graphic, re-run `php spark isense:images` and commit `img/opt/`.
+
 ## Conventions
 
 - Controllers extend `App\Controllers\BaseController` (auto-loads the `website` helper). Module controllers also extend it but set up `request`/`response`/`session` manually in their constructor.

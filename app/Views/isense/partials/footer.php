@@ -44,7 +44,11 @@ $menuSeoIphone  = isense_menu(6);
 $menuSeoIpad    = isense_menu(7);
 $menuSeoMacbook = isense_menu(8);
 
+// Pusta lista = menu odpublikowane albo bez pozycji — nie renderujemy samego naglowka.
 $col = static function (string $title, array $items) {
+    if (empty($items)) {
+        return;
+    }
     echo '<div><h3 class="font-semibold mb-4 text-white">' . esc($title) . '</h3><ul class="space-y-2 text-sm text-[#86868B]">';
     foreach ($items as $it) {
         $t = ! empty($it['target']) ? ' target="' . esc($it['target'], 'attr') . '"' : '';
@@ -53,6 +57,9 @@ $col = static function (string $title, array $items) {
     echo '</ul></div>';
 };
 $linkGrid = static function (string $title, array $items) {
+    if (empty($items)) {
+        return;
+    }
     echo '<div><h3 class="font-semibold mb-4 text-white">' . esc($title) . '</h3><div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-[#86868B]">';
     foreach ($items as $it) {
         $t = ! empty($it['target']) ? ' target="' . esc($it['target'], 'attr') . '"' : '';
@@ -69,7 +76,7 @@ $linkGrid = static function (string $title, array $items) {
             <!-- Logo & kontakt -->
             <div>
                 <a href="<?= site_url('/') ?>" class="flex items-center mb-6">
-                    <img src="<?= esc($logo, 'attr') ?>" alt="<?= esc($company, 'attr') ?>" class="h-10 w-auto object-contain<?= $logoClass ?>">
+                    <?= isense_img($logo, $company, 'h-10 w-auto object-contain' . $logoClass, ['sizes' => '180px']) ?>
                 </a>
                 <ul class="space-y-3 text-sm text-[#86868B]">
                     <li class="flex items-start gap-2">
@@ -99,27 +106,35 @@ $linkGrid = static function (string $title, array $items) {
             </div>
 
             <!-- Oferta + Usługi -->
-            <div class="grid grid-cols-2 gap-8">
-                <?php $col('Oferta', $menuOferta); ?>
-                <?php $col('Usługi', $menuUslugi); ?>
-            </div>
+            <?php if ($menuOferta || $menuUslugi): ?>
+                <div class="grid grid-cols-2 gap-8">
+                    <?php $col('Oferta', $menuOferta); ?>
+                    <?php $col('Usługi', $menuUslugi); ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Firma + Szybkie linki -->
-            <div class="grid grid-cols-2 gap-8">
-                <?php $col('Firma', $menuFirma); ?>
-                <?php $col('Szybkie linki', $menuSzybkie); ?>
-            </div>
+            <?php if ($menuFirma || $menuSzybkie): ?>
+                <div class="grid grid-cols-2 gap-8">
+                    <?php $col('Firma', $menuFirma); ?>
+                    <?php $col('Szybkie linki', $menuSzybkie); ?>
+                </div>
+            <?php endif; ?>
         </div>
 
         <!-- Dolny pas -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pt-12">
-            <?php $linkGrid('Serwis iPhone', $menuSeoIphone); ?>
-            <?php $linkGrid('Serwis iPad', $menuSeoIpad); ?>
-            <?php $linkGrid('Serwis MacBook', $menuSeoMacbook); ?>
-        </div>
+        <?php $hasSeoGrid = $menuSeoIphone || $menuSeoIpad || $menuSeoMacbook; ?>
+        <?php if ($hasSeoGrid): ?>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pt-12">
+                <?php $linkGrid('Serwis iPhone', $menuSeoIphone); ?>
+                <?php $linkGrid('Serwis iPad', $menuSeoIpad); ?>
+                <?php $linkGrid('Serwis MacBook', $menuSeoMacbook); ?>
+            </div>
+        <?php endif; ?>
 
+        <?php /* Bez siatki SEO kreska dolnego paska stykalaby sie z kreska gornego — zostaje jedna. */ ?>
         <!-- Bottom bar -->
-        <div class="border-t border-[#2C2C2E] mt-12 pt-8 text-center text-sm text-[#86868B]">
+        <div class="<?= $hasSeoGrid ? 'border-t border-[#2C2C2E] mt-12 pt-8' : 'pt-8' ?> text-center text-sm text-[#86868B]">
             <?php /* Rok z daty biezacej — inaczej stopka zestarzeje sie 1 stycznia. */ ?>
             <p>© <?= date('Y') ?> <?= esc($company) ?>. Wszystkie prawa zastrzeżone. Nie jesteśmy autoryzowanym serwisem Apple Inc.</p>
         </div>

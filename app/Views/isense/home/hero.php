@@ -1,6 +1,6 @@
 <?php $assets = $assets ?? rtrim(base_url('assets/isense'), '/'); ?>
 <section class="relative w-full overflow-hidden -mt-8 pb-20" style="min-height:480px;height:68vh;max-height:720px;">
-    <img src="<?= $assets ?>/img/hero.png" alt="Naprawa sprzętu Apple" class="absolute inset-0 w-full h-full object-cover">
+    <?= isense_img('hero.png', 'Naprawa sprzętu Apple', 'absolute inset-0 w-full h-full object-cover', ['sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']) ?>
     <div class="relative z-10 h-full flex items-center">
         <div class="max-w-[1300px] mx-auto px-4 lg:px-12 w-full">
             <div class="max-w-2xl">

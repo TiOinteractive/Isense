@@ -20,7 +20,8 @@ $bg = trim($d['bg'] ?? '');
 $overlay = $dark ? 'rgba(29, 29, 31, 0.8), rgba(29, 29, 31, 0.8)' : 'rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)';
 if ($bg) {
     $secClass = 'relative py-16 lg:py-24 bg-cover bg-center';
-    $style = "background-image: linear-gradient({$overlay}), url('" . esc($bg, 'attr') . "');";
+    // Tlo CSS nie ma srcset — bierzemy wariant WebP w rozsadnej szerokosci.
+    $style = "background-image: linear-gradient({$overlay}), url('" . esc(isense_img_url($bg, 1440), 'attr') . "');";
 } else {
     $secClass = $dark ? 'relative py-16 lg:py-24 bg-[#1D1D1F]' : 'relative py-16 lg:py-24 bg-gradient-to-b from-[#F5F5F7] to-white';
     $style = '';

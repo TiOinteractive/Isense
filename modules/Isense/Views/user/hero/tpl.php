@@ -8,7 +8,7 @@ $ctaUrl   = $d['cta_url'] ?? '#naprawa-wysylkowa';
 $bg       = $d['bg'] ?? '/assets/isense/img/hero.png';
 ?>
 <section class="relative w-full overflow-hidden -mt-8 pb-20" style="min-height:480px;height:68vh;max-height:720px;">
-    <img src="<?= esc($bg, 'attr') ?>" alt="<?= esc($heading, 'attr') ?>" class="absolute inset-0 w-full h-full object-cover">
+    <?= isense_img($bg, $heading, 'absolute inset-0 w-full h-full object-cover', ['sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']) ?>
     <div class="relative z-10 h-full flex items-center">
         <div class="max-w-[1300px] mx-auto px-4 lg:px-12 w-full">
             <div class="max-w-2xl">

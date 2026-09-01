@@ -8,7 +8,7 @@ $bgLayout = ($d['layout'] ?? 'split') === 'bg_image';
 $title = trim(($d['title'] ?? '') . ' ' . ($d['title2'] ?? ''));
 ?>
 <?php if ($bgLayout): ?>
-    <section class="relative pt-16 lg:pt-24 pb-16 lg:pb-24"<?= !empty($d['bg_image']) ? ' style="background-image:url(\'' . esc($d['bg_image'], 'attr') . '\');background-size:cover;background-position:right center;background-repeat:no-repeat;"' : '' ?>>
+    <section class="relative pt-16 lg:pt-24 pb-16 lg:pb-24"<?= !empty($d['bg_image']) ? ' style="background-image:url(\'' . esc(isense_img_url($d['bg_image'], 1440), 'attr') . '\');background-size:cover;background-position:right center;background-repeat:no-repeat;"' : '' ?>>
         <div class="relative max-w-[1300px] mx-auto px-4 lg:px-12">
             <div class="max-w-[640px]">
                 <?php if (!empty($d['eyebrow'])): ?><p class="text-[#3b81f7] font-semibold text-sm uppercase tracking-widest mb-3"><?= esc($d['eyebrow']) ?></p><?php endif; ?>
@@ -37,7 +37,7 @@ $title = trim(($d['title'] ?? '') . ' ' . ($d['title2'] ?? ''));
                     </div>
                 </div>
                 <?php if (!empty($d['image'])): ?>
-                    <div class="flex justify-center"><img src="<?= esc($d['image'], 'attr') ?>" alt="<?= esc('Serwis ' . ($d['title2'] ?? ''), 'attr') ?>" class="w-full max-w-md object-contain drop-shadow-xl"></div>
+                    <div class="flex justify-center"><?= isense_img($d['image'], 'Serwis ' . ($d['title2'] ?? ''), 'w-full max-w-md object-contain drop-shadow-xl', ['sizes' => '(min-width: 1024px) 448px, 100vw']) ?></div>
                 <?php endif; ?>
             </div>
         </div>

@@ -31,7 +31,7 @@ $devices = [
             <?php foreach ($devices as $d): ?>
                 <a href="<?= site_url('naprawy/' . $d['slug']) ?>" class="group flex flex-col bg-white border border-[#E5E5EA] hover:border-[#3b81f7] rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
                     <div class="h-44 bg-[#F5F5F7] overflow-hidden">
-                        <img src="<?= $isAssets ?>/img/<?= $d['img'] ?>" alt="Serwis <?= esc($d['name'], 'attr') ?>" class="w-full h-full object-cover">
+                        <?= isense_img($d['img'], 'Serwis ' . $d['name'], 'w-full h-full object-cover', ['sizes' => '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw']) ?>
                     </div>
                     <div class="p-6 flex flex-col flex-1">
                         <div class="flex items-center gap-3 mb-2">

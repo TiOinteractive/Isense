@@ -6,7 +6,7 @@ $repairs = ['Wymiana baterii', 'Wymiana / rozbudowa RAM', 'Wymiana dysku SSD / H
     <div class="max-w-[1300px] mx-auto px-4 lg:px-12">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="rounded-md overflow-hidden order-2 lg:order-1">
-                <img src="<?= $assets ?>/img/imac.png" alt="Serwis MacBook i iMac" class="w-full h-full object-cover">
+                <?= isense_img('imac.png', 'Serwis MacBook i iMac', 'w-full h-full object-cover', ['sizes' => '(min-width: 1024px) 50vw, 100vw']) ?>
             </div>
             <div class="order-1 lg:order-2">
                 <h2 class="text-3xl lg:text-5xl font-bold text-[#1D1D1F] mb-6">Serwis komputerów iMac oraz Macbook</h2>

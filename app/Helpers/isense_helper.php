@@ -83,6 +83,117 @@ if (! function_exists('isense_icon')) {
     }
 }
 
+if (! function_exists('isense_img')) {
+    /**
+     * Renderuje <img> dla grafiki motywu iSense z wariantami WebP.
+     *
+     * Warianty (public/assets/isense/img/opt/*.webp) i manifest generuje
+     * `php spark isense:images` — helper tylko sklada je w srcset/sizes.
+     * Zrodlowe PNG/JPG zostaja na dysku jako material wyjsciowy i jako
+     * fallback: gdy grafiki nie ma w manifescie (swiezo wgrany plik albo
+     * sciezka z CMS-a spoza tego katalogu), wychodzi zwykly <img> na oryginal.
+     *
+     * @param string $src   nazwa pliku ('hero.png') albo pelna sciezka/URL
+     * @param string $alt   tekst alternatywny
+     * @param string $class klasy CSS
+     * @param array  $opts  sizes, loading ('lazy'|'eager'), fetchpriority
+     */
+    function isense_img(string $src, string $alt = '', string $class = '', array $opts = []): string
+    {
+        if (trim($src) === '') {
+            return '';
+        }
+
+        $sizes    = $opts['sizes'] ?? '';
+        $loading  = $opts['loading'] ?? 'lazy';
+        $priority = $opts['fetchpriority'] ?? '';
+
+        $file  = isense_img_basename($src);
+        $entry = $file === null ? null : (isense_img_manifest()[$file] ?? null);
+
+        $attrs = ' alt="' . esc($alt, 'attr') . '"';
+        if ($class !== '') {
+            $attrs .= ' class="' . esc($class, 'attr') . '"';
+        }
+        $attrs .= ' loading="' . esc($loading, 'attr') . '" decoding="async"';
+        if ($priority !== '') {
+            $attrs .= ' fetchpriority="' . esc($priority, 'attr') . '"';
+        }
+
+        if ($entry === null) {
+            $url = preg_match('~^(https?:)?/~', $src) ? $src : base_url('assets/isense/img/' . $src);
+
+            return '<img src="' . esc($url, 'attr') . '"' . $attrs . '>';
+        }
+
+        $base   = rtrim(base_url('assets/isense/img'), '/') . '/';
+        $srcset = [];
+        foreach ($entry['srcset'] as [$w, $path]) {
+            $srcset[] = $base . $path . ' ' . $w . 'w';
+        }
+        // src = najwiekszy wariant: przegladarka bez obslugi srcset dostaje
+        // pelna rozdzielczosc, a nie przypadkowa miniature.
+        $largest = $base . end($entry['srcset'])[1];
+
+        return '<img src="' . esc($largest, 'attr') . '"'
+            . ' srcset="' . esc(implode(', ', $srcset), 'attr') . '"'
+            . ($sizes !== '' ? ' sizes="' . esc($sizes, 'attr') . '"' : '')
+            . ' width="' . (int) $entry['w'] . '" height="' . (int) $entry['h'] . '"'
+            . $attrs . '>';
+    }
+
+    /**
+     * Sam URL wariantu — dla tel CSS (background-image), gdzie nie ma srcset.
+     * Zwraca najmniejszy wariant o szerokosci >= $targetWidth (albo najwiekszy
+     * dostepny), a dla grafik spoza manifestu — oryginalny adres.
+     */
+    function isense_img_url(string $src, int $targetWidth = 1600): string
+    {
+        $file  = isense_img_basename($src);
+        $entry = $file === null ? null : (isense_img_manifest()[$file] ?? null);
+        if ($entry === null) {
+            return preg_match('~^(https?:)?/~', $src) ? $src : base_url('assets/isense/img/' . $src);
+        }
+
+        $base   = rtrim(base_url('assets/isense/img'), '/') . '/';
+        $chosen = end($entry['srcset'])[1];
+        foreach ($entry['srcset'] as [$w, $path]) {
+            if ($w >= $targetWidth) {
+                $chosen = $path;
+                break;
+            }
+        }
+
+        return $base . $chosen;
+    }
+
+    /** Nazwa pliku, jesli $src wskazuje na katalog grafik motywu; inaczej null. */
+    function isense_img_basename(string $src): ?string
+    {
+        $src = trim($src);
+        if ($src === '') {
+            return null;
+        }
+        if (! str_contains($src, '/')) {
+            return $src;
+        }
+
+        return str_contains($src, '/assets/isense/img/') ? basename(parse_url($src, PHP_URL_PATH) ?: '') : null;
+    }
+
+    /** Manifest wariantow; wczytywany raz na request. */
+    function isense_img_manifest(): array
+    {
+        static $manifest = null;
+        if ($manifest === null) {
+            $path     = FCPATH . 'assets/isense/img/opt/manifest.json';
+            $manifest = is_file($path) ? (json_decode((string) file_get_contents($path), true) ?: []) : [];
+        }
+
+        return $manifest;
+    }
+}
+
 if (! function_exists('isense_settings')) {
     /**
      * Cała tablica ustawień serwisu dla bieżącego języka — dokładnie to samo
@@ -161,11 +272,21 @@ if (! function_exists('isense_menu')) {
      * Zwraca drzewo menu CMS (zarządzane w panelu → Menu) z rozwiązanymi URL-ami.
      * Każda pozycja: ['name','url','target','icon','class','children'].
      * type 'page' → URL z powiązanej strony (id_target); type 'own' → własny URL.
+     * Menu odpublikowane w panelu (menu.publish = 0) zwraca pustą tablicę.
      */
     function isense_menu(int $id_menu, ?int $id_lang = null): array
     {
         $id_lang = $id_lang ?? isense_lang_id();
-        return isense_menu_branch(\Config\Database::connect(), $id_menu, 0, $id_lang);
+        $db      = \Config\Database::connect();
+
+        $menu = $db->table('menu')->select('id')
+            ->where('id', $id_menu)->where('publish', 1)
+            ->get()->getRowArray();
+        if ($menu === null) {
+            return [];
+        }
+
+        return isense_menu_branch($db, $id_menu, 0, $id_lang);
     }
 
     function isense_menu_branch($db, int $id_menu, int $id_parent, int $id_lang): array

@@ -23,7 +23,7 @@ $repairs = ['Wymiana baterii', 'Naprawa po zalaniu', 'Wymiana wyświetlacza / ek
                 </a>
             </div>
             <div class="rounded-md overflow-hidden">
-                <img src="<?= $assets ?>/img/ipad.png" alt="Serwis iPad" class="w-full h-full object-cover">
+                <?= isense_img('ipad.png', 'Serwis iPad', 'w-full h-full object-cover', ['sizes' => '(min-width: 1024px) 50vw, 100vw']) ?>
             </div>
         </div>
     </div>

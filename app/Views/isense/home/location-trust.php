@@ -27,7 +27,7 @@ $visitOptions = [
                 <?php foreach ($visitOptions as $option): ?>
                     <div class="bg-[#F5F5F7] rounded overflow-hidden border border-[#E5E5EA] flex">
                         <div class="w-[120px] flex-shrink-0 overflow-hidden self-stretch">
-                            <img src="<?= $assets ?>/img/<?= $option['image'] ?>" alt="<?= esc($option['title'], 'attr') ?>" class="w-full h-full object-cover">
+                            <?= isense_img($option['image'], $option['title'], 'w-full h-full object-cover', ['sizes' => '120px']) ?>
                         </div>
                         <div class="p-4 flex-1 flex flex-col">
                             <h3 class="text-base font-semibold text-[#1D1D1F] mb-2"><?= esc($option['title']) ?></h3>

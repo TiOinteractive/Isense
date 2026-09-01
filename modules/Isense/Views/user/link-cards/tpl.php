@@ -14,7 +14,7 @@ $imgBase = rtrim(base_url('assets/isense/img'), '/');
             <?php foreach ($cards as $c): $url = $c['url'] ?? '#'; $href = preg_match('~^(https?:|/|tel:|mailto:)~', $url) ? $url : site_url($url); ?>
                 <a href="<?= esc($href, 'attr') ?>" class="group flex flex-col bg-white border border-[#E5E5EA] hover:border-[#3b81f7] rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
                     <?php if (!empty($c['img'])): ?>
-                        <div class="h-44 bg-[#F5F5F7] overflow-hidden"><img src="<?= $imgBase ?>/<?= esc($c['img'], 'attr') ?>" alt="<?= esc($c['title'] ?? '', 'attr') ?>" class="w-full h-full object-cover"></div>
+                        <div class="h-44 bg-[#F5F5F7] overflow-hidden"><?= isense_img($imgBase . '/' . $c['img'], $c['title'] ?? '', 'w-full h-full object-cover', ['sizes' => '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw']) ?></div>
                     <?php endif; ?>
                     <div class="p-6 flex flex-col flex-1">
                         <div class="flex items-center gap-3 mb-2">

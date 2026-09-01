@@ -348,7 +348,7 @@ $heroImg = $isAssets . '/img/' . ($catImages[$catKey] ?? 'iphone.png');
                 </div>
             </div>
             <div class="flex justify-center">
-                <img src="<?= esc($heroImg, 'attr') ?>" alt="<?= esc('Serwis ' . $d['title2'], 'attr') ?>" class="w-full max-w-md object-contain drop-shadow-xl">
+                <?= isense_img($heroImg, 'Serwis ' . $d['title2'], 'w-full max-w-md object-contain drop-shadow-xl', ['sizes' => '(min-width: 1024px) 448px, 100vw']) ?>
             </div>
         </div>
     </div>
