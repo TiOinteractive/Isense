@@ -1,6 +1,6 @@
 <?php $assets = $assets ?? rtrim(base_url('assets/isense'), '/'); ?>
 <section class="relative w-full overflow-hidden -mt-8 pb-20" style="min-height:480px;height:68vh;max-height:720px;">
-    <?= isense_img('hero.png', 'Naprawa sprzętu Apple', 'absolute inset-0 w-full h-full object-cover', ['sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']) ?>
+    <?= isense_img('hero.png', 'Naprawa sprzętu Apple', 'absolute inset-0 w-full h-full object-cover isense-hero-media', ['sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']) ?>
     <?php /* Welon pod tekstem — bez niego ciemny H1 zlewa sie ze zdjeciem na mobile (assets/isense/css/hero.css). */ ?>
     <div class="isense-hero-scrim"></div>
     <div class="relative z-10 h-full flex items-center">

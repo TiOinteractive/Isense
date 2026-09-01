@@ -8,7 +8,7 @@ $ctaUrl   = $d['cta_url'] ?? '#naprawa-wysylkowa';
 $bg       = $d['bg'] ?? '/assets/isense/img/hero.png';
 ?>
 <section class="relative w-full overflow-hidden -mt-8 pb-20" style="min-height:480px;height:68vh;max-height:720px;">
-    <?= isense_img($bg, $heading, 'absolute inset-0 w-full h-full object-cover', ['sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']) ?>
+    <?= isense_img($bg, $heading, 'absolute inset-0 w-full h-full object-cover isense-hero-media', ['sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']) ?>
     <?php /* Welon pod tekstem — bez niego ciemny H1 zlewa sie ze zdjeciem na mobile (assets/isense/css/hero.css). */ ?>
     <div class="isense-hero-scrim"></div>
     <div class="relative z-10 h-full flex items-center">

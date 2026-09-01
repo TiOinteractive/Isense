@@ -35,6 +35,25 @@
         );
 }
 
+@media (max-width: 1023px) {
+    /*
+     * Kadr zdjecia hero na waskich ekranach.
+     *
+     * Sekcja ma 480 px wysokosci i szerokosc ekranu, wiec object-cover przy
+     * proporcji zdjecia 16:9 obcina po bokach ok. 56% kadru. Domyslne
+     * object-position: 50% zostawia widoczny pas ~29–71% szerokosci zdjecia —
+     * napis „iSense.pl" na scianie (ok. 60–80%) wypada wtedy w polowie i
+     * wyglada jak blad renderowania, a nie jak fragment fotografii.
+     *
+     * Przesuniecie punktu kotwiczenia na 72% przesuwa widoczny pas na
+     * ok. 44–83%: serwisant (46–72%) i caly napis mieszcza sie w kadrze,
+     * a po lewej — pod naglowkiem — zostaje pusta sciana.
+     */
+    .isense-hero-media {
+        object-position: 72% 50%;
+    }
+}
+
 @media (min-width: 1024px) {
     /* Desktop: welon tylko na lewej kolumnie z tekstem, serwisant bez zmian. */
     .isense-hero-scrim {
