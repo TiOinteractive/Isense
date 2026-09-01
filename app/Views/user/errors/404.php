@@ -1,6 +1,8 @@
 <?php
 helper(['url', 'isense']);
 $assets = rtrim(base_url('assets/isense'), '/');
+// „Popularne działy" — zarządzane w panelu → Menu → „404 — Popularne działy" (id 10).
+$popularMenu = 10;
 ?>
 <!doctype html>
 <html lang="pl">
@@ -35,16 +37,7 @@ $assets = rtrim(base_url('assets/isense'), '/');
                     </a>
                 </div>
 
-                <div class="mt-14 pt-10 border-t border-[#E5E5EA]">
-                    <p class="text-sm text-[#6E6E73] mb-4">Popularne działy:</p>
-                    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-medium">
-                        <a href="<?= site_url('naprawy/iphone') ?>" class="text-[#3b81f7] hover:text-[#2563eb] transition-colors">Serwis iPhone</a>
-                        <a href="<?= site_url('naprawy/ipad') ?>" class="text-[#3b81f7] hover:text-[#2563eb] transition-colors">Serwis iPad</a>
-                        <a href="<?= site_url('naprawy/macbook') ?>" class="text-[#3b81f7] hover:text-[#2563eb] transition-colors">Serwis MacBook</a>
-                        <a href="<?= site_url('trade-in') ?>" class="text-[#3b81f7] hover:text-[#2563eb] transition-colors">Trade In</a>
-                        <a href="<?= site_url('kontakt') ?>" class="text-[#3b81f7] hover:text-[#2563eb] transition-colors">Kontakt</a>
-                    </div>
-                </div>
+                <?= view_cell('\App\Libraries\IsenseMenu::inlineLinks', ['id_menu' => $popularMenu, 'heading' => 'Popularne działy:']) ?>
             </div>
         </div>
     </main>
