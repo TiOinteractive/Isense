@@ -64,6 +64,15 @@ class Home extends BaseController {
         $metatags = $this->pageClass->getDefaultMetatags($settings, $language, $link);
         if ($this->request->isAJAX()) {
             $post = $this->request->getPost();
+            if (empty($post)) {
+                // Bez danych POST ponizsza galaz nie ma czego obsluzyc i metoda konczyla
+                // sie pustym 200 — dla KAZDEGO adresu, takze nieistniejacego. Skaner
+                // wysylajacy naglowek X-Requested-With na /info.php dostawal wiec 200
+                // (len 0) i raportowal to jako "pozostawiony plik diagnostyczny".
+                // Wewnetrzny AJAX zawsze idzie POST-em (ajaxCall w assets/js/javascript.js),
+                // wiec 404 nie zabiera zadnej dzialajacej sciezki.
+                throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+            }
             if (!empty($post)) {
                 if (!empty($link['slug']) && !empty($link['id_module'])) {
                     $module_data = $moduleModel->db->table('module m')
