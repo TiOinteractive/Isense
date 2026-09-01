@@ -54,8 +54,13 @@ class SchemaOrg {
 
     public function organizationNode($settings, $language = array()) {
         $node = [
-            // Podtyp LocalBusiness dopasowany do branzy — serwis sprzetu komputerowego.
-            '@type'       => 'ComputerRepairService',
+            // LocalBusiness, a nie "ComputerRepairService": tego drugiego typu schema.org
+            // nie ma w slowniku (krazy po poradnikach SEO, ale https://schema.org/ComputerRepairService
+            // zwraca 404 — dla napraw istnieja tylko AutoRepair i MotorcycleRepair).
+            // Nierozpoznany typ walidator odrzucal, a przy okazji unieważnial kazda wlasciwosc,
+            // ktora na ten wezel wskazuje: WebSite.publisher i Service.provider.
+            // Branze niesie opis, slogan i wezly Service, nie sama nazwa typu.
+            '@type'       => 'LocalBusiness',
             '@id'         => base_url() . '#organization',
             'url'         => base_url(),
             'name'        => $this->str($settings, 'company_name'),
