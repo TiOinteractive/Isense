@@ -286,7 +286,6 @@ class CinemaMovieModel extends Model{
                     'id_lang' => $id_lang,
                     'title' => $lang['title'],
                     'description' => $lang['description'],
-                    'keywords' => $lang['keywords'],
                     'slug' => 'movie'
                 );
                 $lang = $this->db->table('cinema_meta_lang')->select('id')->where('id_cinema', $id_movie)->where('slug', '')->where('id_lang', $id_lang)->get()->getRowArray();

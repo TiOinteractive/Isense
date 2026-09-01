@@ -150,14 +150,6 @@
                                     <textarea name="meta[lang][<?=$lang['id']; ?>][description]"><?=!empty($catalog['meta']['lang']) ? $catalog['meta']['lang'][$lang['id']]['description'] : ''; ?></textarea>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-label">
-                                    <label><?=lang('Catalog.MetaKeywords');?></label>
-                                </div>
-                                <div class="form-field">
-                                    <textarea name="meta[lang][<?=$lang['id']; ?>][keywords]"><?=!empty($catalog['meta']['lang']) ? $catalog['meta']['lang'][$lang['id']]['keywords'] : ''; ?></textarea>
-                                </div>
-                            </div>
                         </div>
                     <?php ++$l; endforeach; ?>
                 <?php if(!empty($languages) && count($languages) > 1): ?></div><?php endif; ?>

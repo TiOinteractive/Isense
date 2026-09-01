@@ -180,7 +180,6 @@ class CatalogModel extends Model{
                     'id_lang' => $id_lang,
                     'title' => $lang['title'],
                     'description' => $lang['description'],
-                    'keywords' => $lang['keywords'],
                 );
                 $lang = $this->db->table('catalog_meta_lang')->select('id')->where('id_catalog', $id_catalog)->where('id_lang', $id_lang)->get()->getRowArray();
                 if(!empty($lang) && !empty($lang['id'])) {

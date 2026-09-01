@@ -178,7 +178,6 @@ class EventPlaceModel extends Model{
                     'id_lang' => $id_lang,
                     'title' => $lang['title'],
                     'description' => $lang['description'],
-                    'keywords' => $lang['keywords'],
                     'slug' => 'place',
                 );
                 $lang = $this->db->table('event_meta_lang')->select('id')->where('id_event', $id_place)->where('slug', 'place')->where('id_lang', $id_lang)->get()->getRowArray();

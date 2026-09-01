@@ -34,7 +34,7 @@ class SettingsModel extends Model {
                 $ids[] = $id_settings;
             }
             
-            $query = $this->select('id')->notLike('name', 'url_%')->notLike('name', 'special_%');
+            $query = $this->select('id')->notLike('name', 'url_%')->notLike('name', 'special_%')->where('name !=', 'meta_keywords');
             if(!empty($ids)) {
                 $query->whereNotIn('id', $ids);
             }
@@ -42,7 +42,7 @@ class SettingsModel extends Model {
             if(!empty($list)) {
                 foreach($list as $l) {
                     $this->db->table('settings_lang')->where('id_settings', $l['id'])->delete();
-                    $this->where('id', $l['id'])->notLike('name', 'url_%')->notLike('name', 'special_%')->delete();
+                    $this->where('id', $l['id'])->notLike('name', 'url_%')->notLike('name', 'special_%')->where('name !=', 'meta_keywords')->delete();
                 }
             }
             $this->transComplete();

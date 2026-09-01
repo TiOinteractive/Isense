@@ -409,14 +409,6 @@
                                     <textarea name="meta_description[<?=$lang['id']; ?>]"><?=!empty($settings['meta_description']) && !empty($settings['meta_description'][$lang['id']]) ? $settings['meta_description'][$lang['id']] : ''; ?></textarea>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-label">
-                                    <label><?=lang('Admin.settings.MetaKeywords');?></label>
-                                </div>
-                                <div class="form-field">
-                                    <textarea name="meta_keywords[<?=$lang['id']; ?>]"><?=!empty($settings['meta_keywords']) && !empty($settings['meta_keywords'][$lang['id']]) ? $settings['meta_keywords'][$lang['id']] : ''; ?></textarea>
-                                </div>
-                            </div>
                         </div>
                     <?php ++$l; endforeach; ?>
                 <?php if(!empty($languages) && count($languages) > 1): ?></div><?php endif; ?>

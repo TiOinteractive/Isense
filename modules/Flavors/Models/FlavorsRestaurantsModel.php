@@ -315,7 +315,6 @@ class FlavorsRestaurantsModel extends Model{
                     'id_lang' => $id_lang,
                     'title' => $lang['title'],
                     'description' => $lang['description'],
-                    'keywords' => $lang['keywords'],
                 );
                 $lang = $this->db->table('flavors_restaurant_meta_lang')->select('id')->where('id_restaurant', $id_restaurant)->where('id_lang', $id_lang)->get()->getRowArray();
                 if(!empty($lang) && !empty($lang['id'])) {

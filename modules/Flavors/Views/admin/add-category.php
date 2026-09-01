@@ -87,14 +87,6 @@
                                     <textarea name="meta[lang][<?=$lang['id']; ?>][description]"><?=!empty($category['meta']['lang']) ? $category['meta']['lang'][$lang['id']]['description'] : ''; ?></textarea>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-label">
-                                    <label><?=lang('Admin.page.MetaKeywords');?></label>
-                                </div>
-                                <div class="form-field">
-                                    <textarea name="meta[lang][<?=$lang['id']; ?>][keywords]"><?=!empty($category['meta']['lang']) ? $category['meta']['lang'][$lang['id']]['keywords'] : ''; ?></textarea>
-                                </div>
-                            </div>
                         </div>
                     <?php ++$l; endforeach; ?>
 					<div class="form-row-space"></div>

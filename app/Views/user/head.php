@@ -5,7 +5,6 @@
         <title><?=!empty($metatags['title']) ? $metatags['title'] : ''; ?></title>
         <meta name="robots" content="<?php if(!empty($metatags['index']) && empty($metatags['no_index'])): ?>index, follow<?php else: ?>noindex, nofollow<?php endif; ?>">
         <meta name="description" content="<?=!empty($metatags['description']) ? esc($metatags['description']) : ''; ?>">
-        <meta name="keywords" content="<?=!empty($metatags['keywords']) ? esc($metatags['keywords']) : ''; ?>">
         <meta name="author" content="TiO interactive :: e-business solutions - www.tiointeractive.pl">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">

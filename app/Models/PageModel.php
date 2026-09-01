@@ -157,7 +157,6 @@ class PageModel extends Model {
                     'id_lang' => $id_lang,
                     'title' => $lang['title'],
                     'description' => $lang['description'],
-                    'keywords' => $lang['keywords'],
                 );
                 $lang = $this->db->table('page_meta_lang')->select('id')->where('id_page', $id_page)->where('id_lang', $id_lang)->get()->getRowArray();
                 if (!empty($lang) && !empty($lang['id'])) {

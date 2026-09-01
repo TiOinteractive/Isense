@@ -317,7 +317,6 @@ class EventModel extends Model{
                     'id_lang' => $id_lang,
                     'title' => $lang['title'],
                     'description' => $lang['description'],
-                    'keywords' => $lang['keywords'],
                     'slug' => ''
                 );
                 $lang = $this->db->table('event_meta_lang')->select('id')->where('id_event', $id_event)->where('slug', '')->where('id_lang', $id_lang)->get()->getRowArray();
