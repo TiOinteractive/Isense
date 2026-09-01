@@ -268,81 +268,11 @@ class Page {
         if(!empty($link['link'])) {
             $metatags['canonical'] = base_url() . (!empty($language['slug']) ? $language['slug'] . '/' : '') . $link['link'];
         }
-        $social_links = [];
-        if(!empty($settings['facebook'])) {
-            $social_links[] = $settings['facebook'];
-        }
-        if(!empty($settings['youtube'])) {
-            $social_links[] = $settings['youtube'];
-        }
-        if(!empty($settings['instagram'])) {
-            $social_links[] = $settings['instagram'];
-        }
-        if(!empty($settings['twitter'])) {
-            $social_links[] = $settings['twitter'];
-        }
-        if(!empty($settings['tiktok'])) {
-            $social_links[] = $settings['tiktok'];
-        }
-        $metatags['microdata'] = [
-            'website' => [
-                '@type' => "WebSite",
-                '@id' => base_url() . '#website',
-                'url' => base_url(),
-                'name' => !empty($settings['company_name']) ? $settings['company_name'] : '',
-                'description' => !empty($settings['meta_description']) ? $settings['meta_description'] : '',
-                "inLanguage" => !empty($language['iso_code']) ? $language['iso_code'] : $language['lang_code']
-            ],
-            'organization' => [
-                '@type' => ['Organization', 'NewsMediaOrganization'],
-                '@id' => base_url() . '#organization',
-                'url' => base_url(),
-                'name' => !empty($settings['company_name']) ? $settings['company_name'] : '',
-                'logo' => [
-                    '@type' => 'ImageObject',
-                    'url' => !empty($settings['logo']) && !empty($settings['logo']['path']) ? base_url() . 'image/original/' . $settings['logo']['path'] : ''
-                ],
-                'address' => [
-                    '@type' => 'PostalAddress',
-                    'streetAddress' => 'ul Twardowskiego 4B',
-                    'addressLocality' => 'Rzeszów',
-                    'addressRegion' => 'Podkarpackie',
-                    'postalCode' => '35-302',
-                    'addressCountry' => 'PL',
-                    'name' => 'Redakcja RESinet.pl'
-                ],
-                'contactPoint' => [
-                    [
-                        '@type' => 'ContactPoint',
-                        'contactType' => 'editorial',
-                        'telephone' => $settings['phone'],
-                        'email' => $settings['email'],
-                        'availableLanguage' => ["Polish"],
-                    ],
-                ],
-                'areaServed' => [
-                    [
-                        "@type" => "City",
-                        "name" => "Rzeszów",
-                        "sameAs" => "https://pl.wikipedia.org/wiki/Rzeszów"
-                    ],
-                    [
-                        "@type" => "AdministrativeArea", 
-                        "name" => "Podkarpackie",
-                        "sameAs" => "https://pl.wikipedia.org/wiki/Województwo_podkarpackie"
-                    ]
-                ],
-                'sameAs' => $social_links,
-                'foundingDate' => '2001',
-                "knowsAbout" => [
-                    "Rzeszów", 
-                    "Podkarpacie", 
-                    "lokalne wiadomości",
-                    "wydarzenia regionalne"
-                  ],
-                  "slogan" => "Najnowsze wiadomości z Rzeszowa i regionu"
-            ],
-        ];
+        // Graf schema.org (WebSite + LocalBusiness) w calosci z ustawien panelu —
+        // patrz App\Libraries\SchemaOrg. Wczesniej siedzial tu literal opisujacy
+        // zupelnie inny serwis (portal RESinet.pl z Rzeszowa).
+        $schema = new SchemaOrg();
+        $metatags['microdata'] = $schema->graph($settings, $language);
         return $metatags;
     }
 

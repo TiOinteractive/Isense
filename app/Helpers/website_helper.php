@@ -14,7 +14,9 @@ function arrayToSchema($data, $options = []) {
         'dateFields' => ['datePublished', 'dateModified', 'dateCreated'], // Pola z datami
         'numberFields' => ['width', 'height', 'wordCount', 'position'], // Pola numeryczne
         'urlFields' => ['url', '@id', 'sameAs'], // Pola URL
-        'preserveArrays' => ['keywords', 'sameAs', 'image', 'contactPoint', 'areaServed'] // Pola które mają pozostać tablicami
+        // Pola które mają pozostać tablicami (bez tego wycięcie pustego elementu
+        // rozjeżdża klucze i json_encode robi z listy obiekt {"0":...})
+        'preserveArrays' => ['keywords', 'sameAs', 'image', 'contactPoint', 'areaServed', 'openingHoursSpecification', 'dayOfWeek', 'availableLanguage', 'knowsAbout']
     ];
     
     $options = array_merge($defaultOptions, $options);

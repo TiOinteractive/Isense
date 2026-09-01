@@ -350,6 +350,30 @@ if (! function_exists('isense_lang_id')) {
     }
 }
 
+if (! function_exists('isense_jsonld')) {
+    /**
+     * Gotowy <script type="application/ld+json"> z grafem WebSite + LocalBusiness
+     * dla layoutu motywu (app/Views/isense/layout.php). Strony renderowane przez
+     * Front.php nie przechodza przez Page::getDefaultMetatags(), wiec do tej pory
+     * nie mialy zadnych danych strukturalnych — tu skladamy dokladnie ten sam graf
+     * z tych samych ustawien.
+     */
+    function isense_jsonld(): string
+    {
+        helper('website');
+
+        $db       = \Config\Database::connect();
+        $language = $db->table('language')->select('lang_code,iso_code')
+            ->where('id', isense_lang_id($db))->get()->getRowArray() ?? [];
+
+        $graph = (new \App\Libraries\SchemaOrg())->graph(isense_settings(), $language);
+
+        return ENVIRONMENT === 'production'
+            ? generateJsonLdHtmlProd($graph)
+            : generateJsonLdHtmlDev($graph);
+    }
+}
+
 if (! function_exists('isense_announcement')) {
     /**
      * Zwraca dane paska ogłoszeniowego z ustawień: ['enabled' => bool, 'text' => string].

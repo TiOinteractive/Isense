@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" href="<?= $assets ?>/img/favicon.png">
     <link rel="apple-touch-icon" href="<?= $assets ?>/img/favicon-180.png">
     <link rel="stylesheet" href="<?= $assets ?>/css/isense.css">
+    <?= isense_jsonld() ?>
 </head>
 <body class="bg-background text-foreground antialiased">
     <div class="min-h-screen flex flex-col">

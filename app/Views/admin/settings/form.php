@@ -131,6 +131,141 @@
                 </div>
             </div>
 
+            <!-- Dane strukturalne (schema.org) — trafiają do JSON-LD w <head> każdej strony -->
+            <div class="form-row-space"></div>
+            <div class="form-row nag">
+                <h3>Dane strukturalne (schema.org)</h3>
+            </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <div class="shortcodes">Te pola budują blok JSON-LD w nagłówku strony — to z nich Google czyta adres, godziny i zakres działania firmy. Pole „Adres” wyżej jest tekstem dla człowieka; tutaj ten sam adres podajemy rozbity na części.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Ulica i numer</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="address_street" value="<?= !empty($settings['address_street']) ? esc($settings['address_street'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">np. <em>ul. Dobra 56/66</em></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Kod pocztowy</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="address_postal_code" value="<?= !empty($settings['address_postal_code']) ? esc($settings['address_postal_code'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">np. <em>00-312</em></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Miasto</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="address_city" value="<?= !empty($settings['address_city']) ? esc($settings['address_city'], 'attr') : ''; ?>" >
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Województwo</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="address_region" value="<?= !empty($settings['address_region']) ? esc($settings['address_region'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">np. <em>mazowieckie</em></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Kraj</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="address_country" value="<?= !empty($settings['address_country']) ? esc($settings['address_country'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">Dwuliterowy kod ISO, dla Polski: <em>PL</em></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Szerokość geograficzna</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="geo_lat" value="<?= !empty($settings['geo_lat']) ? esc($settings['geo_lat'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">Z Google Maps: prawy przycisk myszy na pinezce → pierwsza liczba. np. <em>52.241900</em>. Puste = współrzędne nie trafią do JSON-LD.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Długość geograficzna</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="geo_lng" value="<?= !empty($settings['geo_lng']) ? esc($settings['geo_lng'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">Druga liczba z Google Maps, np. <em>21.024600</em></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Godziny otwarcia (format dla Google)</label>
+                </div>
+                <div class="form-field">
+                    <textarea name="opening_hours_spec" rows="3"><?= !empty($settings['opening_hours_spec']) ? esc($settings['opening_hours_spec']) : ''; ?></textarea>
+                    <?php /* Osobne pole od "Godziny otwarcia" wyzej: tamto jest tekstem po polsku
+                             dla odwiedzajacego, tego wymaga schema.org i musi byc maszynowe. */ ?>
+                    <div class="shortcodes">Jedna reguła w linii, format <em>Dni GG:MM-GG:MM</em>. Dni: <em>Mo Tu We Th Fr Sa Su</em>, można zakresem (<em>Mo-Fr</em>) lub listą (<em>Mo,We,Fr</em>). Przykład:<br><em>Mo-Fr 09:00-19:00</em><br><em>Sa 10:00-14:00</em><br>Dni nieczynne po prostu pomijamy. Linie w złym formacie są ignorowane.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Obszar działania</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="area_served" value="<?= !empty($settings['area_served']) ? esc($settings['area_served'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">Lista po przecinku, np. <em>Warszawa, Polska</em></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Rok założenia</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="founding_date" value="<?= !empty($settings['founding_date']) ? esc($settings['founding_date'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">Rok (<em>2008</em>) albo pełna data (<em>2008-03-01</em>). Musi się zgadzać z tym, co piszemy w treści strony.</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
+                    <label>Przedział cenowy</label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="price_range" value="<?= !empty($settings['price_range']) ? esc($settings['price_range'], 'attr') : ''; ?>" >
+                    <div class="shortcodes">Umowna skala, np. <em>$$</em> lub <em>100-2000 PLN</em></div>
+                </div>
+            </div>
+            <div class="tabs">
+                <?php if(!empty($languages) && count($languages) > 1): ?>
+                    <div class="tabs-head">
+                        <?php $l=0; foreach($languages as $lang): ?>
+                        <div class="tab<?=$l==0 ? ' active' : ''; ?>"><span class="name"><?=$lang['name']; ?></span><span class="short-name"><?=$lang['short_name']; ?></span></div>
+                        <?php ++$l; endforeach; ?>
+                    </div>
+                    <div class="tabs-content">
+                <?php endif; ?>
+                    <?php $l=0; foreach($languages as $lang): ?>
+                        <div class="tab-item<?=$l==0 ? ' active' : ''; ?>">
+                            <div class="form-row">
+                                <div class="form-label">
+                                    <label>Slogan firmy</label>
+                                </div>
+                                <div class="form-field">
+                                    <input type="text" name="slogan[<?=$lang['id']; ?>]" value="<?= esc(!empty($settings['slogan']) && !empty($settings['slogan'][$lang['id']]) ? $settings['slogan'][$lang['id']] : '', 'attr'); ?>" />
+                                    <div class="shortcodes">Jedno zdanie opisujące firmę, np. <em>Serwis i naprawa sprzętu Apple w Warszawie</em></div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php ++$l; endforeach; ?>
+                <?php if(!empty($languages) && count($languages) > 1): ?></div><?php endif; ?>
+            </div>
+
             <!-- Pasek ogłoszeniowy (góra strony) — pod ustawieniami globalnymi -->
             <div class="form-row-space"></div>
             <div class="form-row nag">

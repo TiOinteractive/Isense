@@ -92,10 +92,11 @@
             <!-- End Facebook Pixel -->
         <?php endif; ?>
         <?php if(!empty($metatags['microdata'])): ?>
-            <?=generateJsonLdHtmlDev($metatags['microdata']); ?>
+            <?php /* Na produkcji JSON minifikowany, lokalnie czytelny do debugowania. */ ?>
+            <?=ENVIRONMENT === 'production' ? generateJsonLdHtmlProd($metatags['microdata']) : generateJsonLdHtmlDev($metatags['microdata']); ?>
         <?php endif; ?>
         <?php if(!empty($breadcrumbs)): ?>
-            <?=generateBreadcrumbListJsonLd($breadcrumbs, !empty($settings['company_name']) ? $settings['company_name'] : 'RESinet.pl', base_url()); ?>
+            <?=generateBreadcrumbListJsonLd($breadcrumbs, !empty($settings['company_name']) ? $settings['company_name'] : 'iSense', base_url()); ?>
         <?php endif; ?>
     </head>
 <body class="<?=!empty($home) ? 'home' : 'page'?><?=!empty($mobile) ? ' mobile' : ''?>">
