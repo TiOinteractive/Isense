@@ -5,5 +5,6 @@
         </button>
     </div>
     <?= view('admin/page/menu_left_submodule_list', array('left_submodules' => $left_submodules)); ?>
-    <?= view('admin/page/menu_left_page_list', array('left_pages' => $left_pages)); ?>
+    <?php /* Ta sama kolejnosc co na liscie stron: alfabetycznie A-Z, rekurencyjnie. */ ?>
+    <?= view('admin/page/menu_left_page_list', array('left_pages' => sortPagesAlphabetically(!empty($left_pages) ? $left_pages : array()))); ?>
 </div>

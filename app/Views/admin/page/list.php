@@ -21,6 +21,9 @@
                     <?=lang('Admin.page.Delete');?>
                 </div>
             </div>
+            <?php /* Domyslne sortowanie A-Z zamiast kolejnosci z page.order. Rekurencyjne,
+                     wiec podstrony tez ida po nazwie; szczegoly w website_helper.php. */ ?>
+            <?php $pages = sortPagesAlphabetically(!empty($pages) ? $pages : array()); ?>
             <?php if(!empty($pages)): ?>
                 <?php foreach($pages as $k=>$page): ?>
                     <?= view('admin/page/list_item', array('page'=>$page, 'count'=>count($pages), 'item_no'=>$k+1)); ?>

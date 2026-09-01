@@ -345,3 +345,37 @@ function deepArrayMergeMultiple(...$arrays) {
     
     return $result;
 }
+/**
+ * Sortuje alfabetycznie (A-Z) drzewo stron z PageModel::getPagesStructure().
+ *
+ * Rekurencyjnie, wiec podstrony w kazdej galezi tez ida po nazwie, a struktura
+ * drzewa (klucz 'list', poziom zagniezdzenia) zostaje bez zmian.
+ *
+ * Collator z ext-intl (twarde wymaganie CI4) ustawia polskie znaki na wlasciwych
+ * miejscach — zwykle strcmp/strcasecmp wrzuciloby "Ł" i "Ż" za "Z", bo porownuje
+ * bajty UTF-8. Locale bierzemy z aktualnego jezyka panelu, ktory CI4 ustawia
+ * przez Locale::setDefault(). Gdyby intl nie bylo, jest fallback na strcasecmp.
+ *
+ * Uwaga: kolejnosc z kolumny page.order (uzywana przez getPagesStructure) jest
+ * tu nadpisywana. Panel nie ma UI do recznego ustawiania kolejnosci stron, wiec
+ * nie odbiera to nikomu zapisanego ukladu.
+ */
+function sortPagesAlphabetically(array $pages, $collator = null) {
+    if (empty($pages)) {
+        return $pages;
+    }
+    if ($collator === null && class_exists('Collator')) {
+        $collator = collator_create(locale_get_default());
+    }
+    usort($pages, function ($a, $b) use ($collator) {
+        $x = (string) (isset($a['name']) ? $a['name'] : '');
+        $y = (string) (isset($b['name']) ? $b['name'] : '');
+        return $collator ? $collator->compare($x, $y) : strcasecmp($x, $y);
+    });
+    foreach ($pages as $k => $page) {
+        if (!empty($page['list'])) {
+            $pages[$k]['list'] = sortPagesAlphabetically($page['list'], $collator);
+        }
+    }
+    return $pages;
+}
