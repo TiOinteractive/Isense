@@ -39,33 +39,33 @@ $devices = ['iphone' => 'iPhone', 'ipad' => 'iPad', 'macbook' => 'MacBook', 'ima
                     <div data-form-msg class="hidden text-sm rounded-lg px-4 py-3"></div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Imię i nazwisko</label>
-                        <input type="text" name="name" placeholder="Jan Kowalski" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <input type="text" name="name" placeholder="Jan Kowalski" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Adres odbioru</label>
-                        <input type="text" name="address" placeholder="ul. Przykładowa 123, 00-001 Warszawa" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <input type="text" name="address" placeholder="ul. Przykładowa 123, 00-001 Warszawa" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Numer telefonu</label>
                         <div class="flex gap-2">
-                            <input type="tel" name="phone" placeholder="+48 123 456 789" class="flex-1 px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                            <input type="tel" name="phone" placeholder="+48 123 456 789" class="flex-1 px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                             <button type="button" class="px-4 py-3 bg-[#3b81f7] text-white rounded-lg hover:bg-[#2563eb] transition-colors whitespace-nowrap">Wyślij kod</button>
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Adres e-mail</label>
-                        <input type="email" name="email" placeholder="jan@example.com" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <input type="email" name="email" placeholder="jan@example.com" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                     </div>
                     <div>
                         <label for="pickup-device" class="block text-sm font-medium text-[#1D1D1F] mb-2">Typ urządzenia</label>
-                        <select id="pickup-device" name="device" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <select id="pickup-device" name="device" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                             <option value="">Wybierz urządzenie</option>
                             <?php foreach ($devices as $v => $l): ?><option value="<?= $v ?>"><?= esc($l) ?></option><?php endforeach; ?>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Opis usterki</label>
-                        <textarea name="description" placeholder="Opisz problem z urządzeniem..." class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20 min-h-24"></textarea>
+                        <textarea name="description" placeholder="Opisz problem z urządzeniem..." class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20 min-h-24"></textarea>
                     </div>
                     <label class="flex items-start gap-3 cursor-pointer">
                         <input type="checkbox" name="terms" class="mt-1 w-5 h-5 text-[#3b81f7] border-[#D2D2D7] rounded focus:ring-[#3b81f7]">

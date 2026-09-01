@@ -25,7 +25,7 @@ Formularz iSense (opis + formularz)
 helper(['url', 'isense', 'form_field']);
 
 $cls_label = 'block text-sm font-medium text-[#1D1D1F] mb-2';
-$cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20';
+$cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20';
 ?>
 <section class="bg-[#F5F5F7] py-16 lg:py-24 section-<?=$id_cont; ?>">
     <div class="max-w-[1300px] mx-auto px-4 lg:px-12">

@@ -92,7 +92,7 @@ $inactCls = 'border-[#D2D2D7] hover:border-[#6E6E73]';
                     </div>
                     <div>
                         <label for="tradein-model" class="block text-sm font-medium text-[#1D1D1F] mb-3">2. Wybierz model</label>
-                        <select data-tradein-model id="tradein-model" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <select data-tradein-model id="tradein-model" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                             <?php foreach (($devices[0]['models'] ?? []) as $mi => $mod): ?><option value="<?= $mi ?>"><?= esc($mod['name']) ?></option><?php endforeach; ?>
                         </select>
                     </div>

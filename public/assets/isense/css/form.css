@@ -24,13 +24,11 @@
     border-color: #d4183d;
 }
 
-/* Widoczny fokus klawiatury. Pola maja go z Tailwinda (focus:ring), ale przycisk
-   wysylki i linki wewnatrz formularza nie mialy zadnego — a to jedyny sposob,
-   w jaki uzytkownik klawiatury widzi, gdzie jest (WCAG 2.4.7). */
-.isense-form :focus-visible {
-    outline: 2px solid #3b81f7;
-    outline-offset: 2px;
-}
+/* Fokus klawiatury obsluguje teraz globalna regula z a11y.css (pierscien
+   dwutonowy, ten sam na calej stronie). Lokalna regula `.isense-form
+   :focus-visible` byla jej wezszym podzbiorem — 2px zamiast 3px i bez bialej
+   obwodki — a przez wyzsza specyficznosc formularze wygladalyby inaczej niz
+   reszta motywu. */
 
 /* Checkbox zgody: bledem oznaczany jest <label> (rodzic inputa). */
 .isense-form .field-box label.error {

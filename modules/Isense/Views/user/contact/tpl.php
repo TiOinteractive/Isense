@@ -55,28 +55,28 @@ $subjects = $d['subjects'] ?? [];
                     <div data-form-msg class="hidden text-sm rounded-lg px-4 py-3"></div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Imię i nazwisko *</label>
-                        <input type="text" required name="name" placeholder="Jan Kowalski" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <input type="text" required name="name" placeholder="Jan Kowalski" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                     </div>
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-[#1D1D1F] mb-2">E-mail *</label>
-                            <input type="email" required name="email" placeholder="jan@example.com" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                            <input type="email" required name="email" placeholder="jan@example.com" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Telefon</label>
-                            <input type="tel" name="phone" placeholder="+48 123 456 789" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                            <input type="tel" name="phone" placeholder="+48 123 456 789" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                         </div>
                     </div>
                     <div>
                         <label for="contact-subject" class="block text-sm font-medium text-[#1D1D1F] mb-2">Temat *</label>
-                        <select required id="contact-subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <select required id="contact-subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                             <option value="">Wybierz temat</option>
                             <?php foreach ($subjects as $s): if (empty($s['label'])) continue; ?><option value="<?= esc($s['label'], 'attr') ?>"><?= esc($s['label']) ?></option><?php endforeach; ?>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Wiadomość *</label>
-                        <textarea required name="message" rows="6" placeholder="Opisz swoje pytanie lub problem..." class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20 resize-none"></textarea>
+                        <textarea required name="message" rows="6" placeholder="Opisz swoje pytanie lub problem..." class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20 resize-none"></textarea>
                     </div>
                     <?php if (!empty($d['consent_text'])): ?>
                     <div class="bg-[#F5F5F7] rounded border border-[#E5E5EA] p-4">

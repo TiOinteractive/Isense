@@ -62,21 +62,21 @@ iSense — Kontakt
                 <form class="space-y-6" onsubmit="event.preventDefault(); this.reset(); alert('Dziękujemy! Wiadomość została wysłana — skontaktujemy się z Tobą wkrótce.');">
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Imię i nazwisko *</label>
-                        <input type="text" required name="name" placeholder="Jan Kowalski" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <input type="text" required name="name" placeholder="Jan Kowalski" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                     </div>
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-[#1D1D1F] mb-2">E-mail *</label>
-                            <input type="email" required name="email" placeholder="jan@example.com" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                            <input type="email" required name="email" placeholder="jan@example.com" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Telefon</label>
-                            <input type="tel" name="phone" placeholder="+48 123 456 789" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                            <input type="tel" name="phone" placeholder="+48 123 456 789" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                         </div>
                     </div>
                     <div>
                         <label for="contact-subject" class="block text-sm font-medium text-[#1D1D1F] mb-2">Temat *</label>
-                        <select required id="contact-subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <select required id="contact-subject" name="subject" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                             <option value="">Wybierz temat</option>
                             <option value="quote">Wycena naprawy</option>
                             <option value="status">Status zlecenia</option>
@@ -87,7 +87,7 @@ iSense — Kontakt
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-[#1D1D1F] mb-2">Wiadomość *</label>
-                        <textarea required name="message" rows="6" placeholder="Opisz swoje pytanie lub problem..." class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20 resize-none"></textarea>
+                        <textarea required name="message" rows="6" placeholder="Opisz swoje pytanie lub problem..." class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20 resize-none"></textarea>
                     </div>
                     <button type="submit" class="w-full bg-[#3b81f7] text-white px-8 py-4 rounded-lg hover:bg-[#2563eb] transition-colors font-medium flex items-center justify-center gap-2">
                         <?= isense_icon('send', 'w-5 h-5') ?>Wyślij wiadomość

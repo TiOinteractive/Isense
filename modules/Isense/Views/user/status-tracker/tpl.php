@@ -13,7 +13,7 @@ $heroStyle = $bg ? "background-image: linear-gradient(rgba(255, 255, 255, 0.9), 
             <?php if (!empty($d['subtitle'])): ?><p class="text-lg lg:text-xl text-[#6E6E73] mb-8"><?= esc($d['subtitle']) ?></p><?php endif; ?>
             <form data-status-form method="get" action="<?= site_url('isense/status') ?>" class="max-w-xl mx-auto">
                 <div class="flex gap-2">
-                    <input type="text" name="order" required placeholder="np. ORD-12345" class="flex-1 px-6 py-4 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20 text-lg">
+                    <input type="text" name="order" required placeholder="np. ORD-12345" class="flex-1 px-6 py-4 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20 text-lg">
                     <button type="submit" class="bg-[#3b81f7] text-white px-8 py-4 rounded-lg hover:bg-[#2563eb] transition-colors font-medium flex items-center gap-2"><?= isense_icon('search', 'w-5 h-5') ?>Sprawdź</button>
                 </div>
             </form>

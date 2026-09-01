@@ -18,7 +18,7 @@ $popularMenu = 10;
 <div class="isense-theme min-h-screen flex flex-col">
     <?= view('isense/partials/header') ?>
 
-    <main class="flex-1 flex items-center">
+    <main id="main" tabindex="-1" class="flex-1 flex items-center">
         <div class="max-w-[1300px] mx-auto px-4 lg:px-12 w-full py-20 lg:py-28">
             <div class="max-w-2xl mx-auto text-center">
                 <p class="text-[120px] lg:text-[160px] font-bold leading-none text-[#3b81f7]">404</p>

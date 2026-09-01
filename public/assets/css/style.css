@@ -105,6 +105,8 @@ body::-webkit-scrollbar-thumb:hover, textarea::-webkit-scrollbar-thumb:hover, .j
 .pricing-tab:hover {color: #1D1D1F; background: rgba(255, 255, 255, 0.5);}
 .pricing-tab.is-active {color: #3b81f7; background: #fff;}
 .pricing-tab.is-active:after {content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: #3b81f7;}
+/* Swiadomy wyjatek od globalnej reguly fokusu z assets/isense/css/a11y.css: */
+/* zakladki przylegaja do siebie i do panelu, wiec outline na zewnatrz bylby przyciety - stad offset do srodka. */
 .pricing-tab:focus-visible, .pricing-service:focus-visible {outline: 2px solid #3b81f7; outline-offset: -2px;}
 .pricing-panel {background: #fff;}
 .pricing-cols {display: flex; align-items: stretch; gap: 0;}

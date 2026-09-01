@@ -94,7 +94,7 @@ $isAssets = rtrim(base_url('assets/isense'), '/'); ?>
                     <!-- Krok 2: model -->
                     <div>
                         <label for="tradein-model" class="block text-sm font-medium text-[#1D1D1F] mb-3">2. Wybierz model</label>
-                        <select id="tradein-model" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20">
+                        <select id="tradein-model" class="w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:ring-2 focus:ring-[#3b81f7]/20">
                             <?php
                             $models = ['iPhone 15 Pro Max', 'iPhone 15 Pro', 'iPhone 15 Plus', 'iPhone 15'];
                             foreach ($models as $model): ?>

@@ -32,11 +32,20 @@ $childIcon = static function (array $child) use ($fallbackIcons): string {
     return '';
 };
 ?>
-<?php /* Arkusz naglowka jedzie z partialem — jest on wlaczany z czterech miejsc
+<?php /* Arkusze naglowka jada z partialem — jest on wlaczany z czterech miejsc
          (isense/layout, user/page/_isense_open, user/page/isense, errors/404),
          a tylko czesc z nich buduje wlasna sekcje <head>. Tak samo jak
-         _isense_open.php linkuje isense.css. */ ?>
+         _isense_open.php linkuje isense.css. a11y.css trafia tu z tego samego
+         powodu: pierscien fokusu i skip-link musza byc na kazdej z tych
+         czterech sciezek, a style.css na dwoch z nich sie nie laduje. */ ?>
 <link rel="stylesheet" href="<?= rtrim(base_url('assets/isense'), '/') ?>/css/header.css">
+<link rel="stylesheet" href="<?= rtrim(base_url('assets/isense'), '/') ?>/css/a11y.css">
+<?php /* Pierwszy element w <body> na wszystkich czterech sciezkach — przed
+         naglowkiem nie ma nic fokusowalnego (user/head.php emituje po <body>
+         tylko <noscript> z GTM). Bez niego uzytkownik klawiatury musi
+         przetabowac kilkadziesiat linkow naglowka i menu, zeby dojsc do tresci
+         (WCAG 2.4.1 Bypass Blocks, poziom A). */ ?>
+<a href="#main" class="isense-skip-link">Przejdź do treści</a>
 <div class="relative z-50">
     <!-- Pasek ogłoszeniowy (zarządzalny: panel → Ustawienia → „Pasek ogłoszeniowy") -->
     <?php if (! empty($announcement['enabled'])): ?>

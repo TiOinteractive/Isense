@@ -15,9 +15,11 @@
     <?= isense_jsonld() ?>
 </head>
 <body class="bg-background text-foreground antialiased">
-    <div class="min-h-screen flex flex-col">
+    <?php /* `isense-theme` to hak dla assets/isense/css/a11y.css — ta sciezka jako
+             jedyna go nie miala, a pierscien fokusu jest scope'owany do motywu. */ ?>
+    <div class="isense-theme min-h-screen flex flex-col">
         <?= $this->include('isense/partials/header') ?>
-        <main class="flex-1">
+        <main id="main" tabindex="-1" class="flex-1">
             <?= $this->renderSection('content') ?>
         </main>
         <?= $this->include('isense/partials/footer') ?>

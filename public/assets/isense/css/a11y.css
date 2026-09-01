@@ -1,0 +1,61 @@
+/*
+ * Dostepnosc klawiatury — pierscien fokusu i skip-link.
+ *
+ * Pierscien: przegladarka rysuje wlasny `outline: auto 3px`, ale w kolorze
+ * szarym (oklch(0.708 0 0)). Na jasnych sekcjach to wystarcza, na ciemnych
+ * powierzchniach motywu praktycznie znika — stopka #1D1D1F, kafelki social
+ * #2C2C2E, pasek nawigacji #424242–#909090 — a na niebieskim pasku
+ * ogloszeniowym #3b81f7 (przycisk „Zamknij") nie widac go wcale.
+ *
+ * Rozwiazanie: pierscien dwutonowy. Biala obwodka przylega do elementu
+ * (wypelnia szczeline z outline-offset), niebieski outline idzie na zewnatrz.
+ * Na bieli niewidoczna jest biel, wiec widac niebieski; na #3b81f7 niewidoczny
+ * jest niebieski, wiec widac biel; na ciemnym widac oba. Jedna regula pokrywa
+ * kazde tlo, bez listy wyjatkow do utrzymywania przy nowych sekcjach.
+ *
+ * Zwykly CSS, nie Tailwind: nie ma build stepu (patrz CLAUDE.md) — analogicznie
+ * do header.css, hero.css i form.css. Arkusz jedzie z partialem naglowka
+ * (isense/partials/header.php), wiec jest na wszystkich czterech sciezkach
+ * renderowania motywu.
+ *
+ * Scope `.isense-theme`: reguly nie moga wyciec do panelu admina ani do starych
+ * szablonow resinet (szablon*.php), ktore dziela ten sam dokument.
+ */
+
+.isense-theme :focus-visible {
+    outline: 3px solid #3b81f7;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #fff;
+}
+
+/* Cel skoku ze skip-linku. `tabindex="-1"` na <main> jest konieczne, zeby
+   fokus faktycznie sie przeniosl (bez niego czesc przegladarek tylko przewija
+   strone), ale uzytkownik nie „wszedl" tam Tabem — pierscien byłby mylacy. */
+.isense-theme main:focus,
+.isense-theme main:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Skip-link — pierwszy element w <body>, ukryty do momentu otrzymania fokusu.
+   Nie `display:none` ani `visibility:hidden`: element musi zostac fokusowalny.
+   z-index ponad sticky nav (z-50 w partials/header.php). */
+.isense-skip-link {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: #3b81f7;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom-right-radius: 0.25rem;
+    transform: translateY(-200%);
+    transition: transform 0.15s ease;
+}
+
+.isense-skip-link:focus {
+    transform: translateY(0);
+}
