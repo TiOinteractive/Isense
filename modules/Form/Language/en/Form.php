@@ -54,6 +54,11 @@ return [
         'Send' => 'Send',
         'Choose' => '-- choose --',
         'CheckboxRequired' => 'This box must be checked.',
+        // Browser-side validation messages (assets/js/form.js), passed to JS in
+        // the form's data-msg-* attributes so the message follows the page
+        // language rather than the browser language.
+        'Required' => 'This field is required.',
+        'Invalid' => 'The value has an invalid format.',
     ],
     'file' => [
         'NotUploaded' => 'No file selected or the upload failed.',
@@ -76,12 +81,22 @@ return [
     ],
     'validation' => [
         'Name' => 'Full name (used in mail subject)',
+        'Address' => 'Address (autofill)',
         'Email' => 'E-mail adress',
         'Phone' => 'Phone number',
         'ZipCode' => 'ZIP code',
         'NIP' => 'NIP number',
         'Regon' => 'REGON number',
         'Pesel' => 'Pesel number',
+    ],
+    /* Hints for the `pattern` attribute — the browser shows them in a tooltip
+       when the format does not match (see Helpers/form_field_helper.php). */
+    'hint' => [
+        'Phone' => 'Enter a phone number, e.g. 601 234 567 or +48 601 234 567.',
+        'ZipCode' => 'Enter a ZIP code in the 00-000 format.',
+        'NIP' => 'Enter a 10-digit NIP number.',
+        'Regon' => 'Enter a 9-digit REGON number.',
+        'Pesel' => 'Enter an 11-digit PESEL number.',
     ],
     'type' => [
         'Text' => 'Text (input)',

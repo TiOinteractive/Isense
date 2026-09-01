@@ -16,8 +16,20 @@
 
 .isense-form .field-box.error input,
 .isense-form .field-box.error select,
-.isense-form .field-box.error textarea {
+.isense-form .field-box.error textarea,
+/* Drugi, niezalezny nosnik stanu: atrybut ustawiany razem z komunikatem.
+   Dzieki niemu ramka jest czerwona takze tam, gdzie rodzicem inputa nie jest
+   .field-box (szablon form1.php owija pole w dodatkowy <div>). */
+.isense-form [aria-invalid="true"] {
     border-color: #d4183d;
+}
+
+/* Widoczny fokus klawiatury. Pola maja go z Tailwinda (focus:ring), ale przycisk
+   wysylki i linki wewnatrz formularza nie mialy zadnego — a to jedyny sposob,
+   w jaki uzytkownik klawiatury widzi, gdzie jest (WCAG 2.4.7). */
+.isense-form :focus-visible {
+    outline: 2px solid #3b81f7;
+    outline-offset: 2px;
 }
 
 /* Checkbox zgody: bledem oznaczany jest <label> (rodzic inputa). */

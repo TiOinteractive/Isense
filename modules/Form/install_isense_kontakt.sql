@@ -243,8 +243,10 @@ INSERT INTO `tio_form_field_option_lang` (`id_option`,`id_lang`,`name`) VALUES (
 
 -- 20-22. ZAGNIEZDZENIE 2. POZIOMU:
 --        Temat = Naprawa wysylkowa -> Dostawa = Kurierem serwisu -> te pola.
-INSERT INTO `tio_form_field` (`id_form`,`type`,`order`,`required`,`publish`,`parent_field`,`parent_values`)
-VALUES (@id_form,'textarea',20,1,1,@f_dost,@o_kurier);
+-- `validation` = 'address' nie dodaje reguly serwerowej — wlacza
+-- autocomplete="street-address" (Helpers/form_field_helper.php).
+INSERT INTO `tio_form_field` (`id_form`,`type`,`validation`,`order`,`required`,`publish`,`parent_field`,`parent_values`)
+VALUES (@id_form,'textarea','address',20,1,1,@f_dost,@o_kurier);
 SET @f := LAST_INSERT_ID();
 INSERT INTO `tio_form_field_lang` (`id_field`,`id_lang`,`name`,`description`)
 VALUES (@f,@id_lang,'Adres odbioru paczki','Ulica, nr, kod pocztowy, miejscowość');

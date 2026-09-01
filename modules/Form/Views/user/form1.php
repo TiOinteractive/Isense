@@ -2,6 +2,9 @@
 /*
 Formularz 1
 */
+/* form_field: atrybuty required / type / autocomplete / inputmode wyliczane
+   z kolumny `validation` — patrz Helpers/form_field_helper.php. */
+helper('form_field');
 ?>
 <section class="section section-<?=$id_cont; ?>">
     <div class="container">
@@ -20,7 +23,7 @@ Formularz 1
                     <h2 class="form-name"><?=$data['name']; ?></h2>
                 <?php endif; ?>
                 <?php if(!empty($data['fields'])): ?>
-                    <form id="form-<?=$data['id']; ?>" class="form form-<?=$data['id']; ?> ajax" method="post" enctype="multipart/form-data" action="<?=uri_string(); ?>">
+                    <form id="form-<?=$data['id']; ?>" class="form form-<?=$data['id']; ?> ajax" data-msg-required="<?=esc(lang('Form.field.Required'), 'attr'); ?>" data-msg-invalid="<?=esc(lang('Form.field.Invalid'), 'attr'); ?>" data-msg-checkbox="<?=esc(lang('Form.field.CheckboxRequired'), 'attr'); ?>" data-msg-files="<?=esc(lang('Form.file.TooMany', array('{0}')), 'attr'); ?>" method="post" enctype="multipart/form-data" action="<?=uri_string(); ?>">
                         <input type="hidden" name="content" value="<?=$id_cont; ?>" />
                         <?php /* Honeypot — ukryty inline, bo dla klasy .field-box.h nie ma
                                  zadnej reguly CSS i pole bylo widoczne dla uzytkownikow,
@@ -48,19 +51,19 @@ Formularz 1
                                     switch($field['type']) {
                                         case 'textarea':
                                             echo '<div class="label"><label for="field-' . $field['id'] . '">' . $field['name'] . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
-                                            echo '<div><textarea '.$placeholder.' name="field_' . $field['id'] . '" id="field-' . $field['id'] . '"></textarea></div>';
+                                            echo '<div><textarea '.$placeholder.' name="field_' . $field['id'] . '" id="field-' . $field['id'] . '"' . form_field_attrs($field, 'textarea') . '></textarea></div>';
                                             break;
                                         case 'number':
                                             echo '<div class="label"><label for="field-' . $field['id'] . '">' . $field['name'] . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
-                                            echo '<div><input '.$placeholder.' type="number" name="field_' . $field['id'] . '" value="" id="field-' . $field['id'] . '" /></div>';
+                                            echo '<div><input '.$placeholder.' type="number" name="field_' . $field['id'] . '" value="" id="field-' . $field['id'] . '"' . form_field_attrs($field, 'number') . ' /></div>';
                                             break;
                                         case 'checkbox':
-                                            echo '<div class="label"><input type="checkbox" name="field_' . $field['id'] . '" value="1" id="field-' . $field['id'] . '" /></div>';
+                                            echo '<div class="label"><input type="checkbox" name="field_' . $field['id'] . '" value="1" id="field-' . $field['id'] . '"' . form_field_attrs($field, 'checkbox') . ' /></div>';
                                             echo '<div><label for="field-' . $field['id'] . '">' . ($field['required'] ? '<span class="req">*</span> ' : '') . $field['name'] . '</label></div>';
                                             break;
                                         case 'select':
                                             echo '<div class="label"><label for="field-' . $field['id'] . '">' . esc($field['name']) . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
-                                            echo '<div><select name="field_' . $field['id'] . '" id="field-' . $field['id'] . '">';
+                                            echo '<div><select name="field_' . $field['id'] . '" id="field-' . $field['id'] . '"' . form_field_attrs($field, 'select') . '>';
                                             echo '<option value="">' . esc(!empty($field['description']) ? $field['description'] : lang('Form.field.Choose')) . '</option>';
                                             // value = ID opcji: stabilne, niezalezne od etykiety i jezyka.
                                             foreach($field['options'] as $option) {
@@ -81,14 +84,15 @@ Formularz 1
                                             echo '<div><input type="file" name="field_' . $field['id'] . '[]" id="field-' . $field['id'] . '"'
                                                . ($max_files > 1 ? ' multiple="multiple"' : '')
                                                . ($accept !== '' ? ' accept="' . esc($accept, 'attr') . '"' : '')
-                                               . ' data-max-files="' . $max_files . '" /></div>';
+                                               . ' data-max-files="' . $max_files . '"'
+                                               . form_field_attrs($field, 'file') . ' /></div>';
                                             if(!empty($field['description'])) {
                                                 echo '<div class="hint">' . esc($field['description']) . '</div>';
                                             }
                                             break;
                                         default:
                                             echo '<div class="label"><label for="field-' . $field['id'] . '">' . $field['name'] . ($field['required'] ? '<span class="req">*</span>' : '') . '</label></div>';
-                                            echo '<div><input type="text" '.$placeholder.' name="field_' . $field['id'] . '" value="" id="field-' . $field['id'] . '" /></div>';
+                                            echo '<div><input type="' . form_field_input_type($field) . '" '.$placeholder.' name="field_' . $field['id'] . '" value="" id="field-' . $field['id'] . '"' . form_field_attrs($field, 'input') . ' /></div>';
                                             break;
                                     }
                                 ?>

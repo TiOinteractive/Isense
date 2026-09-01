@@ -22,7 +22,7 @@ Formularz iSense (opis + formularz)
  * Views/user/mails/<template>. Ten szablon ma swoj odpowiednik
  * mails/form_isense_2col.php — bez niego wysylka bylaby po cichu pomijana.
  */
-helper(['url', 'isense']);
+helper(['url', 'isense', 'form_field']);
 
 $cls_label = 'block text-sm font-medium text-[#1D1D1F] mb-2';
 $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus:border-[#3b81f7] focus:outline-none focus:ring-2 focus:ring-[#3b81f7]/20';
@@ -42,7 +42,7 @@ $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus
             <div class="form form-<?= (int) $data['id'] ?> isense-form">
                 <h2 class="text-3xl font-bold text-[#1D1D1F] mb-8"><?= esc(!empty($title) ? $title : (!empty($data['name']) ? $data['name'] : lang('User.contact.WriteToUs'))) ?></h2>
                 <?php if (!empty($data['fields'])): ?>
-                <form id="form-<?= (int) $data['id'] ?>" class="form form-<?= (int) $data['id'] ?> ajax space-y-6" method="post" enctype="multipart/form-data" action="<?= uri_string() ?>">
+                <form id="form-<?= (int) $data['id'] ?>" class="form form-<?= (int) $data['id'] ?> ajax space-y-6" data-msg-required="<?= esc(lang('Form.field.Required'), 'attr') ?>" data-msg-invalid="<?= esc(lang('Form.field.Invalid'), 'attr') ?>" data-msg-checkbox="<?= esc(lang('Form.field.CheckboxRequired'), 'attr') ?>" data-msg-files="<?= esc(lang('Form.file.TooMany', array('{0}')), 'attr') ?>" method="post" enctype="multipart/form-data" action="<?= uri_string() ?>">
                     <input type="hidden" name="content" value="<?= (int) $id_cont ?>" />
                     <?php /* Honeypot — ukryty inline, bo modul nie ma wlasnego arkusza stylow. */ ?>
                     <div class="field-box h" style="display:none" aria-hidden="true">
@@ -73,15 +73,15 @@ $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus
                                          na RODZICU inputa, wiec ramka musi nim byc, zeby dalo
                                          sie ja podswietlic (patrz assets/isense/css/form.css). */ ?>
                                 <label for="field-<?= $id ?>" class="bg-[#F5F5F7] rounded border border-[#E5E5EA] p-4 flex items-start gap-3 cursor-pointer">
-                                    <input type="checkbox" name="field_<?= $id ?>" value="1" id="field-<?= $id ?>" class="mt-0.5 w-4 h-4 flex-shrink-0 accent-[#3b81f7]">
+                                    <input type="checkbox" name="field_<?= $id ?>" value="1" id="field-<?= $id ?>"<?= form_field_attrs($field, 'checkbox') ?> class="mt-0.5 w-4 h-4 flex-shrink-0 accent-[#3b81f7]">
                                     <span class="text-xs text-[#6E6E73] leading-relaxed"><?= $label ?></span>
                                 </label>
                             <?php else: ?>
                                 <label for="field-<?= $id ?>" class="<?= $cls_label ?>"><?= $label ?></label>
                                 <?php if ($field['type'] === 'textarea'): ?>
-                                    <textarea name="field_<?= $id ?>" id="field-<?= $id ?>" rows="6"<?= $ph ?> class="<?= $cls_input ?> resize-none"></textarea>
+                                    <textarea name="field_<?= $id ?>" id="field-<?= $id ?>" rows="6"<?= $ph ?><?= form_field_attrs($field, 'textarea') ?> class="<?= $cls_input ?> resize-none"></textarea>
                                 <?php elseif ($field['type'] === 'select'): ?>
-                                    <select name="field_<?= $id ?>" id="field-<?= $id ?>" class="<?= $cls_input ?>">
+                                    <select name="field_<?= $id ?>" id="field-<?= $id ?>"<?= form_field_attrs($field, 'select') ?> class="<?= $cls_input ?>">
                                         <option value=""><?= esc(!empty($field['description']) ? $field['description'] : lang('Form.field.Choose')) ?></option>
                                         <?php foreach ($field['options'] as $option): ?>
                                             <option value="<?= (int) $option['id'] ?>"><?= esc($option['name']) ?></option>
@@ -97,11 +97,13 @@ $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus
                                         // wyslalby HEIC, ktorego images.imageMimeIn nie akceptuje.
                                         $accept = config('Images')->imageMimeIn;
                                     ?>
-                                    <input type="file" name="field_<?= $id ?>[]" id="field-<?= $id ?>"<?= $max_files > 1 ? ' multiple="multiple"' : '' ?><?= $accept !== '' ? ' accept="' . esc($accept, 'attr') . '"' : '' ?> data-max-files="<?= $max_files ?>" class="<?= $cls_input ?>" />
+                                    <input type="file" name="field_<?= $id ?>[]" id="field-<?= $id ?>"<?= $max_files > 1 ? ' multiple="multiple"' : '' ?><?= $accept !== '' ? ' accept="' . esc($accept, 'attr') . '"' : '' ?> data-max-files="<?= $max_files ?>"<?= form_field_attrs($field, 'file') ?> class="<?= $cls_input ?>" />
                                 <?php elseif ($field['type'] === 'number'): ?>
-                                    <input type="number" name="field_<?= $id ?>" id="field-<?= $id ?>" value=""<?= $ph ?> class="<?= $cls_input ?>" />
+                                    <input type="number" name="field_<?= $id ?>" id="field-<?= $id ?>" value=""<?= $ph ?><?= form_field_attrs($field, 'number') ?> class="<?= $cls_input ?>" />
                                 <?php else: ?>
-                                    <input type="text" name="field_<?= $id ?>" id="field-<?= $id ?>" value=""<?= $ph ?> class="<?= $cls_input ?>" />
+                                    <?php /* type/inputmode/autocomplete wynikaja z kolumny `validation`
+                                             ustawianej w panelu — patrz Helpers/form_field_helper.php. */ ?>
+                                    <input type="<?= form_field_input_type($field) ?>" name="field_<?= $id ?>" id="field-<?= $id ?>" value=""<?= $ph ?><?= form_field_attrs($field, 'input') ?> class="<?= $cls_input ?>" />
                                 <?php endif; ?>
                             <?php endif; ?>
                         </div>

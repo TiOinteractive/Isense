@@ -54,6 +54,11 @@ return [
         'Send' => 'Wyślij',
         'Choose' => '-- wybierz --',
         'CheckboxRequired' => 'Zaznaczenie tego pola jest wymagane.',
+        // Komunikaty walidacji w przegladarce (assets/js/form.js). Przekazywane
+        // do JS w atrybutach data-msg-* formularza, zeby jezyk komunikatu szedl
+        // za jezykiem strony, a nie za jezykiem przegladarki.
+        'Required' => 'To pole jest wymagane.',
+        'Invalid' => 'Wpisana wartość ma nieprawidłowy format.',
     ],
     'file' => [
         'NotUploaded' => 'Nie wybrano pliku lub przesyłanie się nie powiodło.',
@@ -76,12 +81,22 @@ return [
     ],
     'validation' => [
         'Name' => 'Imię i nazwisko (do tematu maila)',
+        'Address' => 'Adres (autouzupełnianie)',
         'Email' => 'Adres e-mail',
         'Phone' => 'Numer telefonu',
         'ZipCode' => 'Kod pocztowy',
         'NIP' => 'Numer NIP',
         'Regon' => 'Numer Regon',
         'Pesel' => 'Numer Pesel',
+    ],
+    /* Podpowiedzi do atrybutu `pattern` — przegladarka pokazuje je w dymku przy
+       niezgodnym formacie (patrz Helpers/form_field_helper.php). */
+    'hint' => [
+        'Phone' => 'Podaj numer telefonu, np. 601 234 567 lub +48 601 234 567.',
+        'ZipCode' => 'Podaj kod pocztowy w formacie 00-000.',
+        'NIP' => 'Podaj 10-cyfrowy numer NIP.',
+        'Regon' => 'Podaj 9-cyfrowy numer REGON.',
+        'Pesel' => 'Podaj 11-cyfrowy numer PESEL.',
     ],
     'type' => [
         'Text' => 'Pole tekstowe (input)',
