@@ -65,7 +65,7 @@ class PageContentModel extends Model {
         $this->db->transStart();
         if(!empty($id_content) && !empty($this->select('id')->where('id', $id_content)->find())) {
             $result = $this->set($data)->where('id', $id_content)->update();
-            $this->savePageContentLang($id_content, $post['lang']);
+            $this->savePageContentLang($id_content, $post['lang'] ?? array());
         }
         $this->db->transComplete();
         return $this->db->transStatus();

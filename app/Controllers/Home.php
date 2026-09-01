@@ -51,17 +51,19 @@ class Home extends BaseController {
         $global_links = $linkClass->getGlobalLinks($id_lang, $language['slug']);
         $global_links = array_merge($global_links, $this->pageClass->getSpecialWebsites($id_lang, $language['slug']));
         $global_links = array_merge($global_links, $this->pageClass->getDirectWebsites($id_lang, $language['slug']));
-        if (!empty($settings['technical_break']) && $settings['technical_break']) {
-            echo view('user/technical_break', array('metatags' => $metatags, 'logo' => !empty($settings['logo']) ? $settings['logo']['path'] : null, 'company_name' => !empty($settings['company_name']) ? $settings['company_name'] : null));
-            exit();
-        }
-        $session_user = $this->session->get('user');
         $link = $linkClass->getLinkByUrl(uri_string(true), $language);
         if (empty($link)) {
             //throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
             //exit();
         }
+        // Metatagi ustalamy przed galezia przerwy technicznej — widok technical_break ich uzywa,
+        // a przy odwrotnej kolejnosci wlaczenie przerwy dawalo blad 500 na kazdym adresie.
         $metatags = $this->pageClass->getDefaultMetatags($settings, $language, $link);
+        if (!empty($settings['technical_break']) && $settings['technical_break']) {
+            echo view('user/technical_break', array('metatags' => $metatags, 'logo' => !empty($settings['logo']) ? $settings['logo']['path'] : null, 'company_name' => !empty($settings['company_name']) ? $settings['company_name'] : null));
+            exit();
+        }
+        $session_user = $this->session->get('user');
         if ($this->request->isAJAX()) {
             $post = $this->request->getPost();
             if (empty($post)) {
@@ -80,6 +82,9 @@ class Home extends BaseController {
                                     ->where('m.id', $link['id_module'])
                                     ->where('m.publish', 1)
                                     ->get()->getRowArray();
+                    if (empty($module_data['slug'])) {
+                        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+                    }
                     $class = '\Modules\\' . ucfirst($module_data['slug']) . '\Libraries\\' . ucfirst($module_data['slug']);
                     if (is_dir(ROOTPATH . 'modules/' . ucfirst($module_data['slug'])) && class_exists($class)) {
                         $module = new $class();
@@ -121,6 +126,11 @@ class Home extends BaseController {
                                         ->where('m.publish', 1)
                                         ->get()->getRowArray();
                     }
+                    // Modul moze byc niepublikowany albo element moze juz nie istniec — wtedy
+                    // zapytanie zwraca null i dereferencja ['slug'] konczy sie bledem 500.
+                    if (empty($module_data['slug'])) {
+                        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+                    }
                     $class = '\Modules\\' . ucfirst($module_data['slug']) . '\Libraries\\' . ucfirst($module_data['slug']);
                     if (is_dir(ROOTPATH . 'modules/' . ucfirst($module_data['slug'])) && class_exists($class)) {
                         $module = new $class();
@@ -143,6 +153,10 @@ class Home extends BaseController {
                                     ->where('m.id', $link['id_module'])
                                     ->where('m.publish', 1)
                                     ->get()->getRowArray();
+                    // Jw. — brak wiersza modulu (usuniety lub publish=0) nie moze wywracac calej strony.
+                    if (empty($module_data['slug'])) {
+                        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+                    }
                     $class = '\Modules\\' . ucfirst($module_data['slug']) . '\Libraries\\' . ucfirst($module_data['slug']);
                     if (is_dir(ROOTPATH . 'modules/' . ucfirst($module_data['slug'])) && class_exists($class)) {
                         $module = new $class();
@@ -269,6 +283,12 @@ class Home extends BaseController {
                                                 ->where('me.id', $content['id_module_element'])
                                                 ->where('m.publish', 1)
                                                 ->get()->getRowArray();
+                                // Blok wskazuje na element modulu, ktory zniknal albo zostal
+                                // odpublikowany — pomijamy sam blok zamiast wywracac cala strone.
+                                if (empty($module_data['slug'])) {
+                                    unset($page['content'][$k]);
+                                    continue;
+                                }
                                 $class = '\App\Libraries\\' . ucfirst($module_data['slug']);
                                 $template = '\App\Views/user/' . (!empty($module_data['element_slug']) ? $module_data['element_slug'] . '/' : '');
                                 if (!class_exists($class)) {
@@ -369,9 +389,15 @@ class Home extends BaseController {
                         if (!empty($page['custom_data']['custom_data']['custom_meta'])) {
                             $metatags = array_merge($metatags, $page['custom_data']['custom_data']['custom_meta']);
                         }
+                        // Pusty lub nieistniejacy szablon strony konczyl sie ViewException (500).
+                        // Brak pliku widoku to dla uzytkownika po prostu brak strony — 404.
+                        // Sprawdzane przed wyslaniem naglowka, zeby 404 nie doklejal sie do polowy HTML-a.
+                        if (empty($page['template']) || !file_exists(APPPATH . 'Views/user/page/' . $page['template'])) {
+                            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+                        }
                         // Szablon iSense ma wlasny naglowek/stopke - jego CSS/JS musi sie zaladowac
                         // takze wtedy, gdy strona nie zawiera zadnego bloku modulu Isense.
-                        if (!empty($page['template']) && strpos($page['template'], 'isense') === 0) {
+                        if (strpos($page['template'], 'isense') === 0) {
                             $this->assetsClass->addAssets(array('css' => array('/assets/isense/css/isense.css'), 'js' => array('/assets/isense/js/isense.js')));
                         }
                         echo view('user/head', array('metatags' => $metatags, 'settings' => $settings, 'global_links' => $global_links, 'session_user' => $session_user, 'languages' => $languages, 'locale' => $language['slug'], 'css_files' => $this->assetsClass->getCss(), 'environment' => ENVIRONMENT, 'mobile' => $is_mobile, 'home' => !empty($page['home']), 'id_lang' => $id_lang, 'page' => $this->pageClass->page, 'breadcrumbs' => $bread));

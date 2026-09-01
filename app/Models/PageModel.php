@@ -189,6 +189,10 @@ class PageModel extends Model {
                     $result = $this->db->table('page_content')->insert($data);
                     $id_cont = $this->db->insertID();
                 }
+                // Front laczy blok z page_content_lang i filtruje po id_lang, wiec blok bez
+                // wiersza jezykowego jest niewidoczny na stronie — nawet gdy jest opublikowany.
+                // Wiersze (puste) zakladamy od razu; tresc uzupelnia formularz samego bloku.
+                $this->ensurePageContentLang($id_cont);
                 $ids[] = $id_cont;
             }
         }
@@ -199,7 +203,28 @@ class PageModel extends Model {
         $content_list = $query->get()->getResultArray();
         if (!empty($content_list)) {
             foreach ($content_list as $c) {
+                $this->db->table('page_content_lang')->where('id_page_cont', $c['id'])->delete();
                 $this->db->table('page_content')->where('id', $c['id'])->delete();
+            }
+        }
+    }
+
+    /** Uzupelnia brakujace wiersze page_content_lang bloku — po jednym na kazdy jezyk. */
+    private function ensurePageContentLang($id_cont) {
+        if (empty($id_cont)) {
+            return;
+        }
+        $languages = $this->db->table('language')->select('id')->get()->getResultArray();
+        foreach ($languages as $l) {
+            $exists = $this->db->table('page_content_lang')->select('id')->where('id_page_cont', $id_cont)->where('id_lang', $l['id'])->get()->getRowArray();
+            if (empty($exists)) {
+                $this->db->table('page_content_lang')->insert(array(
+                    'id_page_cont' => $id_cont,
+                    'id_lang' => $l['id'],
+                    'title' => '',
+                    'subtitle' => '',
+                    'url' => '',
+                ));
             }
         }
     }
