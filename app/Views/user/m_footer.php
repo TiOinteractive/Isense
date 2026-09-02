@@ -1,14 +1,3 @@
-<div class="aa-zone zone-0 type-0 source-adsense">
-    <div class="aa-zone-container">
-        <div class="aa-center">
-            <span class="t"><?=lang('Advertisement.user.Advertisement'); ?></span>
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9301198135861729" data-ad-slot="7878158194" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </div>
-</div>
 <footer class="main-footer mobile-footer">
     <div class="bottom-footer">
         <div class="container">

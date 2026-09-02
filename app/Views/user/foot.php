@@ -62,7 +62,5 @@
         <?php echo $js_code;?>
     </script>
 <?php endif; ?>
-<script async src="//www.reklamy.org.pl/www/delivery/asyncjs.php"></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9301198135861729" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -41,8 +41,9 @@
         <link rel="shortcut icon" href="<?=!empty($metatags['favicon']) ? $metatags['favicon'] : ''; ?>">
         <link rel="apple-touch-icon" href="<?=!empty($metatags['apple_icon']) ? $metatags['apple_icon'] : ''; ?>">
         <?php if(!empty($settings['widget_gsv'])): ?><meta name="google-site-verification" content="<?=$settings['widget_gsv']; ?>" /><?php endif; ?>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <?php /* Font Barlow jest hostowany lokalnie (/assets/css/fonts.css, dopisany
+                 do listy CSS w Home.php) — bez polaczen do fonts.googleapis.com
+                 i fonts.gstatic.com przed zgoda uzytkownika. */ ?>
         <?php if($environment == 'production' || $environment == 'development2'): ?>
             <link rel="stylesheet" href="/tio.css<?=!empty($css_files) ? '?files=' . implode(',', $css_files) : ''; ?>&v=1.3">
         <?php elseif(!empty($css_files)): ?>
@@ -50,7 +51,6 @@
                 <link rel="stylesheet" href="<?=$css_file; ?>?v=1.3">
             <?php endforeach; ?>
         <?php endif; ?>
-        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <?php if(!empty($settings['widget_gtm'])): ?>
             <!-- Google Tag Manager -->
             <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

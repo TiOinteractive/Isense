@@ -14,7 +14,7 @@ class Home extends BaseController {
         $this->session = session();
         $this->pageClass = new Page();
         $this->assetsClass = new Assets(array(
-            'css' => array('/adm/third-party/font-awasome/css/all.min.css', '/assets/css/style.css', '/assets/css/tiolightbox.css'),
+            'css' => array('/adm/third-party/font-awasome/css/all.min.css', '/assets/css/fonts.css', '/assets/css/style.css', '/assets/css/tiolightbox.css'),
             'js' => array('/assets/js/jquery.min.js', '/assets/js/javascript.js', '/assets/js/jquery.touchSwipe.min.js', '/assets/js/tiolightbox.js', '/assets/js/jquery-confirm.min.js', '/assets/js/header.js'),
             'css_footer' => array('/assets/css/jquery-confirm.min.css'),
             'js_ready' => array('$("a[rel=lightbox]").TiO_lightbox();')

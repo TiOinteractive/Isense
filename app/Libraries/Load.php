@@ -42,7 +42,7 @@ class Load
         $html = '<link rel="stylesheet" href="' . base_url() . 'assets/css/header.css">';
         //$html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/style.css">';
         //$html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/foto.css">';
-        $html .= '<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">';
+        $html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/fonts.css">';
         $html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/jquery-confirm.min.css">';
         //$html .= '<script src="' . base_url() . 'assets/js/jquery.min.js"></script>';
         $html .= '<script src="' . base_url() . 'assets/js/javascript.js"></script>';
@@ -62,7 +62,7 @@ class Load
         //$html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/style.css">';
         //$html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/foto.css">';
 		$html .= '<link rel="stylesheet" href="font-awasome/css/all.min.css">';
-        $html .= '<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">';
+        $html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/fonts.css">';
         $html .= '<link rel="stylesheet" href="' . base_url() . 'assets/css/jquery-confirm.min.css">';
         //$html .= '<script src="' . base_url() . 'assets/js/jquery.min.js"></script>';
         $html .= '<script src="' . base_url() . 'assets/js/javascript.js"></script>';
