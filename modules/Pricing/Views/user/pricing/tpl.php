@@ -34,17 +34,17 @@ $uid        = 'pricing-' . (int) ($d['id'] ?? 0);
                 <?php else: ?>
                     <div class="pricing-cols">
                         <div class="pricing-col-services">
-                            <ul class="pricing-services">
+                            <ul class="pricing-services" role="tablist" aria-orientation="vertical">
                                 <?php foreach ($category['services'] as $s => $service): ?>
-                                    <li>
-                                        <button type="button" class="pricing-service<?= $s === 0 ? ' is-active' : ''; ?>" aria-controls="<?= $uid; ?>-models-<?= $service['id']; ?>" aria-selected="<?= $s === 0 ? 'true' : 'false'; ?>" data-pricing-service="<?= $service['id']; ?>"><?= esc($service['name']); ?></button>
+                                    <li role="presentation">
+                                        <button type="button" class="pricing-service<?= $s === 0 ? ' is-active' : ''; ?>" role="tab" id="<?= $uid; ?>-service-<?= $service['id']; ?>" aria-controls="<?= $uid; ?>-models-<?= $service['id']; ?>" aria-selected="<?= $s === 0 ? 'true' : 'false'; ?>" tabindex="<?= $s === 0 ? '0' : '-1'; ?>" data-pricing-service="<?= $service['id']; ?>"><?= esc($service['name']); ?></button>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
                         </div>
                         <div class="pricing-col-models">
                             <?php foreach ($category['services'] as $s => $service): ?>
-                                <div class="pricing-models<?= $s === 0 ? ' is-active' : ''; ?>" id="<?= $uid; ?>-models-<?= $service['id']; ?>" data-pricing-models="<?= $service['id']; ?>"<?= $s === 0 ? '' : ' hidden'; ?>>
+                                <div class="pricing-models<?= $s === 0 ? ' is-active' : ''; ?>" id="<?= $uid; ?>-models-<?= $service['id']; ?>" role="tabpanel" aria-labelledby="<?= $uid; ?>-service-<?= $service['id']; ?>" tabindex="0" data-pricing-models="<?= $service['id']; ?>"<?= $s === 0 ? '' : ' hidden'; ?>>
                                     <?php if (empty($service['models'])): ?>
                                         <p class="pricing-empty"><?= lang('Pricing.NoModels'); ?></p>
                                     <?php else: ?>

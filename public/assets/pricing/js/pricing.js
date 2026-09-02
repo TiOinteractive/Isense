@@ -31,7 +31,9 @@
     function selectService(panel, id) {
       if (!panel || !id) return;
       panel.querySelectorAll("[data-pricing-service]").forEach(function (btn) {
-        setActive(btn, btn.getAttribute("data-pricing-service") === id);
+        var on = btn.getAttribute("data-pricing-service") === id;
+        setActive(btn, on);
+        btn.setAttribute("tabindex", on ? "0" : "-1");
       });
       panel.querySelectorAll("[data-pricing-models]").forEach(function (box) {
         var on = box.getAttribute("data-pricing-models") === id;
@@ -78,23 +80,42 @@
       }
     });
 
-    /* Belka zakładek obsługiwana klawiaturą zgodnie ze wzorcem tablist. */
-    if (tabs.length > 1) {
-      root.addEventListener("keydown", function (e) {
-        var tab = e.target.closest ? e.target.closest("[data-pricing-tab]") : null;
-        if (!tab) return;
-        var i = tabs.indexOf(tab);
-        var next = null;
-        if (e.key === "ArrowRight") next = tabs[(i + 1) % tabs.length];
-        else if (e.key === "ArrowLeft") next = tabs[(i - 1 + tabs.length) % tabs.length];
-        else if (e.key === "Home") next = tabs[0];
-        else if (e.key === "End") next = tabs[tabs.length - 1];
-        if (!next) return;
-        e.preventDefault();
-        selectCategory(next.getAttribute("data-pricing-tab"));
-        next.focus();
-      });
+    /* Obie belki zakładek obsługiwane klawiaturą zgodnie ze wzorcem tablist:
+       kategorie poziomo (strzałki lewo/prawo), usługi pionowo (góra/dół). */
+    function step(list, current, key, prevKey, nextKey) {
+      var i = list.indexOf(current);
+      if (i < 0) return null;
+      if (key === nextKey) return list[(i + 1) % list.length];
+      if (key === prevKey) return list[(i - 1 + list.length) % list.length];
+      if (key === "Home") return list[0];
+      if (key === "End") return list[list.length - 1];
+      return null;
     }
+
+    root.addEventListener("keydown", function (e) {
+      if (!e.target.closest) return;
+
+      var tab = e.target.closest("[data-pricing-tab]");
+      if (tab && tabs.length > 1) {
+        var nextTab = step(tabs, tab, e.key, "ArrowLeft", "ArrowRight");
+        if (!nextTab) return;
+        e.preventDefault();
+        selectCategory(nextTab.getAttribute("data-pricing-tab"));
+        nextTab.focus();
+        return;
+      }
+
+      var service = e.target.closest("[data-pricing-service]");
+      if (!service) return;
+      var panel = service.closest("[data-pricing-panel]") || root;
+      var services = Array.prototype.slice.call(panel.querySelectorAll("[data-pricing-service]"));
+      if (services.length < 2) return;
+      var nextService = step(services, service, e.key, "ArrowUp", "ArrowDown");
+      if (!nextService) return;
+      e.preventDefault();
+      selectService(panel, nextService.getAttribute("data-pricing-service"));
+      nextService.focus();
+    });
 
     // Stan początkowy ustawia serwer; to tylko domknięcie, gdyby żaden panel nie był aktywny.
     if (!root.querySelector("[data-pricing-panel].is-active")) {
