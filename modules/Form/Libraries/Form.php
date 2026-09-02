@@ -139,6 +139,8 @@ class Form {
             'phone' => $get('phone'),
             'email' => $get('email'),
             'hours' => $get('opening_hours'),
+            'nip' => $get('nip'),
+            'regon' => $get('regon'),
         );
 
         return array_merge($contact, $this->buildMapUrls($get('map_location')));
