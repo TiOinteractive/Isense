@@ -12,6 +12,7 @@ return [
     'SectionTextImage'    => 'Sekcja: tekst + obraz',
     'SectionInfoCards'    => 'Sekcja: karty z ikonami',
     'SectionStats'        => 'Sekcja: statystyki (liczby)',
+    'SectionColumnsText'  => 'Sekcja: kolumny z tekstem',
     'SectionRichtext'     => 'Sekcja: tekst (HTML)',
     'SectionCta'          => 'Sekcja: CTA (wezwanie do działania)',
     'SectionContact'      => 'Sekcja: kontakt (dane + mapa + formularz)',
