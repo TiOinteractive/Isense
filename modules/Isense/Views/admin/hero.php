@@ -20,6 +20,13 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-label"><label><?= lang('Isense.EyebrowUrl'); ?></label></div>
+                    <div class="form-field">
+                        <input type="text" name="form_data[lang][<?= $lang['id']; ?>][eyebrow_url]" value="<?= esc($f['eyebrow_url'] ?? '', 'attr'); ?>" placeholder="https://">
+                        <div class="shortcodes"><?= lang('Isense.EyebrowUrlInfo'); ?></div>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-label"><label><?= lang('Isense.Heading'); ?></label></div>
                     <div class="form-field">
                         <input type="text" name="form_data[lang][<?= $lang['id']; ?>][heading]" value="<?= esc($f['heading'] ?? '', 'attr'); ?>">

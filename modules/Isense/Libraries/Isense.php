@@ -80,6 +80,7 @@ class Isense
             case 'hero':
                 return [
                     'eyebrow'   => 'Apple Independent Repair Provider',
+                    'eyebrow_url' => 'https://support.apple.com/repair/verify-repair-provider?storeid=I654185',
                     'heading'   => 'Niezależny dostawca usług naprawczych',
                     'cta_label' => 'Zleć naprawę wysyłkową',
                     'cta_url'   => '#naprawa-wysylkowa',

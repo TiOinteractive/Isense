@@ -9,6 +9,8 @@ return [
     'SectionFeatures'     => 'Section: 4 features',
     'SectionTestimonials' => 'Section: testimonials',
     'Eyebrow'             => 'Eyebrow (small text above heading)',
+    'EyebrowUrl'          => 'Eyebrow link (optional)',
+    'EyebrowUrlInfo'      => 'Address the eyebrow links to (opens in a new tab). The text styling does not change. Empty = eyebrow without a link.',
     'Heading'             => 'Heading',
     'CtaLabel'            => 'Button label',
     'CtaUrl'              => 'Button URL',

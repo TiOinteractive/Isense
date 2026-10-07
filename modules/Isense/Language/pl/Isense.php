@@ -28,6 +28,8 @@ return [
     'SectionWhyBrand'     => 'Sekcja: dlaczego iSense (tekst + statystyki)',
     'SectionFaq'          => 'Sekcja: FAQ (pytania i odpowiedzi)',
     'Eyebrow'             => 'Nadtytuł (mały tekst nad nagłówkiem)',
+    'EyebrowUrl'          => 'Link nadtytułu (opcjonalnie)',
+    'EyebrowUrlInfo'      => 'Adres, pod który prowadzi nadtytuł (otwiera się w nowej karcie). Wygląd tekstu się nie zmienia. Puste pole = nadtytuł bez linku.',
     'Heading'             => 'Nagłówek',
     'CtaLabel'            => 'Tekst przycisku',
     'CtaUrl'              => 'Adres przycisku (URL)',

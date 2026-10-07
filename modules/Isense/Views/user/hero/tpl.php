@@ -3,6 +3,7 @@ helper(['url', 'isense']);
 $d = $data ?? [];
 $heading = $title ?: ($d['heading'] ?? '');
 $eyebrow = $d['eyebrow'] ?? '';
+$eyebrowUrl = trim((string) ($d['eyebrow_url'] ?? ''));
 $ctaLabel = $d['cta_label'] ?? 'Zleć naprawę wysyłkową';
 $ctaUrl   = $d['cta_url'] ?? '#naprawa-wysylkowa';
 $bg       = $d['bg'] ?? '/assets/isense/img/hero.png';
@@ -15,7 +16,8 @@ $bg       = $d['bg'] ?? '/assets/isense/img/hero.png';
         <div class="max-w-[1300px] mx-auto px-4 lg:px-12 w-full">
             <div class="max-w-2xl">
                 <h1 class="font-bold mb-10">
-                    <?php if ($eyebrow): ?><span class="text-[19px] text-[#3b81f7] leading-[22px] block mb-2"><?= esc($eyebrow) ?></span><?php endif; ?>
+                    <?php /* Link bez klas: reset Tailwinda (a { color: inherit; text-decoration: inherit }) sprawia, ze wyglad nadtytulu sie nie zmienia. */ ?>
+                    <?php if ($eyebrow): ?><span class="text-[19px] text-[#3b81f7] leading-[22px] block mb-2"><?php if ($eyebrowUrl): ?><a href="<?= esc($eyebrowUrl, 'attr') ?>" target="_blank" rel="noopener noreferrer"><?= esc($eyebrow) ?></a><?php else: ?><?= esc($eyebrow) ?><?php endif; ?></span><?php endif; ?>
                     <span class="text-[38px] text-[#1D1D1F] leading-[44px] block"><?= esc($heading) ?></span>
                 </h1>
                 <?php if ($ctaLabel): ?>
