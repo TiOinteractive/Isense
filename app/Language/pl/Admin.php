@@ -123,6 +123,8 @@ return [
         'Email' => 'Adres email',
         'Phone' => 'Numer telefonu',
         'Address' => 'Adres',
+        'LegalName' => 'Nazwa firmy (dane rejestrowe)',
+        'LegalNameInfo' => 'Pełna nazwa podmiotu, np. <em>P&amp;E Services Paweł Kowalczuk</em>. Wyświetla się w sekcji „Dane firmy” na stronie kontaktu.',
         'NIP' => 'Numer NIP',
         'Regon' => 'Numer Regon',
         'KRS' => 'Numer KRS',

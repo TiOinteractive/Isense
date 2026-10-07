@@ -54,12 +54,13 @@ $cls_input = 'w-full px-4 py-3 rounded-lg border border-[#D2D2D7] bg-white focus
                         <div><h3 class="font-semibold text-[#1D1D1F] mb-1"><?= lang('User.contact.OpeningHours') ?></h3><div class="text-[#6E6E73] whitespace-pre-line"><?= esc($c['hours']) ?></div></div>
                     </div>
                     <?php endif; ?>
-                    <?php if (!empty($c['nip']) || !empty($c['regon'])): ?>
+                    <?php if (!empty($c['legal_name']) || !empty($c['nip']) || !empty($c['regon'])): ?>
                     <div class="flex gap-4">
                         <div class="w-12 h-12 bg-[#3b81f7]/10 rounded-xl flex items-center justify-center flex-shrink-0"><?= isense_icon('clipboard-list', 'w-6 h-6 text-[#3b81f7]') ?></div>
                         <div>
                             <h3 class="font-semibold text-[#1D1D1F] mb-1"><?= lang('User.contact.CompanyData') ?></h3>
                             <div class="text-[#6E6E73]">
+                                <?php if (!empty($c['legal_name'])): ?><p><?= esc($c['legal_name']) ?></p><?php endif; ?>
                                 <?php if (!empty($c['nip'])): ?><p><?= lang('User.contact.Nip') ?>: <?= esc($c['nip']) ?></p><?php endif; ?>
                                 <?php if (!empty($c['regon'])): ?><p><?= lang('User.contact.Regon') ?>: <?= esc($c['regon']) ?></p><?php endif; ?>
                             </div>

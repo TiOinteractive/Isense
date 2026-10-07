@@ -68,6 +68,8 @@ return [
         'Email' => 'E-mail adress',
         'Phone' => 'Phone number',
         'Address' => 'Address',
+        'LegalName' => 'Company name (registered)',
+        'LegalNameInfo' => 'Full name of the entity, e.g. <em>P&amp;E Services Paweł Kowalczuk</em>. Shown in the "Company details" section on the contact page.',
         'NIP' => 'NIP number',
         'Regon' => 'REGON number',
         'KRS' => 'KRS number',

@@ -68,6 +68,15 @@
             </div>
             <div class="form-row">
                 <div class="form-label">
+                    <label><?=lang('Admin.settings.LegalName');?></label>
+                </div>
+                <div class="form-field">
+                    <input type="text" name="legal_name" value="<?= !empty($settings['legal_name']) ? esc($settings['legal_name'], 'attr') : ''; ?>" >
+                    <div class="shortcodes"><?=lang('Admin.settings.LegalNameInfo');?></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-label">
                     <label><?=lang('Admin.settings.NIP');?></label>
                 </div>
                 <div class="form-field">

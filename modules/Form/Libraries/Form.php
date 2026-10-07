@@ -139,6 +139,7 @@ class Form {
             'phone' => $get('phone'),
             'email' => $get('email'),
             'hours' => $get('opening_hours'),
+            'legal_name' => $get('legal_name'),
             'nip' => $get('nip'),
             'regon' => $get('regon'),
         );
