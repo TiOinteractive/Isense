@@ -7,6 +7,10 @@ $popularMenu = 10;
 <!doctype html>
 <html lang="pl">
 <head>
+    <!--
+      Projekt i realizacja: TiO Interactive
+      https://www.tiointeractive.pl
+    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">

@@ -49,6 +49,14 @@ class SchemaOrg {
             'description' => $this->str($settings, 'meta_description'),
             'inLanguage' => $this->langCode($language),
             'publisher'  => ['@id' => base_url() . '#organization'],
+            // Wykonawca serwisu — osobny Organization bez @id klienta, zeby nie
+            // kolidowal z wezlem LocalBusiness opisujacym wlasciciela strony.
+            'creator'    => [
+                '@type'       => 'Organization',
+                'name'        => 'TiO Interactive',
+                'url'         => 'https://www.tiointeractive.pl',
+                'description' => 'Realizacja sklepow internetowych i stron www',
+            ],
         ];
     }
 
