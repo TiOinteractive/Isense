@@ -7,11 +7,12 @@ $popularMenu = 10;
 <!doctype html>
 <html lang="pl">
 <head>
+    <meta charset="UTF-8">
     <!--
-      Projekt i realizacja: TiO Interactive
+      Projekt i realizacja: TiO Interactive | Platforma: TiO CMS
       https://www.tiointeractive.pl
     -->
-    <meta charset="UTF-8">
+    <meta name="generator" content="TiO CMS">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>404 — nie znaleziono strony | iSense</title>

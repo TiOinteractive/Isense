@@ -137,6 +137,8 @@ $linkGrid = static function (string $title, array $items) {
         <div class="<?= $hasSeoGrid ? 'border-t border-[#2C2C2E] mt-12 pt-8' : 'pt-8' ?> text-center text-sm text-[#86868B]">
             <?php /* Rok z daty biezacej — inaczej stopka zestarzeje sie 1 stycznia. */ ?>
             <p>© <?= date('Y') ?> <?= esc($company) ?>. Wszystkie prawa zastrzeżone. Nie jesteśmy autoryzowanym serwisem Apple Inc.</p>
+            <?php /* Podpis wykonawcy (wariant B: zwykly link, bez rel). Klasa tio-credit jako hak dla audytow. */ ?>
+            <p class="tio-credit mt-2">Projekt i realizacja: <a href="https://www.tiointeractive.pl" class="hover:text-white transition-colors">TiO Interactive</a></p>
         </div>
     </div>
 </footer>

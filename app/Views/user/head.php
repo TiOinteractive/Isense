@@ -2,6 +2,11 @@
 <html lang="<?=!empty($metatags['lang']) ? $metatags['lang'] : ''; ?>">
     <head>   
         <meta charset="UTF-8">
+        <!--
+          Projekt i realizacja: TiO Interactive | Platforma: TiO CMS
+          https://www.tiointeractive.pl
+        -->
+        <meta name="generator" content="TiO CMS">
         <title><?=!empty($metatags['title']) ? $metatags['title'] : ''; ?></title>
         <meta name="robots" content="<?php if(!empty($metatags['index']) && empty($metatags['no_index'])): ?>index, follow<?php else: ?>noindex, nofollow<?php endif; ?>">
         <meta name="description" content="<?=!empty($metatags['description']) ? esc($metatags['description']) : ''; ?>">

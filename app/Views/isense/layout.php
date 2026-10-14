@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <meta charset="UTF-8">
     <!--
-      Projekt i realizacja: TiO Interactive
+      Projekt i realizacja: TiO Interactive | Platforma: TiO CMS
       https://www.tiointeractive.pl
     -->
-    <meta charset="UTF-8">
+    <meta name="generator" content="TiO CMS">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= esc($title ?? 'iSense — Serwis i naprawa sprzętu Apple') ?></title>
     <?php if (! empty($description)): ?>
